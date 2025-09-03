@@ -1,5 +1,7 @@
 'use client'
 
+import type React from 'react'
+
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -38,22 +40,22 @@ export default function Navbar({ showTopbar }: NavbarProps) {
     setSearchKeyword(e.target.value)
   }
   return (
-    <div className="flex justify-between">
-      {/* Navbar */}
-      <nav className="relative flex items-start gap-8 py-2">
-        {/* 로고 (Topbar 숨겨졌을 때만 보임) */}
-        {!showTopbar && (
-          <Link href="/" className="">
-            <Image
-              src="/logo/sc-logo-black.svg"
-              width={0}
-              height={0}
-              alt="sc-logo-top"
-              className="h-auto w-[1.875rem]"
-            />
-          </Link>
-        )}
+    <div className="flex items-center justify-between">
+      {/* 로고 (Topbar 숨겨졌을 때만 보임) */}
+      {!showTopbar && (
+        <Link href="/" className="">
+          <Image
+            src="/logo/sc-logo-black.svg"
+            width={0}
+            height={0}
+            alt="sc-logo-top"
+            className="w-[3rem]"
+          />
+        </Link>
+      )}
 
+      {/* Navbar */}
+      <nav className={`relative flex items-center gap-8 ${showTopbar ? 'py-2' : 'py-[1.25rem]'}`}>
         <NavigationMenu viewport={false}>
           <NavigationMenuList className="flex gap-10 text-p15">
             {navItems.map((item) => (
