@@ -11,7 +11,7 @@ export default function Topbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowTopbar(window.scrollY < 50)
+      setShowTopbar(window.scrollY < 300)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
