@@ -4,9 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaFacebookF, FaPinterestP } from 'react-icons/fa'
+import Navbar from './Navbar'
 
 export default function Topbar() {
-  const [showTopbar, setShowTopbar] = useState(true)
+  const [showTopbar, setShowTopbar] = useState<boolean>(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,9 +18,9 @@ export default function Topbar() {
   }, [])
 
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 bg-bgColor px-[5.375rem] py-[1.5625rem]">
+    <div className="fixed left-0 right-0 top-0 z-50 bg-bgColor px-[5.375rem]">
       {showTopbar && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-[1.5625rem]">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold">
             <Image
@@ -54,6 +55,7 @@ export default function Topbar() {
           </div>
         </div>
       )}
+      <Navbar showTopbar={showTopbar} />
     </div>
   )
 }
