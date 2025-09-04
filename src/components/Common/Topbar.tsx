@@ -34,7 +34,7 @@ export default function Topbar() {
 
           <div className="flex flex-col items-end gap-y-2">
             <div className="flex gap-3">
-              <a href="#" aria-label="Instagram">
+              <a href="https://www.instagram.com/seoulcollective_official/" aria-label="Instagram">
                 <FaInstagram />
               </a>
               <a href="#" aria-label="Facebook">
