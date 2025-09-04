@@ -55,7 +55,9 @@ export default function Navbar({ showTopbar }: NavbarProps) {
       )}
 
       {/* Navbar */}
-      <nav className={`relative flex items-center gap-8 ${showTopbar ? 'py-2' : 'py-[1.25rem]'}`}>
+      <nav
+        className={`relative flex items-center gap-8 ${showTopbar ? 'py-[0.5rem]' : 'py-[1.25rem]'}`}
+      >
         <NavigationMenu viewport={false}>
           <NavigationMenuList className="flex gap-10 text-p15">
             {navItems.map((item) => (
