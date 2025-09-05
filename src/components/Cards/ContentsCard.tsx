@@ -19,10 +19,7 @@ type SectionStyle = {
     image_categroy: string
     category_title: string
   }
-  image?: {
-    width: string
-    height: string
-  }
+  image_ratio: string
 }
 
 const sectionType: SectionStyle[] = [
@@ -36,10 +33,7 @@ const sectionType: SectionStyle[] = [
       image_categroy: 'pt-6',
       category_title: 'pt-3',
     },
-    image: {
-      width: '770px',
-      height: '552px',
-    },
+    image_ratio: 'aspect-[770/582]',
   },
   {
     section: 'sub',
@@ -51,10 +45,7 @@ const sectionType: SectionStyle[] = [
       image_categroy: 'pt-3',
       category_title: 'pt-1',
     },
-    image: {
-      width: '300px',
-      height: '240px',
-    },
+    image_ratio: 'aspect-[334/235]',
   },
   {
     section: 'testDrive',
@@ -66,10 +57,7 @@ const sectionType: SectionStyle[] = [
       image_categroy: 'pt-2',
       category_title: 'pt-3',
     },
-    image: {
-      width: '300px',
-      height: '200px',
-    },
+    image_ratio: 'aspect-[334/235]',
   },
   {
     section: 'shopping',
@@ -81,10 +69,7 @@ const sectionType: SectionStyle[] = [
       image_categroy: 'pt-2',
       category_title: 'pt-3',
     },
-    image: {
-      width: '300px',
-      height: '200px',
-    },
+    image_ratio: 'aspect-[334/235]',
   },
   {
     section: 'latest',
@@ -96,10 +81,7 @@ const sectionType: SectionStyle[] = [
       image_categroy: 'pt-2',
       category_title: 'pt-3',
     },
-    image: {
-      width: '300px',
-      height: '200px',
-    },
+    image_ratio: 'aspect-[334/235]',
   },
 ]
 
@@ -110,13 +92,7 @@ export default function ContentsCard({ imageUrl, category, title, section }: Con
   return (
     <div className="flex h-full w-full cursor-pointer flex-col font-semibold">
       {/* 이미지 영역 */}
-      <div
-        className={`relative w-full ${
-          style.section === 'main'
-            ? 'aspect-[770/582]' // 큰 카드 비율
-            : 'aspect-[334/235]' // 작은 카드 비율
-        }`}
-      >
+      <div className={`relative w-full ${style.image_ratio}`}>
         <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
       </div>
 
