@@ -13,7 +13,7 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Search } from 'lucide-react'
+import { IoSearch } from 'react-icons/io5'
 
 const navItems = [
   { name: 'SKIN', submenu: ['Skin Concerns', 'Skin Type', 'Sun Care', 'Body Care'] },
@@ -59,14 +59,14 @@ export default function Navbar({ showTopbar }: NavbarProps) {
         className={`relative flex items-center gap-8 ${showTopbar ? 'py-[0.5rem]' : 'py-[1.25rem]'}`}
       >
         <NavigationMenu viewport={false}>
-          <NavigationMenuList className="flex gap-10 text-p15">
+          <NavigationMenuList className="flex gap-10">
             {navItems.map((item) => (
               <NavigationMenuItem key={item.name}>
-                <NavigationMenuTrigger className="cursor-pointer p-0 font-semibold underline-offset-4 hover:underline hover:decoration-purple hover:decoration-[0.0938rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.0938rem] [&>svg]:hidden">
+                <NavigationMenuTrigger className="cursor-pointer p-0 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden">
                   {item.name}
                 </NavigationMenuTrigger>
                 {item.submenu && (
-                  <NavigationMenuContent className="absolute left-auto top-full z-50 mt-1 w-[9.375rem] rounded-sm bg-white p-1 text-p13 font-normal">
+                  <NavigationMenuContent className="absolute left-auto top-full z-50 mt-[0.4375rem] w-[10.5rem] rounded-sm bg-white p-1 font-normal">
                     {item.submenu.map((sub) => (
                       <NavigationMenuLink
                         asChild
@@ -97,7 +97,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
               onChange={onChangeSearchKeyword}
             />
             <button onClick={() => setIsSearchOpen(false)} className="text-black hover:text-purple">
-              <Search size={20} />
+              <IoSearch size={22} />
             </button>
           </div>
         ) : (
@@ -105,7 +105,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
             onClick={() => setIsSearchOpen(true)}
             className="text-black transition-colors hover:text-purple"
           >
-            <Search size={20} />
+            <IoSearch size={22} />
           </button>
         )}
       </div>
