@@ -45,10 +45,10 @@ export default function Topbar() {
               </a>
             </div>
             <div className="flex gap-3">
-              <button className="w-[5rem] bg-purple text-p11 font-semibold text-white">
+              <button className="w-[7rem] bg-purple text-p11 font-semibold text-white">
                 SUBSCRIBE
               </button>
-              <button className="w-[5rem] bg-black text-p11 font-semibold text-white">
+              <button className="w-[7rem] bg-black text-p11 font-semibold text-white">
                 SIGN IN
               </button>
             </div>
