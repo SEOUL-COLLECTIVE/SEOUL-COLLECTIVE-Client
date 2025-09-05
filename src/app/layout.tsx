@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="block">
         <Topbar />
-        <div className="pt-32">{children}</div>
+        <div className="px-[5.375rem] pt-[12rem]">{children}</div>
       </body>
     </html>
   )
