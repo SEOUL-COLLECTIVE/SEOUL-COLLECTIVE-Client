@@ -15,6 +15,10 @@ type SectionStyle = {
     category: string
     title: string
   }
+  gap: {
+    image_categroy: string
+    category_title: string
+  }
   image?: {
     width: string
     height: string
@@ -28,6 +32,10 @@ const sectionType: SectionStyle[] = [
       category: 'text-p13',
       title: 'text-p28',
     },
+    gap: {
+      image_categroy: 'pt-6',
+      category_title: 'pt-3',
+    },
     image: {
       width: '770px',
       height: '552px',
@@ -37,7 +45,11 @@ const sectionType: SectionStyle[] = [
     section: 'sub',
     font: {
       category: 'text-p11',
-      title: 'text-p18',
+      title: 'text-p20',
+    },
+    gap: {
+      image_categroy: 'pt-3',
+      category_title: 'pt-1',
     },
     image: {
       width: '300px',
@@ -50,6 +62,10 @@ const sectionType: SectionStyle[] = [
       category: 'text-p10',
       title: 'text-p16',
     },
+    gap: {
+      image_categroy: 'pt-2',
+      category_title: 'pt-3',
+    },
     image: {
       width: '300px',
       height: '200px',
@@ -61,6 +77,10 @@ const sectionType: SectionStyle[] = [
       category: 'text-p13',
       title: 'text-p26',
     },
+    gap: {
+      image_categroy: 'pt-2',
+      category_title: 'pt-3',
+    },
     image: {
       width: '300px',
       height: '200px',
@@ -71,6 +91,10 @@ const sectionType: SectionStyle[] = [
     font: {
       category: 'text-p10',
       title: 'text-p16',
+    },
+    gap: {
+      image_categroy: 'pt-2',
+      category_title: 'pt-3',
     },
     image: {
       width: '300px',
@@ -89,16 +113,21 @@ export default function ContentsCard({ imageUrl, category, title, section }: Con
       <div
         className={`relative w-full ${
           style.section === 'main'
-            ? 'aspect-[768/550]' // 큰 카드 비율
-            : 'aspect-[384/238]' // 작은 카드 비율
+            ? 'aspect-[770/582]' // 큰 카드 비율
+            : 'aspect-[334/235]' // 작은 카드 비율
         }`}
       >
         <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
       </div>
+
       {/* 텍스트 영역 */}
-      <div className="flex flex-1 flex-col justify-between p-2">
-        <span className={`${style.font.category} font-medium`}>{category}</span>
-        <div className={`${style.font.title} whitespace-pre-line break-words`}>{title}</div>
+      <div className={`flex flex-col gap-1 ${style.gap.image_categroy}`}>
+        <span className={`${style.font.category} `}>{category}</span>
+        <div
+          className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words`}
+        >
+          {title}
+        </div>
       </div>
     </div>
   )

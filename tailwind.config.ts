@@ -22,6 +22,7 @@ const config: Config = {
         p15: '1.25rem',
         p16: '1.333rem',
         p18: '1.5rem',
+        p20: '1.667rem',
         p26: '2.167rem',
         p28: '2.333rem',
       },
