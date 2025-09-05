@@ -1,11 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Main from '../components/Sections/Main'
 
 export default function Page() {
+  const [username, setUsername] = useState<string>('Emma')
   return (
     <div>
-      <div className="pb-3 text-p26 font-semibold">Hi, Emma</div>
+      <div className="text-p20 pb-3 font-semibold">Hi, {username}</div>
       <Main />
     </div>
   )
