@@ -62,7 +62,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
           <NavigationMenuList className="flex gap-10">
             {navItems.map((item) => (
               <NavigationMenuItem key={item.name}>
-                <NavigationMenuTrigger className="cursor-pointer p-0 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden">
+                <NavigationMenuTrigger className="cursor-pointer p-0 text-p15 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden">
                   {item.name}
                 </NavigationMenuTrigger>
                 {item.submenu && (
