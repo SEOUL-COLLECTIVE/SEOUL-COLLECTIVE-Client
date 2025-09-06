@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'futura-bold': ['var(--font-futura-bold)', 'Arial', 'sans-serif'],
+        futura: ['var(--font-futura)', 'Arial', 'sans-serif'],
+      },
       colors: {
         bgColor: '#F5F5F7',
         purple: '#7D89FF',
