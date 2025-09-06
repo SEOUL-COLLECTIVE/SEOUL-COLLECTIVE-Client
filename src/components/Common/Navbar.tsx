@@ -55,7 +55,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
                   {item.name}
                 </NavigationMenuTrigger>
                 {item.submenu && (
-                  <NavigationMenuContent className="absolute left-auto top-full z-50 mt-[0.4375rem] w-[10.5rem] rounded-sm bg-white p-1 font-normal">
+                  <NavigationMenuContent>
                     {item.submenu.map((sub) => (
                       <NavigationMenuLink
                         asChild
