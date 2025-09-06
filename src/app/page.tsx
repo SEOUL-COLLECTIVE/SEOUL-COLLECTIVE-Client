@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Main from '../components/Sections/Main'
 import TestDrive from '@/components/Sections/TestDrive'
+import SCShopping from '@/components/Sections/SCShopping'
 
 export default function Page() {
   const [username, setUsername] = useState<string>('Emma')
@@ -12,6 +13,7 @@ export default function Page() {
       <div className="flex flex-col gap-y-24">
         <Main />
         <TestDrive />
+        <SCShopping />
       </div>
     </div>
   )
