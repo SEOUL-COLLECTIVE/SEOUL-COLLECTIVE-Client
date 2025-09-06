@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Topbar from '../components/Common/Topbar'
+import Footer from '../components/Common/Footer'
 
 export const metadata: Metadata = {
   title: 'SEOUL COLLECTIVE',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="block">
         <Topbar />
         <div className="px-[5.375rem] pt-[12rem]">{children}</div>
+        <Footer />
       </body>
     </html>
   )
