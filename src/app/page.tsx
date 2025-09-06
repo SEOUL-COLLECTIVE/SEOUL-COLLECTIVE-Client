@@ -2,13 +2,17 @@
 
 import { useState } from 'react'
 import Main from '../components/Sections/Main'
+import TestDrive from '@/components/Sections/TestDrive'
 
 export default function Page() {
   const [username, setUsername] = useState<string>('Emma')
   return (
     <div>
       <div className="pb-3 text-p20 font-semibold">Hi, {username}</div>
-      <Main />
+      <div className="flex flex-col gap-y-24">
+        <Main />
+        <TestDrive />
+      </div>
     </div>
   )
 }
