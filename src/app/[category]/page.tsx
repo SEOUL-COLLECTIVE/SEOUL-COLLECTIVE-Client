@@ -25,9 +25,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       {navItem.submenu && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {navItem.submenu.map((subItem) => (
-            <div key={subItem} className="rounded-lg border p-4 transition-shadow hover:shadow-md">
-              <h2 className="mb-2 text-xl font-semibold">{subItem}</h2>
-              <p className="text-gray-600">{subItem}에 대한 상세 정보를 여기에 표시합니다.</p>
+            <div
+              key={subItem.name}
+              className="rounded-lg border p-4 transition-shadow hover:shadow-md"
+            >
+              <h2 className="mb-2 text-xl font-semibold">{subItem.name}</h2>
+              <p className="text-gray-600">{subItem.name}에 대한 상세 정보를 여기에 표시합니다.</p>
             </div>
           ))}
         </div>

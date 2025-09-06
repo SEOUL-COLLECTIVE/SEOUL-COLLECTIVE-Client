@@ -1,6 +1,6 @@
 import { FaInstagram, FaFacebookF, FaPinterestP } from 'react-icons/fa'
 import { AiOutlineMail } from 'react-icons/ai'
-import { footerNavItems, companyLinks, legalLinks } from '@/data/navItem'
+import { mainNavLinks, companyLinks, legalLinks } from '@/data/navItem'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -60,7 +60,7 @@ export default function Footer() {
             {/* Navigation Links */}
             <div className="w-fit text-p13">
               <nav className="flex flex-col space-y-3">
-                {footerNavItems.map((item) => (
+                {mainNavLinks.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
