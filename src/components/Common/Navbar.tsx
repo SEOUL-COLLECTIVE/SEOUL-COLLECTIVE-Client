@@ -14,19 +14,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { IoSearch } from 'react-icons/io5'
-
-const navItems = [
-  { name: 'SKIN', submenu: ['Skin Concerns', 'Skin Type', 'Sun Care', 'Body Care'] },
-  {
-    name: 'MAKEUP',
-    submenu: ['Face', 'Eyes', 'Lips', 'Brushes & tools', 'View all'],
-  },
-  { name: 'HAIR', submenu: ['Hair care', 'Scalp Health'] },
-  { name: 'NAIL', submenu: ['Inspiration', 'Product'] },
-  { name: 'BRANDS' },
-  { name: 'SHOPPING' },
-  { name: 'COMMUNITY', submenu: ['Product Q&A', 'My Review', 'Discussion'] },
-]
+import { navItems } from '@/data/navItem'
+import { useRouter } from 'next/navigation'
 
 type NavbarProps = {
   showTopbar: boolean
@@ -35,10 +24,16 @@ type NavbarProps = {
 export default function Navbar({ showTopbar }: NavbarProps) {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const router = useRouter()
+
+  const onClickTrigger = (href: string) => {
+    router.push(href)
+  }
 
   const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
   }
+
   return (
     <div className="flex items-center justify-between">
       {/* 로고 (Topbar 숨겨졌을 때만 보임) */}
@@ -62,18 +57,21 @@ export default function Navbar({ showTopbar }: NavbarProps) {
           <NavigationMenuList className="flex gap-10">
             {navItems.map((item) => (
               <NavigationMenuItem key={item.name}>
-                <NavigationMenuTrigger className="cursor-pointer p-0 text-p15 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden">
+                <NavigationMenuTrigger
+                  onClick={() => onClickTrigger(item.href)}
+                  className="cursor-pointer p-0 text-p15 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden"
+                >
                   {item.name}
                 </NavigationMenuTrigger>
                 {item.submenu && (
-                  <NavigationMenuContent className="absolute left-auto top-full z-50 mt-[0.4375rem] w-[10.5rem] rounded-sm bg-white p-1 font-normal">
+                  <NavigationMenuContent>
                     {item.submenu.map((sub) => (
                       <NavigationMenuLink
                         asChild
-                        key={sub}
+                        key={sub.name}
                         className="block rounded-md px-4 py-2 hover:text-purple"
                       >
-                        <Link href="#">{sub}</Link>
+                        <Link href={sub.href}>{sub.name}</Link>
                       </NavigationMenuLink>
                     ))}
                   </NavigationMenuContent>

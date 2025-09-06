@@ -25,8 +25,8 @@ export default function Topbar() {
           <Link href="/" className="text-2xl font-bold">
             <Image
               src="/logo/sc-logo-black.svg"
-              width={0}
-              height={0}
+              width={180}
+              height={36}
               alt="sc-logo-top"
               className="h-auto w-[11.6875rem]"
             />

@@ -7,7 +7,7 @@ export default function Page() {
   const [username, setUsername] = useState<string>('Emma')
   return (
     <div>
-      <div className="text-p20 pb-3 font-semibold">Hi, {username}</div>
+      <div className="pb-3 text-p20 font-semibold">Hi, {username}</div>
       <Main />
     </div>
   )
