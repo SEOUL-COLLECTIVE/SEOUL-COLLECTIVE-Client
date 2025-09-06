@@ -14,19 +14,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { IoSearch } from 'react-icons/io5'
-
-const navItems = [
-  { name: 'SKIN', submenu: ['Skin Concerns', 'Skin Type', 'Sun Care', 'Body Care'] },
-  {
-    name: 'MAKEUP',
-    submenu: ['Face', 'Eyes', 'Lips', 'Brushes & tools', 'View all'],
-  },
-  { name: 'HAIR', submenu: ['Hair care', 'Scalp Health'] },
-  { name: 'NAIL', submenu: ['Inspiration', 'Product'] },
-  { name: 'BRANDS' },
-  { name: 'SHOPPING' },
-  { name: 'COMMUNITY', submenu: ['Product Q&A', 'My Review', 'Discussion'] },
-]
+import { navItems } from '@/data/navItem'
 
 type NavbarProps = {
   showTopbar: boolean
@@ -39,6 +27,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
   const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
   }
+
   return (
     <div className="flex items-center justify-between">
       {/* 로고 (Topbar 숨겨졌을 때만 보임) */}

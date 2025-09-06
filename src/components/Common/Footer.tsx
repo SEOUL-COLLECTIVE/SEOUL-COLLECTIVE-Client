@@ -1,5 +1,6 @@
 import { FaInstagram, FaFacebookF, FaPinterestP } from 'react-icons/fa'
 import { AiOutlineMail } from 'react-icons/ai'
+import { footerNavItems, companyLinks, legalLinks } from '@/data/navItem'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -56,58 +57,48 @@ export default function Footer() {
           </div>
 
           <div className="grid w-full justify-between text-p13 lg:grid-cols-[auto_auto_auto] lg:gap-x-20">
+            {/* Navigation Links */}
             <div className="w-fit text-p13">
               <nav className="flex flex-col space-y-3">
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  SKIN
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  MAKEUP
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  HAIR
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  NAIL
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  BRANDS
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  SHOPPING
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  COMMUNITY
-                </a>
+                {footerNavItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="transition-colors hover:text-gray-300"
+                  >
+                    {item.name}
+                  </a>
+                ))}
               </nav>
             </div>
 
-            {/* Right Columns - Company Links */}
+            {/* Company Links */}
             <div className="w-fit text-p13">
               <nav className="flex flex-col gap-y-3">
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  ABOUT US
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  CAREERS
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  COMMERCE GUIDELINE
-                </a>
+                {companyLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="transition-colors hover:text-gray-300"
+                  >
+                    {link.name}
+                  </a>
+                ))}
               </nav>
             </div>
 
+            {/* Legal Links */}
             <div className="w-fit text-p13">
               <nav className="flex flex-col gap-y-3">
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  PRIVACY POLICY
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  TERMS OF SERVICE
-                </a>
-                <a href="#" className="transition-colors hover:text-gray-300">
-                  ADVERTISE
-                </a>
+                {legalLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="transition-colors hover:text-gray-300"
+                  >
+                    {link.name}
+                  </a>
+                ))}
               </nav>
             </div>
           </div>
