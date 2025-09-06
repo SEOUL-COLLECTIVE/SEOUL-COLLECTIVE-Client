@@ -61,13 +61,13 @@ export default function Footer() {
             <div className="w-fit text-p13">
               <nav className="flex flex-col space-y-3">
                 {mainNavLinks.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
                     className="transition-colors hover:text-gray-300"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -76,13 +76,13 @@ export default function Footer() {
             <div className="w-fit text-p13">
               <nav className="flex flex-col gap-y-3">
                 {companyLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
                     href={link.href}
                     className="transition-colors hover:text-gray-300"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -91,13 +91,13 @@ export default function Footer() {
             <div className="w-fit text-p13">
               <nav className="flex flex-col gap-y-3">
                 {legalLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
                     href={link.href}
                     className="transition-colors hover:text-gray-300"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
