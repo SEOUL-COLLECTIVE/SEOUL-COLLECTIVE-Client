@@ -15,7 +15,7 @@ export type SectionStyle = {
     title: string
   }
   gap: {
-    image_categroy: string
+    image_category: string
     category_title: string
   }
   image_ratio: string
