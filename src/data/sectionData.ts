@@ -1,5 +1,8 @@
+// 각 섹션별 필요한 더미데이터들을 관리
+
 import { CardTypes } from '@/types/card'
 
+// testdrive 섹션 더미데이터
 export const testDriveData: CardTypes[] = [
   {
     id: 1,
@@ -24,6 +27,7 @@ export const testDriveData: CardTypes[] = [
   },
 ]
 
+// the latest 섹션 더미데이터
 export const latestData: CardTypes[] = [
   {
     id: 1,
@@ -68,3 +72,63 @@ export const latestData: CardTypes[] = [
     imageUrl: '/test/thumbnail_01.jpg',
   },
 ]
+
+// sc shopping 섹션 더미데이터
+export const shoppingData = {
+  products: [
+    {
+      id: 1,
+      brand: 'SUMMER FRIDAYS',
+      name: 'Lip Butter Balm',
+      price: '$24',
+      retailer: 'SEPHORA',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+    {
+      id: 2,
+      brand: 'FARMACY',
+      name: 'Lip Smoothie Peptide Lip Balm',
+      price: '$22',
+      retailer: 'AMAZON',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+    {
+      id: 3,
+      brand: 'NATURIUM',
+      name: 'Phyto-Glow Lip Balm',
+      price: '$10',
+      retailer: 'AMAZON',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+    {
+      id: 4,
+      brand: 'SUMMER FRIDAYS',
+      name: 'Lip Butter Balm',
+      price: '$24',
+      retailer: 'SEPHORA',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+    {
+      id: 5,
+      brand: 'FARMACY',
+      name: 'Lip Smoothie Peptide Lip Balm',
+      price: '$22',
+      retailer: 'AMAZON',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+    {
+      id: 6,
+      brand: 'NATURIUM',
+      name: 'Phyto-Glow Lip Balm',
+      price: '$10',
+      retailer: 'AMAZON',
+      imageUrl: '/test/thumbnail_01.jpg',
+      link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
+    },
+  ],
+}
