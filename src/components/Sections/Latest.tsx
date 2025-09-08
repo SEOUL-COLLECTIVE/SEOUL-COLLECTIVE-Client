@@ -9,7 +9,7 @@ export default function Latest() {
       <div className="text-[30pt] border-b-[1.5px] border-black w-[400px] font-semibold">
         THE LATEST
       </div>
-      <div className="grid grid-cols-3 grid-raws-2 gap-8 gap-y-14">
+      <div className="grid grid-cols-3 grid-rows-2 gap-8 gap-y-14">
         {latestData.map((item) => (
           <ContentsCard
             key={item.id}
