@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Main from '../components/Sections/Main'
 import TestDrive from '@/components/Sections/TestDrive'
 import SCShopping from '@/components/Sections/SCShopping'
+import CategoryPreview from '@/components/Sections/CategoryPreview'
 
 export default function Page() {
   const [username, setUsername] = useState<string>('Emma')
@@ -14,6 +15,7 @@ export default function Page() {
         <Main />
         <TestDrive />
         <SCShopping />
+        <CategoryPreview />
       </div>
     </div>
   )
