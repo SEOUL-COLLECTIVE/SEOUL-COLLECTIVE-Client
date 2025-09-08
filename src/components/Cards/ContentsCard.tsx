@@ -1,25 +1,13 @@
 'use client'
 
 import Image from 'next/image'
+import { SectionStyle } from '@/types/card'
 
 type ContentsCardProps = {
   imageUrl: string
   category: string
   title: string
   section: string
-}
-
-type SectionStyle = {
-  section: string
-  font: {
-    category: string
-    title: string
-  }
-  gap: {
-    image_categroy: string
-    category_title: string
-  }
-  image_ratio: string
 }
 
 const sectionType: SectionStyle[] = [
@@ -30,7 +18,7 @@ const sectionType: SectionStyle[] = [
       title: 'text-p28',
     },
     gap: {
-      image_categroy: 'pt-6',
+      image_category: 'pt-6',
       category_title: 'pt-3',
     },
     image_ratio: 'aspect-[770/582]',
@@ -42,7 +30,7 @@ const sectionType: SectionStyle[] = [
       title: 'text-p20',
     },
     gap: {
-      image_categroy: 'pt-3',
+      image_category: 'pt-3',
       category_title: 'pt-1',
     },
     image_ratio: 'aspect-[334/235]',
@@ -54,7 +42,7 @@ const sectionType: SectionStyle[] = [
       title: 'text-p16',
     },
     gap: {
-      image_categroy: 'pt-2',
+      image_category: 'pt-2',
       category_title: 'pt-1',
     },
     image_ratio: 'aspect-[371/290]',
@@ -66,7 +54,7 @@ const sectionType: SectionStyle[] = [
       title: 'text-p26',
     },
     gap: {
-      image_categroy: 'pt-3',
+      image_category: 'pt-3',
       category_title: 'pt-1',
     },
     image_ratio: 'aspect-[514/508]',
@@ -78,10 +66,10 @@ const sectionType: SectionStyle[] = [
       title: 'text-p16',
     },
     gap: {
-      image_categroy: 'pt-2',
-      category_title: 'pt-3',
+      image_category: 'pt-4',
+      category_title: 'pt-1',
     },
-    image_ratio: 'aspect-[334/235]',
+    image_ratio: 'aspect-[340/255]',
   },
 ]
 
@@ -97,7 +85,7 @@ export default function ContentsCard({ imageUrl, category, title, section }: Con
       </div>
 
       {/* 텍스트 영역 */}
-      <div className={`flex flex-col gap-1 ${style.gap.image_categroy}`}>
+      <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
         <span className={`${style.font.category} `}>{category}</span>
         <div
           className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words`}
