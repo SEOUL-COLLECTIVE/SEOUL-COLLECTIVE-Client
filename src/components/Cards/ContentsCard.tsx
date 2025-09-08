@@ -78,10 +78,10 @@ const sectionType: SectionStyle[] = [
       title: 'text-p16',
     },
     gap: {
-      image_categroy: 'pt-2',
-      category_title: 'pt-3',
+      image_categroy: 'pt-4',
+      category_title: 'pt-1',
     },
-    image_ratio: 'aspect-[334/235]',
+    image_ratio: 'aspect-[340/255]',
   },
 ]
 
