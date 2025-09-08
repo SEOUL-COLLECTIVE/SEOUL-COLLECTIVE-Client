@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Main from '../components/Sections/Main'
 import TestDrive from '@/components/Sections/TestDrive'
 import SCShopping from '@/components/Sections/SCShopping'
+import Latest from '@/components/Sections/Latest'
 import CategoryPreview from '@/components/Sections/CategoryPreview'
 
 export default function Page() {
@@ -15,6 +16,7 @@ export default function Page() {
         <Main />
         <TestDrive />
         <SCShopping />
+        <Latest />
         <CategoryPreview />
       </div>
     </div>
