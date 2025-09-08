@@ -6,3 +6,17 @@ export type CardTypes = {
   title: string
   section: string
 }
+
+// section마다 달라지는 card 관련 스타일 type
+export type SectionStyle = {
+  section: string
+  font: {
+    category: string
+    title: string
+  }
+  gap: {
+    image_categroy: string
+    category_title: string
+  }
+  image_ratio: string
+}
