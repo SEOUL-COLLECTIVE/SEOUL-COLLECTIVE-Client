@@ -2,7 +2,7 @@
 export type CardTypes = {
   id: number
   imageUrl: string
-  category: string
+  category: 'main' | 'sub' | 'testDrive' | 'shopping' | 'latest'
   title: string
   section: string
 }
