@@ -1,6 +1,6 @@
 'use client'
 
-import CustomCarousel from '../ Carousel/CustomCarousel'
+import CustomCarousel from '../Carousel/CustomCarousel'
 
 export default function CategoryPreview() {
   return (
