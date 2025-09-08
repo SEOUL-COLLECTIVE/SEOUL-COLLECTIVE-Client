@@ -1,11 +1,9 @@
 import { notFound } from 'next/navigation'
 import { navItems } from '@/data/navItem'
 
-interface CategoryPageProps {
-  category: string
-}
+export default function CategoryPage({ params }: { params: { category: string } }) {
+  const { category } = params
 
-export default function CategoryPage({ category }: CategoryPageProps) {
   // 카테고리 이름을 대문자로 변환하여 navItems에서 찾기
   const categoryName = category.toUpperCase()
   const navItem = navItems.find((item) => item.name === categoryName)
