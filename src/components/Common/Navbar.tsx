@@ -44,7 +44,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
             width={0}
             height={0}
             alt="sc-logo-top"
-            className="w-[5rem]"
+            className="w-[7rem]"
           />
         </Link>
       )}
@@ -59,7 +59,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuTrigger
                   onClick={() => onClickTrigger(item.href)}
-                  className="cursor-pointer p-0 text-p15 font-semibold underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden"
+                  className="cursor-pointer p-0 text-p13 font-medium underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden"
                 >
                   {item.name}
                 </NavigationMenuTrigger>
