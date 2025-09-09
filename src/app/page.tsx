@@ -5,6 +5,7 @@ import Main from '../components/Sections/Main'
 import TestDrive from '@/components/Sections/TestDrive'
 import SCShopping from '@/components/Sections/SCShopping'
 import Latest from '@/components/Sections/Latest'
+import CategoryPreview from '@/components/Sections/CategoryPreview'
 
 export default function Page() {
   const [username, setUsername] = useState<string>('Emma')
@@ -16,6 +17,7 @@ export default function Page() {
         <TestDrive />
         <SCShopping />
         <Latest />
+        <CategoryPreview />
       </div>
     </div>
   )

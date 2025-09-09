@@ -44,7 +44,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
             width={0}
             height={0}
             alt="sc-logo-top"
-            className="w-[3rem]"
+            className="w-[5rem]"
           />
         </Link>
       )}

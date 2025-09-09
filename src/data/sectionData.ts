@@ -8,7 +8,7 @@ export const testDriveData: CardTypes[] = [
     id: 1,
     section: 'testDrive',
     title: '8 Best Mineral Body Sunscreens\nfor Gentle All-Over Protection',
-    category: 'SUNSCREEN',
+    category: 'SKIN',
     imageUrl: '/test/thumbnail_01.jpg',
   },
   {
@@ -33,7 +33,7 @@ export const latestData: CardTypes[] = [
     id: 1,
     section: 'latest',
     title: '8 Best Mineral Body Sunscreens\nfor Gentle All-Over Protection',
-    category: 'SUNSCREEN',
+    category: 'SKIN',
     imageUrl: '/test/thumbnail_01.jpg',
   },
   {
@@ -54,7 +54,7 @@ export const latestData: CardTypes[] = [
     id: 4,
     section: 'latest',
     title: '8 Best Mineral Body Sunscreens\nfor Gentle All-Over Protection',
-    category: 'SUNSCREEN',
+    category: 'MAKEUP',
     imageUrl: '/test/thumbnail_01.jpg',
   },
   {

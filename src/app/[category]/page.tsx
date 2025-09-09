@@ -1,14 +1,8 @@
 import { notFound } from 'next/navigation'
 import { navItems } from '@/data/navItem'
 
-interface CategoryPageProps {
-  params: {
-    category: string
-  }
-}
-
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const { category } = params
+export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  const { category } = await params
 
   // 카테고리 이름을 대문자로 변환하여 navItems에서 찾기
   const categoryName = category.toUpperCase()

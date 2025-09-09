@@ -2,9 +2,9 @@
 export type CardTypes = {
   id: number
   imageUrl: string
-  category: 'main' | 'sub' | 'testDrive' | 'shopping' | 'latest'
+  category: string
   title: string
-  section: string
+  section: 'main' | 'sub' | 'testDrive' | 'shopping' | 'latest'
 }
 
 // section마다 달라지는 card 관련 스타일 type
