@@ -86,9 +86,9 @@ export default function ContentsCard({ imageUrl, category, title, section }: Con
 
       {/* 텍스트 영역 */}
       <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
-        <span className={`${style.font.category} `}>{category}</span>
+        <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
         <div
-          className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words`}
+          className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
         >
           {title}
         </div>
