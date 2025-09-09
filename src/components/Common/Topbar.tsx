@@ -32,20 +32,20 @@ export default function Topbar() {
             />
           </Link>
 
-          <div className="flex flex-col items-end gap-y-2">
+          <div className="flex flex-col items-end gap-y-4">
             <div className="flex gap-3">
               <a href="https://www.instagram.com/seoulcollective_official/" aria-label="Instagram">
-                <FaInstagram />
+                <FaInstagram size={20} />
               </a>
               <a href="#" aria-label="Facebook">
-                <FaFacebookF />
+                <FaFacebookF size={20} />
               </a>
               <a href="#" aria-label="Pinterest">
-                <FaPinterestP />
+                <FaPinterestP size={20} />
               </a>
             </div>
             <div className="flex gap-3">
-              <button className="w-[7rem] bg-purple text-p11 font-semibold text-white">
+              <button className="w-[7rem] bg-purple text-p11 font-semibold text-white py-0.5">
                 SUBSCRIBE
               </button>
               <button className="w-[7rem] bg-black text-p11 font-semibold text-white">
