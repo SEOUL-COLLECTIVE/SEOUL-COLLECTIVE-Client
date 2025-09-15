@@ -90,11 +90,16 @@ export async function getSubArticles(): Promise<Article[]> {
 export async function getArticleById(id: string): Promise<Article | null> {
   const data: {
     items: Entry<ArticleFields>[]
-    includes?: { Asset?: Asset[]; Entry?: (Category | Subcategory)[] }
-  } = await fetchContent(`entries/${id}?include=2`)
+    includes?: {
+      Asset?: Asset[]
+      Entry?: (Category | Subcategory)[]
+    }
+  } = await fetchContent(`entries?sys.id=${id}&include=2`)
 
-  if (!data.items?.length) return null
+  if (!data.items || data.items.length === 0) return null
+
   const item = data.items[0]
+  const { title, dateTime, thumbnail, contentsDetail, editor, section } = item.fields
 
   // includes → Map 변환
   const assets = new Map<string, Asset>(data.includes?.Asset?.map((a) => [a.sys.id, a]) || [])
@@ -102,27 +107,15 @@ export async function getArticleById(id: string): Promise<Article | null> {
     data.includes?.Entry?.map((e) => [e.sys.id, e]) || []
   )
 
-  const { title, dateTime, thumbnail, contentsDetail, editor, section } = item.fields
-
   // 썸네일 매핑
   const thumbnailUrl = thumbnail
     ? `https:${assets.get(thumbnail.sys.id)?.fields.file.url ?? ''}`
     : null
 
   // 카테고리 매핑
-  const category = item.fields.category
-    ? {
-        name: entries.get(item.fields.category.sys.id)?.fields.name ?? '',
-        slug: entries.get(item.fields.category.sys.id)?.fields.slug ?? '',
-      }
-    : null
-
-  // 서브카테고리 매핑
-  const subcategory = item.fields.subcategory
-    ? {
-        name: entries.get(item.fields.subcategory.sys.id)?.fields.name ?? '',
-        slug: entries.get(item.fields.subcategory.sys.id)?.fields.slug ?? '',
-      }
+  const categoryEntry = item.fields.category ? entries.get(item.fields.category.sys.id) : null
+  const subcategoryEntry = item.fields.subcategory
+    ? entries.get(item.fields.subcategory.sys.id)
     : null
 
   return {
@@ -131,8 +124,12 @@ export async function getArticleById(id: string): Promise<Article | null> {
     dateTime,
     thumbnail: thumbnailUrl,
     contentsDetail,
-    category,
-    subcategory,
+    category: categoryEntry
+      ? { name: categoryEntry.fields.name, slug: categoryEntry.fields.slug ?? '' }
+      : null,
+    subcategory: subcategoryEntry
+      ? { name: subcategoryEntry.fields.name, slug: subcategoryEntry.fields.slug ?? '' }
+      : null,
     section: section ?? null,
     editor,
   }
