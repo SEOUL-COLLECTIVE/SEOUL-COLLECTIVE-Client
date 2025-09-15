@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         'futura-bold': ['var(--font-futura-bold)', 'Arial', 'sans-serif'],
         futura: ['var(--font-futura)', 'Arial', 'sans-serif'],
+        poppins: ['var(--font-poppins)', 'Arial', 'sans-serif'],
       },
       colors: {
         bgColor: '#F5F5F7',
@@ -22,6 +23,7 @@ const config: Config = {
       fontSize: {
         p10: '0.833rem',
         p11: '0.917rem',
+        p12: '1rem',
         p13: '1.083rem',
         p15: '1.25rem',
         p16: '1.333rem',
