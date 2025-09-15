@@ -8,8 +8,8 @@ export default async function SubCategoryPage({
   const articles = await getArticles()
   const filtered = articles.filter(
     (a) =>
-      a.category?.toLowerCase() === params.category.toLowerCase() &&
-      a.subcategory?.toLowerCase().replace(/\s+/g, '-') === params.subcategory.toLowerCase()
+      a.category?.slug.toLowerCase() === params.category.toLowerCase() &&
+      a.subcategory?.slug.toLowerCase() === params.subcategory.toLowerCase()
   )
 
   return (

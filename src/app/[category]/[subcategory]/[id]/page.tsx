@@ -3,9 +3,14 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
+export default async function ArticlePage({
+  params,
+}: {
+  params: { category: string; subcategory: string; id: string }
+}) {
   const article = await getArticleById(params.id)
-  console.log(article)
+  console.log('article', article)
+  console.log('id', params.id)
   if (!article) return <p>Not found</p>
 
   return (

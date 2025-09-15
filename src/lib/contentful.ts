@@ -45,13 +45,19 @@ export async function getArticles(): Promise<Article[]> {
       : null
 
     // 카테고리 매핑
-    const categoryName = item.fields.category
-      ? (entries.get(item.fields.category.sys.id)?.fields.name ?? null)
+    const category = item.fields.category
+      ? {
+          name: entries.get(item.fields.category.sys.id)?.fields.name ?? '',
+          slug: entries.get(item.fields.category.sys.id)?.fields.slug ?? '',
+        }
       : null
 
     // 서브카테고리 매핑
-    const subcategoryName = item.fields.subcategory
-      ? (entries.get(item.fields.subcategory.sys.id)?.fields.name ?? null)
+    const subcategory = item.fields.subcategory
+      ? {
+          name: entries.get(item.fields.subcategory.sys.id)?.fields.name ?? '',
+          slug: entries.get(item.fields.subcategory.sys.id)?.fields.slug ?? '',
+        }
       : null
 
     return {
@@ -60,8 +66,8 @@ export async function getArticles(): Promise<Article[]> {
       dateTime,
       thumbnail: thumbnailUrl,
       contentsDetail,
-      category: categoryName,
-      subcategory: subcategoryName,
+      category,
+      subcategory,
       section: section ?? null,
       editor,
     }
@@ -84,39 +90,39 @@ export async function getSubArticles(): Promise<Article[]> {
 export async function getArticleById(id: string): Promise<Article | null> {
   const data: {
     items: Entry<ArticleFields>[]
-    includes?: {
-      Asset?: Asset[]
-      Entry?: (Category | Subcategory)[]
-    }
+    includes?: { Asset?: Asset[]; Entry?: (Category | Subcategory)[] }
   } = await fetchContent(`entries/${id}?include=2`)
 
-  if (!data) return null
-
-  const item = data as unknown as Entry<ArticleFields>
+  if (!data.items?.length) return null
+  const item = data.items[0]
 
   // includes → Map 변환
   const assets = new Map<string, Asset>(data.includes?.Asset?.map((a) => [a.sys.id, a]) || [])
-
   const entries = new Map<string, Category | Subcategory>(
     data.includes?.Entry?.map((e) => [e.sys.id, e]) || []
   )
 
   const { title, dateTime, thumbnail, contentsDetail, editor, section } = item.fields
 
-  // 🔹 썸네일 매핑
   // 썸네일 매핑
   const thumbnailUrl = thumbnail
     ? `https:${assets.get(thumbnail.sys.id)?.fields.file.url ?? ''}`
     : null
 
-  // 🔹 카테고리 매핑
-  const categoryName = item.fields.category
-    ? (entries.get(item.fields.category.sys.id)?.fields.name ?? null)
+  // 카테고리 매핑
+  const category = item.fields.category
+    ? {
+        name: entries.get(item.fields.category.sys.id)?.fields.name ?? '',
+        slug: entries.get(item.fields.category.sys.id)?.fields.slug ?? '',
+      }
     : null
 
-  // 🔹 서브카테고리 매핑
-  const subcategoryName = item.fields.subcategory
-    ? (entries.get(item.fields.subcategory.sys.id)?.fields.name ?? null)
+  // 서브카테고리 매핑
+  const subcategory = item.fields.subcategory
+    ? {
+        name: entries.get(item.fields.subcategory.sys.id)?.fields.name ?? '',
+        slug: entries.get(item.fields.subcategory.sys.id)?.fields.slug ?? '',
+      }
     : null
 
   return {
@@ -125,8 +131,8 @@ export async function getArticleById(id: string): Promise<Article | null> {
     dateTime,
     thumbnail: thumbnailUrl,
     contentsDetail,
-    category: categoryName,
-    subcategory: subcategoryName,
+    category,
+    subcategory,
     section: section ?? null,
     editor,
   }

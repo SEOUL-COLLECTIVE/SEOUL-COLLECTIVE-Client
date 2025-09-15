@@ -56,14 +56,15 @@ export type ArticleFields = {
 }
 
 // Article 최종 리턴 타입 (프론트에서 사용하는 형태)
+// Article 최종 리턴 타입 (프론트에서 사용하는 형태)
 export type Article = {
   id: string
   title: string
   dateTime?: string
   thumbnail: string | null
   contentsDetail: Document
-  category: string | null
-  subcategory: string | null
+  category: { name: string; slug: string } | null
+  subcategory: { name: string; slug: string } | null
   section: string | null
   editor?: string
 }

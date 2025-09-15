@@ -52,7 +52,11 @@ export default function Main() {
           <ContentsCard
             section={mainArticle.section ?? 'main'}
             title={mainArticle.title}
-            category={mainArticle.category ?? 'category'}
+            category={mainArticle.category?.name ?? 'category'}
+            categorySlug={mainArticle.category?.slug ?? 'etc'}
+            subcategory={mainArticle.subcategory?.name ?? 'subcategory'}
+            subcategorySlug={mainArticle.subcategory?.slug ?? 'general'}
+            id={mainArticle.id}
             imageUrl={mainArticle.thumbnail ?? '/test/thumbnail_01.jpg'}
           />
         )}
@@ -64,7 +68,11 @@ export default function Main() {
           <ContentsCard
             section={item.section ?? 'sub'}
             title={item.title}
-            category={item.category ?? 'category'}
+            category={item.category?.name ?? 'category'}
+            categorySlug={item.category?.slug ?? 'etc'}
+            subcategory={item.subcategory?.name ?? 'subcategory'}
+            subcategorySlug={item.subcategory?.slug ?? 'general'}
+            id={item.id}
             imageUrl={item.thumbnail ?? '/test/thumbnail_01.jpg'}
           />
         </div>

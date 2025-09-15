@@ -3,7 +3,7 @@ import { getArticles } from '@/lib/contentful'
 export default async function CategoryPage({ params }: { params: { category: string } }) {
   const articles = await getArticles()
   const filtered = articles.filter(
-    (a) => a.category?.toLowerCase() === params.category.toLowerCase()
+    (a) => a.category?.slug.toLowerCase() === params.category.toLowerCase()
   )
 
   return (

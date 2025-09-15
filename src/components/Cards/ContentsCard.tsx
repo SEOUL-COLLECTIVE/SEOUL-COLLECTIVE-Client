@@ -2,12 +2,17 @@
 
 import Image from 'next/image'
 import { SectionStyle } from '@/types/card'
+import Link from 'next/link'
 
 type ContentsCardProps = {
-  imageUrl: string
-  category: string
-  title: string
   section: string
+  title: string
+  category: string
+  categorySlug: string
+  subcategory: string
+  subcategorySlug: string
+  imageUrl: string
+  id: string
 }
 
 const sectionType: SectionStyle[] = [
@@ -73,26 +78,38 @@ const sectionType: SectionStyle[] = [
   },
 ]
 
-export default function ContentsCard({ imageUrl, category, title, section }: ContentsCardProps) {
+export default function ContentsCard({
+  section,
+  title,
+  category,
+  categorySlug,
+  subcategory,
+  subcategorySlug,
+  imageUrl,
+  id,
+}: ContentsCardProps) {
+  const href = `/${categorySlug}/${subcategorySlug}/${id}`
   const style = sectionType.find((s) => s.section === section)
   if (!style) return null
 
   return (
-    <div className="flex h-full w-full cursor-pointer flex-col font-semibold">
-      {/* 이미지 영역 */}
-      <div className={`relative w-full ${style.image_ratio}`}>
-        <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
-      </div>
+    <Link href={href}>
+      <div className="flex h-full w-full cursor-pointer flex-col font-semibold">
+        {/* 이미지 영역 */}
+        <div className={`relative w-full ${style.image_ratio}`}>
+          <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
+        </div>
 
-      {/* 텍스트 영역 */}
-      <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
-        <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
-        <div
-          className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
-        >
-          {title.replace(/\\n/g, '\n')}
+        {/* 텍스트 영역 */}
+        <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
+          <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
+          <div
+            className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
+          >
+            {title.replace(/\\n/g, '\n')}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
