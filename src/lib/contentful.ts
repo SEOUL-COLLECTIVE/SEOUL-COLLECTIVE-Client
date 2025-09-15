@@ -79,3 +79,55 @@ export async function getSubArticles(): Promise<Article[]> {
   const articles = await getArticles()
   return articles.filter((a) => a.section === 'sub')
 }
+
+// id로 단일 아티클 정보 가져오기
+export async function getArticleById(id: string): Promise<Article | null> {
+  const data: {
+    items: Entry<ArticleFields>[]
+    includes?: {
+      Asset?: Asset[]
+      Entry?: (Category | Subcategory)[]
+    }
+  } = await fetchContent(`entries/${id}?include=2`)
+
+  if (!data) return null
+
+  const item = data as unknown as Entry<ArticleFields>
+
+  // includes → Map 변환
+  const assets = new Map<string, Asset>(data.includes?.Asset?.map((a) => [a.sys.id, a]) || [])
+
+  const entries = new Map<string, Category | Subcategory>(
+    data.includes?.Entry?.map((e) => [e.sys.id, e]) || []
+  )
+
+  const { title, dateTime, thumbnail, contentsDetail, editor, section } = item.fields
+
+  // 🔹 썸네일 매핑
+  // 썸네일 매핑
+  const thumbnailUrl = thumbnail
+    ? `https:${assets.get(thumbnail.sys.id)?.fields.file.url ?? ''}`
+    : null
+
+  // 🔹 카테고리 매핑
+  const categoryName = item.fields.category
+    ? (entries.get(item.fields.category.sys.id)?.fields.name ?? null)
+    : null
+
+  // 🔹 서브카테고리 매핑
+  const subcategoryName = item.fields.subcategory
+    ? (entries.get(item.fields.subcategory.sys.id)?.fields.name ?? null)
+    : null
+
+  return {
+    id: item.sys.id,
+    title,
+    dateTime,
+    thumbnail: thumbnailUrl,
+    contentsDetail,
+    category: categoryName,
+    subcategory: subcategoryName,
+    section: section ?? null,
+    editor,
+  }
+}
