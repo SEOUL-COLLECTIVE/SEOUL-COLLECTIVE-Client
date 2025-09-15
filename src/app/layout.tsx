@@ -21,17 +21,23 @@ const futura = localFont({
   display: 'swap',
 })
 
+const poppins = localFont({
+  src: '../../public/fonts/Poppins-Medium.ttf',
+  variable: '--font-poppins',
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${futuraBold.variable} ${futura.variable}`}>
+    <html lang="en" className={`${futuraBold.variable} ${futura.variable} ${poppins.variable}`}>
       {/* 두 폰트 variable 모두 추가 */}
       <body className="block">
         <Topbar />
-        <div className="px-[5.375rem] pt-[12rem]">{children}</div>
+        <div className="px-[5.375rem] pt-[11rem]">{children}</div>
         <Footer />
       </body>
     </html>

@@ -20,7 +20,7 @@ export default function Topbar() {
   return (
     <div className="fixed left-0 right-0 top-0 z-50 bg-bgColor px-[5.375rem]">
       {showTopbar && (
-        <div className="flex items-center justify-between py-[1.5625rem]">
+        <div className="flex items-center justify-between pt-[1.5625rem] pb-[1rem]">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold">
             <Image
