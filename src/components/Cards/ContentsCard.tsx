@@ -18,8 +18,8 @@ const sectionType: SectionStyle[] = [
       title: 'text-p28',
     },
     gap: {
-      image_category: 'pt-6',
-      category_title: 'pt-3',
+      image_category: 'pt-3',
+      category_title: 'pt-1',
     },
     image_ratio: 'aspect-[770/582]',
   },
@@ -88,7 +88,7 @@ export default function ContentsCard({ imageUrl, category, title, section }: Con
       <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
         <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
         <div
-          className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
+          className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
         >
           {title}
         </div>
