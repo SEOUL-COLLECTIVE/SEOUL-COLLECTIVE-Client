@@ -1,5 +1,8 @@
 import { notFound } from 'next/navigation'
 import { navItems } from '@/data/navItem'
+import Image from 'next/image'
+import ContentsCard from '@/components/Cards/ContentsCard'
+import { latestData } from '@/data/sectionData'
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params
@@ -13,30 +16,57 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold">{navItem.name}</h1>
+    <div className="container mb-24">
+      <div className="relative h-80 -mx-[5.375rem]">
+        <Image
+          src="/test/thumbnail_01.jpg"
+          alt={navItem.name}
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
+            <span className="uppercase">{navItem.name}</span>
+          </div>
+
+          <div className="mb-2">
+            <div className="text-white inline-block tracking-wide text-p32">
+              <div className="font-bold uppercase">{navItem.name}</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {navItem.submenu && (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex gap-8 text-p12 py-5">
           {navItem.submenu.map((subItem) => (
             <div
               key={subItem.name}
-              className="rounded-lg border p-4 transition-shadow hover:shadow-md"
+              className="font-semibold cursor-pointer hover:underline hover:decoration-purple hover:decoration-[0.125rem] underline-offset-[0.4375rem]"
             >
-              <h2 className="mb-2 text-xl font-semibold">{subItem.name}</h2>
-              <p className="text-gray-600">{subItem.name}에 대한 상세 정보를 여기에 표시합니다.</p>
+              {subItem.name}
             </div>
           ))}
         </div>
       )}
 
-      {!navItem.submenu && (
-        <div className="py-12 text-center">
-          <p className="text-lg text-gray-600">
-            {navItem.name} 카테고리의 콘텐츠가 곧 추가될 예정입니다.
-          </p>
+      <div className="flex flex-col w-full mt-10">
+        <div className="text-p32 font-bold flex justify-center">THE LATEST</div>
+        <div className="grid grid-cols-3 grid-rows-2 gap-8 gap-y-14 mt-6">
+          {latestData.map((item) => (
+            <ContentsCard
+              key={item.id}
+              section={item.section}
+              title={item.title}
+              category={item.category}
+              imageUrl={item.imageUrl}
+            />
+          ))}
         </div>
-      )}
+      </div>
     </div>
   )
 }
