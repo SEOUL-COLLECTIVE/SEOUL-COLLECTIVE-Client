@@ -41,7 +41,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       </div>
 
       {navItem.submenu && (
-        <div className="flex gap-8 text-p12 py-5">
+        <div className="flex gap-8 text-p14 py-5 pt-10">
           {navItem.submenu.map((subItem) => (
             <div
               key={subItem.name}
