@@ -40,8 +40,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         </div>
       </div>
 
+      {/* 서브카테고리 네비게이션 */}
       {navItem.submenu && (
-        <div className="flex gap-8 text-p12 py-5">
+        <div className="flex gap-8 text-p14 py-5 pt-10">
           {navItem.submenu.map((subItem) => (
             <div
               key={subItem.name}
@@ -53,8 +54,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         </div>
       )}
 
+      {/* 카테고리 콘텐츠 나열 3x2 */}
       <div className="flex flex-col w-full mt-10">
-        <div className="text-p32 font-bold flex justify-center">THE LATEST</div>
+        <div className="text-p32 font-semibold flex justify-center">THE LATEST</div>
         <div className="grid grid-cols-3 grid-rows-2 gap-8 gap-y-14 mt-6">
           {latestData.map((item) => (
             <ContentsCard
