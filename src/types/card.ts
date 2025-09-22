@@ -1,6 +1,6 @@
 // section 공용 card type
 export type CardTypes = {
-  id: number
+  id: string
   imageUrl: string
   category: string
   title: string
