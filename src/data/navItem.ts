@@ -23,7 +23,6 @@ export const navItems: NavItem[] = [
       { name: 'Eyes', href: '/makeup/eyes' },
       { name: 'Lips', href: '/makeup/lips' },
       { name: 'Brushes & tools', href: '/makeup/brushes-tools' },
-      { name: 'View all', href: '/makeup/all' },
     ],
   },
   {
