@@ -56,9 +56,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="grid w-full justify-between text-p13 lg:grid-cols-[auto_auto_auto] lg:gap-x-20">
+          <div className="grid w-full justify-between lg:grid-cols-[auto_auto_auto] lg:gap-x-20 font-poppins text-p12">
             {/* Navigation Links */}
-            <div className="w-fit text-p13">
+            <div className="w-fit">
               <nav className="flex flex-col space-y-3">
                 {mainNavLinks.map((item) => (
                   <Link
@@ -73,7 +73,7 @@ export default function Footer() {
             </div>
 
             {/* Company Links */}
-            <div className="w-fit text-p13">
+            <div className="w-fit">
               <nav className="flex flex-col gap-y-3">
                 {companyLinks.map((link) => (
                   <Link
@@ -88,7 +88,7 @@ export default function Footer() {
             </div>
 
             {/* Legal Links */}
-            <div className="w-fit text-p13">
+            <div className="w-fit">
               <nav className="flex flex-col gap-y-3">
                 {legalLinks.map((link) => (
                   <Link
