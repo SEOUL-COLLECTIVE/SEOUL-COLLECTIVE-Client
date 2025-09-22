@@ -70,7 +70,7 @@ export default function CustomCarousel({ category }: CarouselProps) {
       >
         {/* Header */}
         <div className="relative flex items-center justify-center border-b-[1.5px] border-black mb-6">
-          <h2 className="text-p28 font-bold">{category || 'CATEGORY'}</h2>
+          <h2 className="text-p28 font-semibold">{category || 'CATEGORY'}</h2>
           <div className="absolute right-0 flex">
             <CarouselPrevious className="border-none shadow-none static transform-none relative left-auto top-auto right-auto bottom-auto translate-x-0 translate-y-0" />
             <CarouselNext className="border-none shadow-none static transform-none relative left-auto top-auto right-auto bottom-auto translate-x-0 translate-y-0" />
