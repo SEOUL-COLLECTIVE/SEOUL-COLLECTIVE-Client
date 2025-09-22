@@ -9,8 +9,8 @@ type ContentsCardProps = {
   title: string
   category: string
   categorySlug: string
-  subcategory: string
-  subcategorySlug: string
+  subcategory?: string
+  subcategorySlug?: string
   imageUrl: string
   id: string
 }
@@ -104,7 +104,7 @@ export default function ContentsCard({
         <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
           <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
           <div
-            className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
+            className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words ${style.section === 'main' ? 'leading-tight' : 'leading-snug'}`}
           >
             {title.replace(/\\n/g, '\n')}
           </div>

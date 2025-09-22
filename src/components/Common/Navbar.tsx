@@ -59,7 +59,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuTrigger
                   onClick={() => onClickTrigger(item.href)}
-                  className="cursor-pointer p-0 text-p13 font-medium underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden"
+                  className="font-poppins tracking-wide cursor-pointer p-0 text-p12 underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.1rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.1rem] [&>svg]:hidden"
                 >
                   {item.name}
                 </NavigationMenuTrigger>
@@ -69,7 +69,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
                       <NavigationMenuLink
                         asChild
                         key={sub.name}
-                        className="block rounded-md px-4 py-2 hover:text-purple"
+                        className="text-p12 block rounded-md px-4 py-2 hover:text-purple"
                       >
                         <Link href={sub.href}>{sub.name}</Link>
                       </NavigationMenuLink>
