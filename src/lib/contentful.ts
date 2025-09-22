@@ -70,6 +70,9 @@ export async function getArticles(): Promise<Article[]> {
       subcategory,
       section: section ?? null,
       editor,
+      // includes 데이터도 함께 전달
+      assets,
+      entries,
     }
   })
 }
@@ -132,5 +135,8 @@ export async function getArticleById(id: string): Promise<Article | null> {
       : null,
     section: section ?? null,
     editor,
+    // includes 데이터도 함께 전달
+    assets,
+    entries,
   }
 }
