@@ -70,6 +70,8 @@ export default async function CategoryPage({ params }: { params: { category: str
               title={item.title}
               category={item.category}
               imageUrl={item.imageUrl}
+              id={item.id}
+              categorySlug={`/${item.category}`}
             />
           ))}
         </div>
