@@ -107,7 +107,7 @@ export default function ArticlePage({
               )
             },
 
-            // ✅ VideoEmbed (Entry) - URL 변환 로직 개선
+            // ✅ VideoEmbed (Entry) - YouTube, Instagram 지원
             [BLOCKS.EMBEDDED_ENTRY]: (node) => {
               console.log('EMBEDDED_ENTRY node:', node)
 
@@ -137,23 +137,20 @@ export default function ArticlePage({
                 console.log('VideoEmbed found - platform:', platform, 'url:', url)
 
                 if (platform === 'youtube' && url) {
-                  // YouTube URL을 embed URL로 변환 (다양한 형식 지원)
+                  // YouTube URL을 embed URL로 변환
                   let embedUrl = url
 
                   if (url.includes('youtu.be/')) {
-                    // https://youtu.be/mCgrsOuIjo?si=IRSGvA88_oLJdUKd 형식
                     const videoId = url.split('youtu.be/')[1].split('?')[0]
                     embedUrl = `https://www.youtube.com/embed/${videoId}`
                   } else if (url.includes('watch?v=')) {
-                    // https://www.youtube.com/watch?v=mCgrsOuIjo 형식
                     embedUrl = url.replace('watch?v=', 'embed/')
                   } else if (url.includes('youtube.com/v/')) {
-                    // https://www.youtube.com/v/mCgrsOuIjo 형식
                     embedUrl = url.replace('/v/', '/embed/')
                   }
 
-                  console.log('Original URL:', url)
-                  console.log('Converted embed URL:', embedUrl)
+                  console.log('YouTube - Original URL:', url)
+                  console.log('YouTube - Converted embed URL:', embedUrl)
 
                   return (
                     <div className="my-6 aspect-video">
@@ -163,6 +160,37 @@ export default function ArticlePage({
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         className="w-full h-full rounded-lg"
+                      />
+                    </div>
+                  )
+                } else if (platform === 'instagram' && url) {
+                  // Instagram URL을 embed URL로 변환
+                  let embedUrl = url
+
+                  // Instagram embed URL 형식: https://www.instagram.com/reel/ID/embed/
+                  if (url.includes('/reel/')) {
+                    // https://www.instagram.com/reel/DOyxprEkrPF/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==
+                    // -> https://www.instagram.com/reel/DOyxprEkrPF/embed/
+                    embedUrl = url.split('?')[0] + (url.endsWith('/') ? 'embed/' : '/embed/')
+                  } else if (url.includes('/p/')) {
+                    // 일반 포스트도 지원
+                    embedUrl = url.split('?')[0] + (url.endsWith('/') ? 'embed/' : '/embed/')
+                  }
+
+                  console.log('Instagram - Original URL:', url)
+                  console.log('Instagram - Converted embed URL:', embedUrl)
+
+                  return (
+                    <div className="my-6">
+                      <iframe
+                        src={embedUrl}
+                        title="Instagram post"
+                        width="400"
+                        height="480"
+                        frameBorder="0"
+                        scrolling="no"
+                        allowTransparency={true}
+                        className="max-w-full mx-auto rounded-lg"
                       />
                     </div>
                   )
