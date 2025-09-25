@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import ContentsCard from '../Cards/ContentsCard'
-import { getMainArticles, getSubArticles } from '@/lib/contentful'
+import { getMainArticles, getSubArticles } from '@/utils/contentful'
 import { Article } from '@/types/contentful'
 
 export default function Main() {

@@ -1,4 +1,4 @@
-import { getArticles } from '@/lib/contentful'
+import { getArticles } from '@/utils/contentful'
 
 export default async function SubCategoryPage({
   params,

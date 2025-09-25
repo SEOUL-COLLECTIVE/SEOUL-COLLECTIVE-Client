@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { navItems } from '@/data/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
-import { getCategoryBySlug, getArticlesByCategory } from '@/lib/contentful'
+import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
 import { useState, useEffect } from 'react'
 import { Article } from '@/types/contentful'
 

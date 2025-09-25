@@ -1,7 +1,7 @@
 'use client'
 
 import SaveBtn from '@/components/Buttons/SaveBtn'
-import { getArticleById } from '@/lib/contentful'
+import { getArticleById } from '@/utils/contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
