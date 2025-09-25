@@ -107,7 +107,7 @@ export default function ArticlePage({
               )
             },
 
-            // ✅ VideoEmbed (Entry) - YouTube, Instagram 지원
+            // ✅ VideoEmbed (Entry) - YouTube, Instagram, TikTok 지원
             [BLOCKS.EMBEDDED_ENTRY]: (node) => {
               console.log('EMBEDDED_ENTRY node:', node)
 
@@ -192,6 +192,35 @@ export default function ArticlePage({
                         allowTransparency={true}
                         className="max-w-full mx-auto rounded-lg"
                       />
+                    </div>
+                  )
+                } else if (platform === 'tiktok' && url) {
+                  // TikTok URL을 embed URL로 변환
+                  let embedUrl = url
+
+                  // TikTok embed URL 형식: https://www.tiktok.com/embed/videoId
+                  if (url.includes('/video/')) {
+                    const videoId = url.split('/video/')[1].split('?')[0]
+                    embedUrl = `https://www.tiktok.com/embed/${videoId}`
+                  }
+
+                  console.log('TikTok - Original URL:', url)
+                  console.log('TikTok - Converted embed URL:', embedUrl)
+
+                  return (
+                    <div className="my-6 flex justify-center">
+                      <div className="w-full max-w-sm">
+                        <iframe
+                          src={embedUrl}
+                          title="TikTok video"
+                          width="325"
+                          height="580"
+                          frameBorder="0"
+                          scrolling="no"
+                          allow="encrypted-media"
+                          className="rounded-lg mx-auto"
+                        />
+                      </div>
                     </div>
                   )
                 }
