@@ -7,6 +7,7 @@ import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Article } from '@/types/contentful'
+import { formatDate } from '@/utils/dateFormat'
 
 export default function ArticlePage({
   params,
@@ -31,6 +32,8 @@ export default function ArticlePage({
     fetchArticle()
   }, [params.id])
 
+  const formattedDate = formatDate(article?.dateTime || 'month, date year')
+
   if (loading) return <div>Loading...</div>
   if (!article) return <p>Not found</p>
 
@@ -46,7 +49,7 @@ export default function ArticlePage({
 
       <div className="flex gap-8 font-bold text-[0.7rem] uppercase mb-6">
         <div>BY {article.editor}</div>
-        <div>PUBLISHED ON {article.dateTime}</div>
+        <div>PUBLISHED ON {formattedDate}</div>
       </div>
 
       <div className="mb-8">
