@@ -43,6 +43,15 @@ export type Subcategory = {
   }
 }
 
+// VideoEmbed 타입 추가
+export type VideoEmbed = {
+  sys: Sys
+  fields: {
+    platform: string
+    url: string
+  }
+}
+
 // Article 원본 필드
 export type ArticleFields = {
   title: string
@@ -68,5 +77,5 @@ export type Article = {
   editor?: string
   // includes 데이터 추가
   assets: Map<string, Asset>
-  entries: Map<string, Category | Subcategory>
+  entries: Map<string, Category | Subcategory | VideoEmbed>
 }
