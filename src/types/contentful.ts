@@ -31,6 +31,7 @@ export type Category = {
   fields: {
     name: string
     slug?: string
+    thumbnail?: Asset
   }
 }
 
@@ -52,6 +53,9 @@ export type VideoEmbed = {
   }
 }
 
+// Entry 유니온 타입 (includes에서 사용될 수 있는 모든 타입)
+export type IncludeEntry = Category | Subcategory | VideoEmbed
+
 // Article 원본 필드
 export type ArticleFields = {
   title: string
@@ -71,7 +75,7 @@ export type Article = {
   dateTime?: string
   thumbnail: string | null
   contentsDetail: Document
-  category: { name: string; slug: string } | null
+  category: { name: string; slug: string; thumbnail: string | null } | null
   subcategory: { name: string; slug: string } | null
   section: string | null
   editor?: string
