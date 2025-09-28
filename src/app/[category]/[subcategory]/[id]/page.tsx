@@ -9,18 +9,34 @@ import { useState, useEffect } from 'react'
 import { Article } from '@/types/contentful'
 import { formatDate } from '@/utils/dateFormat'
 
-export default function ArticlePage({
-  params,
-}: {
-  params: { category: string; subcategory: string; id: string }
-}) {
+interface PageProps {
+  params: Promise<{ category: string; subcategory: string; id: string }>
+}
+
+export default function ArticlePage({ params }: PageProps) {
   const [article, setArticle] = useState<Article | null>(null)
   const [loading, setLoading] = useState(true)
+  const [resolvedParams, setResolvedParams] = useState<{
+    category: string
+    subcategory: string
+    id: string
+  } | null>(null)
+
+  // params를 resolve하는 useEffect 추가
+  useEffect(() => {
+    async function resolveParams() {
+      const resolved = await params
+      setResolvedParams(resolved)
+    }
+    resolveParams()
+  }, [params])
 
   useEffect(() => {
     async function fetchArticle() {
+      if (!resolvedParams) return // params가 resolve되지 않았으면 대기
+
       try {
-        const fetchedArticle = await getArticleById(params.id)
+        const fetchedArticle = await getArticleById(resolvedParams.id)
         setArticle(fetchedArticle)
       } catch (error) {
         console.error('Error fetching article:', error)
@@ -30,7 +46,7 @@ export default function ArticlePage({
     }
 
     fetchArticle()
-  }, [params.id])
+  }, [resolvedParams])
 
   const formattedDate = formatDate(article?.dateTime || 'month, date year')
 

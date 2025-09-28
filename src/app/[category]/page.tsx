@@ -13,20 +13,35 @@ interface CategoryData {
   slug: string
   thumbnail: string | null
 }
+interface PageProps {
+  params: Promise<{ category: string }>
+}
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
+export default function CategoryPage({ params }: PageProps) {
   const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
   const [categoryArticles, setCategoryArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [resolvedParams, setResolvedParams] = useState<{ category: string } | null>(null)
+
+  // params를 resolve하는 useEffect 추가
+  useEffect(() => {
+    async function resolveParams() {
+      const resolved = await params
+      setResolvedParams(resolved)
+    }
+    resolveParams()
+  }, [params])
 
   useEffect(() => {
     async function fetchCategoryData() {
+      if (!resolvedParams) return // params가 resolve되지 않았으면 대기
+
       try {
         setLoading(true)
         const [category, articles] = await Promise.all([
-          getCategoryBySlug(params.category),
-          getArticlesByCategory(params.category),
+          getCategoryBySlug(resolvedParams.category),
+          getArticlesByCategory(resolvedParams.category),
         ])
 
         setCategoryData(category)
@@ -40,10 +55,21 @@ export default function CategoryPage({ params }: { params: { category: string } 
     }
 
     fetchCategoryData()
-  }, [params.category]) // params.category가 변경될 때만 재실행
+  }, [resolvedParams]) // params.category가 변경될 때만 재실행
+
+  // resolvedParams가 없으면 로딩 처리
+  if (!resolvedParams) {
+    return (
+      <div className="container mb-24">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-lg">Loading...</div>
+        </div>
+      </div>
+    )
+  }
 
   // 카테고리 이름을 대문자로 변환하여 navItems에서 찾기
-  const categoryName = params.category.toUpperCase()
+  const categoryName = resolvedParams.category.toUpperCase()
   const navItem = navItems.find((item) => item.name === categoryName)
 
   if (!navItem) {
@@ -121,7 +147,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
                 category={article.category?.name || 'category'}
                 imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
                 id={article.id}
-                categorySlug={article.category?.slug || params.category}
+                categorySlug={article.category?.slug || resolvedParams.category}
               />
             ))}
           </div>
