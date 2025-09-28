@@ -1,6 +1,7 @@
 import { Document } from '@contentful/rich-text-types'
 
 // 기본 sys 정보
+// 모든 Contentful 엔트리와 에셋이 공통으로 가지는 시스템 메타데이터
 export type Sys = {
   id: string
   contentType?: {
@@ -11,6 +12,7 @@ export type Sys = {
 }
 
 // 제네릭 Entry 타입
+// "시스템 정보 + 실제 콘텐츠"를 담는 Contentful의 표준 데이터
 export type Entry<T> = {
   sys: Sys
   fields: T
@@ -54,6 +56,7 @@ export type VideoEmbed = {
 }
 
 // Entry 유니온 타입 (includes에서 사용될 수 있는 모든 타입)
+// Reference나 새로운 asset 관련 타입을 정의하면 IncludeEntry에 추가해야합니다.
 export type IncludeEntry = Category | Subcategory | VideoEmbed
 
 // Article 원본 필드
