@@ -48,7 +48,7 @@ export default function ArticlePage({ params }: PageProps) {
     fetchArticle()
   }, [resolvedParams])
 
-  const formattedDate = formatDate(article?.dateTime || 'month, date year')
+  const formattedDate = article?.dateTime ? formatDate(article.dateTime) : null
 
   if (loading) return <div>Loading...</div>
   if (!article) return <p>Not found</p>
@@ -65,7 +65,7 @@ export default function ArticlePage({ params }: PageProps) {
 
       <div className="flex gap-8 font-bold text-[0.7rem] uppercase mb-6">
         <div>BY {article.editor}</div>
-        <div>PUBLISHED ON {formattedDate}</div>
+        {formattedDate ? <div>PUBLISHED ON {formattedDate}</div> : null}
       </div>
 
       <div className="mb-8">
