@@ -7,8 +7,8 @@ import Link from 'next/link'
 type ContentsCardProps = {
   section: string
   title: string
-  category: string
-  categorySlug: string
+  category?: string
+  categorySlug?: string
   subcategory?: string
   subcategorySlug?: string
   imageUrl: string
