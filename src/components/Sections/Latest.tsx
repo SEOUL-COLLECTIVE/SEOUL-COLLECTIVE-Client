@@ -13,6 +13,7 @@ export default function Latest() {
         {latestData.map((item) => (
           <ContentsCard
             key={item.id}
+            id={item.id}
             section={item.section}
             title={item.title}
             category={item.category}
