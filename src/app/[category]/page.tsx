@@ -7,6 +7,7 @@ import ContentsCard from '@/components/Cards/ContentsCard'
 import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
 import { useState, useEffect } from 'react'
 import { Article } from '@/types/contentful'
+import Shopping from '@/components/Sections/Shopping'
 
 interface CategoryData {
   name: string
@@ -92,6 +93,37 @@ export default function CategoryPage({ params }: PageProps) {
         <div className="flex justify-center items-center h-96">
           <div className="text-lg text-red-500">{error}</div>
         </div>
+      </div>
+    )
+  }
+
+  if (resolvedParams.category == 'shopping') {
+    return (
+      <div className="container mb-24">
+        <div className="relative h-80 -mx-[5.375rem]">
+          <Image
+            src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}
+            alt={categoryData?.name || navItem.name}
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
+              <span className="uppercase">{categoryData?.name || navItem.name}</span>
+            </div>
+
+            <div className="mb-2">
+              <div className="text-white inline-block tracking-wide text-p32">
+                <div className="font-bold uppercase">{categoryData?.name || navItem.name}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Shopping />
       </div>
     )
   }
