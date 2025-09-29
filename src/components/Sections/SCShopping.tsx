@@ -13,6 +13,7 @@ export default function SCShopping() {
       <div className="grid grid-cols-[1fr_1fr] gap-8">
         <div>
           <ContentsCard
+            id="1"
             section="shopping"
             imageUrl="/test/thumbnail_01.jpg"
             title={'Hailey Bieber’s Staple Fall\nJeans Are On Sale For Under $75'}
