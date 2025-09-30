@@ -99,14 +99,15 @@ export default function ContentsCard({
         <div className={`relative w-full ${style.image_ratio}`}>
           <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
         </div>
-        
-      {/* 텍스트 영역 */}
-      <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
-        <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
-        <div
-          className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words leading-tight`}
-        >
-          {title}
+
+        {/* 텍스트 영역 */}
+        <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
+          <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
+          <div
+            className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words leading-tight`}
+          >
+            {title}
+          </div>
         </div>
       </div>
     </Link>
