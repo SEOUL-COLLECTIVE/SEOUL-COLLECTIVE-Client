@@ -53,7 +53,10 @@ export default function Shopping() {
         <div className="flex flex-col h-full">
           {sideArticles.map((article, index) => (
             <div key={article.id}>
-              <Link href={`/article/${article.id}`} className="group flex gap-4 mb-8 flex-1">
+              <Link
+                href={`/shopping/articles/${article.id}`}
+                className="group flex gap-4 mb-8 flex-1"
+              >
                 {/* 썸네일 */}
                 <div className="relative flex-shrink-0 aspect-[1/1] w-40">
                   <Image
