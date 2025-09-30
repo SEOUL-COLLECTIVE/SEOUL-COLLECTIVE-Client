@@ -1,5 +1,3 @@
-'use client'
-
 import SaveBtn from '@/components/Buttons/SaveBtn'
 import { getArticleById } from '@/utils/contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -9,53 +7,49 @@ import { useState, useEffect } from 'react'
 import { Article } from '@/types/contentful'
 import { formatDate } from '@/utils/dateFormat'
 
-interface PageProps {
-  params: Promise<{ category: string; subcategory: string; id: string }>
-}
+type PageProps = { params: { category: string; subcategory: string; id: string } }
 
-export default function ArticlePage({ params }: PageProps) {
-  const [article, setArticle] = useState<Article | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [resolvedParams, setResolvedParams] = useState<{
-    category: string
-    subcategory: string
-    id: string
-  } | null>(null)
+export default async function ArticlePage({ params }: PageProps) {
+  // const [article, setArticle] = useState<Article | null>(null)
+  // const [loading, setLoading] = useState(true)
+  // const [resolvedParams, setResolvedParams] = useState<{
+  //   category: string
+  //   subcategory: string
+  //   id: string
+  // } | null>(null)
 
-  // params를 resolve하는 useEffect 추가
-  useEffect(() => {
-    async function resolveParams() {
-      const resolved = await params
-      setResolvedParams(resolved)
-    }
-    resolveParams()
-  }, [params])
+  // // params를 resolve하는 useEffect 추가
+  // useEffect(() => {
+  //   async function resolveParams() {
+  //     const resolved = await params
+  //     setResolvedParams(resolved)
+  //   }
+  //   resolveParams()
+  // }, [params])
 
-  useEffect(() => {
-    async function fetchArticle() {
-      if (!resolvedParams) return // params가 resolve되지 않았으면 대기
+  // useEffect(() => {
+  //   async function fetchArticle() {
+  //     if (!resolvedParams) return // params가 resolve되지 않았으면 대기
 
-      try {
-        const fetchedArticle = await getArticleById(resolvedParams.id)
-        setArticle(fetchedArticle)
-      } catch (error) {
-        console.error('Error fetching article:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+  //     try {
+  //       const fetchedArticle = await getArticleById(resolvedParams.id)
+  //       setArticle(fetchedArticle)
+  //     } catch (error) {
+  //       console.error('Error fetching article:', error)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
 
-    fetchArticle()
-  }, [resolvedParams])
+  //   fetchArticle()
+  // }, [resolvedParams])
+
+  const article = await getArticleById(params.id)
 
   const formattedDate = article?.dateTime ? formatDate(article.dateTime) : null
 
-  if (loading) return <div>Loading...</div>
+  //if (loading) return <div>Loading...</div>
   if (!article) return <p>Not found</p>
-
-  const handleSave = () => {
-    alert('저장되었습니다.')
-  }
 
   return (
     <article className="prose max-w-5xl mx-auto p-6">
@@ -69,7 +63,7 @@ export default function ArticlePage({ params }: PageProps) {
       </div>
 
       <div className="mb-8">
-        <SaveBtn onClick={handleSave} />
+        <SaveBtn />
       </div>
 
       {/* 썸네일 */}
@@ -209,7 +203,6 @@ export default function ArticlePage({ params }: PageProps) {
                         height="480"
                         frameBorder="0"
                         scrolling="no"
-                        allowTransparency={true}
                         className="max-w-full mx-auto rounded-lg"
                         loading="lazy"
                       />
