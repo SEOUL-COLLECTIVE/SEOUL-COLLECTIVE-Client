@@ -1,103 +1,32 @@
-'use client'
-
 import { notFound } from 'next/navigation'
 import { navItems } from '@/data/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
-import { useState, useEffect } from 'react'
-import { Article } from '@/types/contentful'
 import Shopping from '@/components/Sections/Shopping'
 
-interface CategoryData {
-  name: string
-  slug: string
-  thumbnail: string | null
-}
 interface PageProps {
   params: Promise<{ category: string }>
 }
 
-export default function CategoryPage({ params }: PageProps) {
-  const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
-  const [categoryArticles, setCategoryArticles] = useState<Article[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [resolvedParams, setResolvedParams] = useState<{ category: string } | null>(null)
-
-  // params를 resolve하는 useEffect 추가
-  useEffect(() => {
-    async function resolveParams() {
-      const resolved = await params
-      setResolvedParams(resolved)
-    }
-    resolveParams()
-  }, [params])
-
-  useEffect(() => {
-    async function fetchCategoryData() {
-      if (!resolvedParams) return // params가 resolve되지 않았으면 대기
-
-      try {
-        setLoading(true)
-        const [category, articles] = await Promise.all([
-          getCategoryBySlug(resolvedParams.category),
-          getArticlesByCategory(resolvedParams.category),
-        ])
-
-        setCategoryData(category)
-        setCategoryArticles(articles)
-      } catch (err) {
-        console.error('Error fetching category data:', err)
-        setError('카테고리 데이터를 불러오는데 실패했습니다.')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchCategoryData()
-  }, [resolvedParams]) // params.category가 변경될 때만 재실행
-
-  // resolvedParams가 없으면 로딩 처리
-  if (!resolvedParams) {
-    return (
-      <div className="container mb-24">
-        <div className="flex justify-center items-center h-96">
-          <div className="text-lg">Loading...</div>
-        </div>
-      </div>
-    )
-  }
+export default async function CategoryPage({ params }: PageProps) {
+  const { category } = await params
 
   // 카테고리 이름을 대문자로 변환하여 navItems에서 찾기
-  const categoryName = resolvedParams.category.toUpperCase()
+  const categoryName = category.toUpperCase()
   const navItem = navItems.find((item) => item.name === categoryName)
 
   if (!navItem) {
     notFound()
   }
 
-  if (loading) {
-    return (
-      <div className="container mb-24">
-        <div className="flex justify-center items-center h-96">
-          <div className="text-lg">Loading...</div>
-        </div>
-      </div>
-    )
-  }
+  // 병렬로 데이터 페칭
+  const [categoryData, categoryArticles] = await Promise.all([
+    getCategoryBySlug(category),
+    getArticlesByCategory(category),
+  ])
 
-  if (error) {
-    return (
-      <div className="container mb-24">
-        <div className="flex justify-center items-center h-96">
-          <div className="text-lg text-red-500">{error}</div>
-        </div>
-      </div>
-    )
-  }
-
-  if (resolvedParams.category == 'shopping') {
+  if (category == 'shopping') {
     return (
       <div className="container mb-24">
         <div className="relative h-80 -mx-[5.375rem]">
@@ -180,7 +109,7 @@ export default function CategoryPage({ params }: PageProps) {
                 category={article.category?.name || 'category'}
                 imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
                 id={article.id}
-                categorySlug={article.category?.slug || resolvedParams.category}
+                categorySlug={article.category?.slug || category}
               />
             ))}
           </div>
