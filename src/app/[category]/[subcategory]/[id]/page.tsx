@@ -5,7 +5,9 @@ import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
 import { formatDate } from '@/utils/dateFormat'
 
-type PageProps = { params: { category: string; subcategory: string; id: string } }
+interface PageProps {
+  params: Promise<{ category: string; subcategory: string; id: string }>
+}
 
 export default async function ArticlePage({ params }: PageProps) {
   const { id } = await params
