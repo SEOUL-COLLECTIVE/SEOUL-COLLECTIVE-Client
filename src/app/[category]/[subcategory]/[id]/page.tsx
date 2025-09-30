@@ -179,6 +179,7 @@ export default function ArticlePage({ params }: PageProps) {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         className="w-full h-full rounded-lg"
+                        loading="lazy"
                       />
                     </div>
                   )
@@ -210,6 +211,7 @@ export default function ArticlePage({ params }: PageProps) {
                         scrolling="no"
                         allowTransparency={true}
                         className="max-w-full mx-auto rounded-lg"
+                        loading="lazy"
                       />
                     </div>
                   )
@@ -238,6 +240,7 @@ export default function ArticlePage({ params }: PageProps) {
                           scrolling="no"
                           allow="encrypted-media"
                           className="rounded-lg mx-auto"
+                          loading="lazy"
                         />
                       </div>
                     </div>
