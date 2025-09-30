@@ -110,6 +110,7 @@ export default async function CategoryPage({ params }: PageProps) {
                 imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
                 id={article.id}
                 categorySlug={article.category?.slug || category}
+                subcategorySlug={article.subcategory?.slug || category}
               />
             ))}
           </div>
