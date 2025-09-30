@@ -23,7 +23,7 @@ export default async function ArticlePage({ params }: PageProps) {
       </h1>
 
       <div className="flex gap-8 font-bold text-[0.7rem] uppercase mb-6">
-        <div>BY {article.editor}</div>
+        {article.editor ? <div>BY {article.editor}</div> : null}
         {formattedDate ? <div>PUBLISHED ON {formattedDate}</div> : null}
       </div>
 
