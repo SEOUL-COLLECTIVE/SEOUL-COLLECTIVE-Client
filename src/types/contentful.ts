@@ -1,0 +1,88 @@
+import { Document } from '@contentful/rich-text-types'
+
+// 기본 sys 정보
+// 모든 Contentful 엔트리와 에셋이 공통으로 가지는 시스템 메타데이터
+export type Sys = {
+  id: string
+  contentType?: {
+    sys: {
+      id: string
+    }
+  }
+}
+
+// 제네릭 Entry 타입
+// "시스템 정보 + 실제 콘텐츠"를 담는 Contentful의 표준 데이터
+export type Entry<T> = {
+  sys: Sys
+  fields: T
+}
+
+// Asset (이미지, 미디어)
+export type Asset = {
+  sys: Sys
+  fields: {
+    file: { url: string }
+    title?: string
+  }
+}
+
+// 카테고리
+export type Category = {
+  sys: Sys
+  fields: {
+    name: string
+    slug?: string
+    thumbnail?: Asset
+  }
+}
+
+// 서브카테고리
+export type Subcategory = {
+  sys: Sys
+  fields: {
+    name: string
+    slug?: string
+  }
+}
+
+// VideoEmbed 타입 추가
+export type VideoEmbed = {
+  sys: Sys
+  fields: {
+    platform: string
+    url: string
+  }
+}
+
+// Entry 유니온 타입 (includes에서 사용될 수 있는 모든 타입)
+// Reference나 새로운 asset 관련 타입을 정의하면 IncludeEntry에 추가해야합니다.
+export type IncludeEntry = Category | Subcategory | VideoEmbed
+
+// Article 원본 필드
+export type ArticleFields = {
+  title: string
+  dateTime?: string
+  thumbnail?: Asset
+  contentsDetail: Document
+  category?: Entry<Category>
+  subcategory?: Entry<Subcategory>
+  section?: string
+  editor?: string
+}
+
+// Article 최종 리턴 타입 (프론트에서 사용하는 형태)
+export type Article = {
+  id: string
+  title: string
+  dateTime?: string
+  thumbnail: string | null
+  contentsDetail: Document
+  category: { name: string; slug: string; thumbnail: string | null } | null
+  subcategory: { name: string; slug: string } | null
+  section: string | null
+  editor?: string
+  // includes 데이터 추가
+  assets: Map<string, Asset>
+  entries: Map<string, Category | Subcategory | VideoEmbed>
+}
