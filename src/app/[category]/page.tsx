@@ -50,8 +50,9 @@ export default async function CategoryPage({ params }: PageProps) {
         </div>
       </div>
 
+      {/* 서브카테고리 네비게이션 */}
       {navItem.submenu && (
-        <div className="flex gap-8 text-p12 py-5">
+        <div className="flex gap-8 text-p14 py-5 pt-10">
           {navItem.submenu.map((subItem) => (
             <div
               key={subItem.name}
