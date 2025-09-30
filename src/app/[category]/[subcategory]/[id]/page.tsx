@@ -3,48 +3,13 @@ import { getArticleById } from '@/utils/contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { Article } from '@/types/contentful'
 import { formatDate } from '@/utils/dateFormat'
 
 type PageProps = { params: { category: string; subcategory: string; id: string } }
 
 export default async function ArticlePage({ params }: PageProps) {
-  // const [article, setArticle] = useState<Article | null>(null)
-  // const [loading, setLoading] = useState(true)
-  // const [resolvedParams, setResolvedParams] = useState<{
-  //   category: string
-  //   subcategory: string
-  //   id: string
-  // } | null>(null)
-
-  // // params를 resolve하는 useEffect 추가
-  // useEffect(() => {
-  //   async function resolveParams() {
-  //     const resolved = await params
-  //     setResolvedParams(resolved)
-  //   }
-  //   resolveParams()
-  // }, [params])
-
-  // useEffect(() => {
-  //   async function fetchArticle() {
-  //     if (!resolvedParams) return // params가 resolve되지 않았으면 대기
-
-  //     try {
-  //       const fetchedArticle = await getArticleById(resolvedParams.id)
-  //       setArticle(fetchedArticle)
-  //     } catch (error) {
-  //       console.error('Error fetching article:', error)
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
-
-  //   fetchArticle()
-  // }, [resolvedParams])
-
-  const article = await getArticleById(params.id)
+  const { id } = await params
+  const article = await getArticleById(id)
 
   const formattedDate = article?.dateTime ? formatDate(article.dateTime) : null
 
