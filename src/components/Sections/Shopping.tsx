@@ -44,6 +44,8 @@ export default function Shopping() {
             section="shopping"
             imageUrl="/test/thumbnail_01.jpg"
             title={'Hailey Bieber’s Staple Fall\nJeans Are On Sale For Under $75'}
+            categorySlug="shopping"
+            subcategorySlug="articles"
           />
         </div>
 
