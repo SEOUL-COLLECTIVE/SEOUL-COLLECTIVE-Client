@@ -26,7 +26,7 @@ export default async function CategoryPage({ params }: PageProps) {
     getArticlesByCategory(category),
   ])
 
-  if (category == 'shopping') {
+  if (category === 'shopping') {
     return (
       <div className="container mb-24">
         <div className="relative h-80 -mx-[5.375rem]">
