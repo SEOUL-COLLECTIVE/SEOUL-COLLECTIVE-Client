@@ -52,11 +52,6 @@ export const navItems: NavItem[] = [
   {
     name: 'COMMUNITY',
     href: '/community',
-    submenu: [
-      { name: 'Product Q&A', href: '/community/qa' },
-      { name: 'My Review', href: '/community/reviews' },
-      { name: 'Discussion', href: '/community/discussion' },
-    ],
   },
 ]
 
