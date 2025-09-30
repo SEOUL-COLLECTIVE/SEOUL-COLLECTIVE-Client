@@ -9,9 +9,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import ShoppingCard from '../Cards/ShoppingCard'
+import { shoppingData } from '@/data/sectionData'
 
 type CarouselProps = {
   category: string
+  isshopping?: boolean
 }
 
 const data = [
@@ -57,7 +60,7 @@ const data = [
   },
 ]
 
-export default function CustomCarousel({ category }: CarouselProps) {
+export default function CustomCarousel({ category, isshopping }: CarouselProps) {
   return (
     <div className="space-y-6">
       {/* Carousel */}
@@ -78,18 +81,38 @@ export default function CustomCarousel({ category }: CarouselProps) {
         </div>
 
         <CarouselContent>
-          {data.map((item) => (
-            <CarouselItem key={item.id} className="basis-1/4">
-              <div className="flex flex-col space-y-4">
-                <div className="relative w-full aspect-[273/203]">
-                  <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
-                </div>
-                <p className="text-base font-semibold whitespace-pre-line text-p15 leading-relaxed">
-                  {item.title}
-                </p>
-              </div>
-            </CarouselItem>
-          ))}
+          {isshopping ? (
+            <>
+              {shoppingData.products.map((item) => (
+                <CarouselItem key={item.id} className="basis-1/4">
+                  <ShoppingCard
+                    imageUrl={item.imageUrl}
+                    brand={item.brand}
+                    product={item.name}
+                    price={item.price}
+                    store={item.retailer}
+                    link={item.link}
+                    size="big"
+                  />
+                </CarouselItem>
+              ))}
+            </>
+          ) : (
+            <>
+              {data.map((item) => (
+                <CarouselItem key={item.id} className="basis-1/4">
+                  <div className="flex flex-col space-y-4">
+                    <div className="relative w-full aspect-[273/203]">
+                      <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
+                    </div>
+                    <p className="text-base font-semibold whitespace-pre-line text-p15 leading-relaxed">
+                      {item.title}
+                    </p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </>
+          )}
         </CarouselContent>
       </Carousel>
     </div>

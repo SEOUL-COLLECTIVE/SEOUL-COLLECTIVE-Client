@@ -10,6 +10,7 @@ type ShoppingCardProps = {
   price: string
   store: string
   link: string
+  size?: 'default' | 'big' // 사이즈 옵션 추가
 }
 
 export default function ShoppingCard({
@@ -19,7 +20,11 @@ export default function ShoppingCard({
   price,
   store,
   link,
+  size = 'default', // 기본값
 }: ShoppingCardProps) {
+  // 사이즈에 따른 텍스트 크기 결정
+  const textSize = size === 'big' ? 'text-[1rem]' : 'text-[0.75rem]'
+
   return (
     <Link
       rel="noopener noreferrer nofollow"
@@ -34,7 +39,7 @@ export default function ShoppingCard({
       </div>
 
       {/* 텍스트 영역 */}
-      <div className="flex flex-col gap-1 text-[12px]">
+      <div className={`flex flex-col gap-1 ${textSize}`}>
         <div className="">{brand}</div>
         <div className="line-clamp-1 whitespace-pre-line break-words">{product}</div>
         <div className="">{price}</div>

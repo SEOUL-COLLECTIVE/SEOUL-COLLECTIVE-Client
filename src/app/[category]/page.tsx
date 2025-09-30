@@ -3,6 +3,7 @@ import { navItems } from '@/data/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
+import Shopping from '@/components/Sections/Shopping'
 
 interface PageProps {
   params: Promise<{ category: string }>
@@ -24,6 +25,37 @@ export default async function CategoryPage({ params }: PageProps) {
     getCategoryBySlug(category),
     getArticlesByCategory(category),
   ])
+
+  if (category === 'shopping') {
+    return (
+      <div className="container mb-24">
+        <div className="relative h-80 -mx-[5.375rem]">
+          <Image
+            src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}
+            alt={categoryData?.name || navItem.name}
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
+              <span className="uppercase">{categoryData?.name || navItem.name}</span>
+            </div>
+
+            <div className="mb-2">
+              <div className="text-white inline-block tracking-wide text-p32">
+                <div className="font-bold uppercase">{categoryData?.name || navItem.name}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Shopping />
+      </div>
+    )
+  }
 
   return (
     <div className="container mb-24">
@@ -78,6 +110,7 @@ export default async function CategoryPage({ params }: PageProps) {
                 imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
                 id={article.id}
                 categorySlug={article.category?.slug || category}
+                subcategorySlug={article.subcategory?.slug || category}
               />
             ))}
           </div>
