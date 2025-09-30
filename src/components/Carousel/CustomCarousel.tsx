@@ -86,7 +86,6 @@ export default function CustomCarousel({ category, isshopping }: CarouselProps) 
               {shoppingData.products.map((item) => (
                 <CarouselItem key={item.id} className="basis-1/4">
                   <ShoppingCard
-                    key={item.id}
                     imageUrl={item.imageUrl}
                     brand={item.brand}
                     product={item.name}
