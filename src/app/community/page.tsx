@@ -1,14 +1,30 @@
 import CreateBtn from '@/components/Buttons/CreateBtn'
 import PostCard from '@/components/Cards/PostCard'
+import SortDropdown from '@/components/DropDown/SortDropDown'
+import SearchBar from '@/components/Inputs/SearchBar'
 import Image from 'next/image'
 import React from 'react'
 
 const communitymenu = [
   {
     name: 'My Review',
+    slug: 'my-review',
   },
   {
     name: 'Product Q&A',
+    slug: 'product-q&a',
+  },
+]
+
+const communitycategory = [
+  {
+    category: 'SKINCARE',
+  },
+  {
+    category: 'MAKEUP',
+  },
+  {
+    category: 'HAIR',
   },
 ]
 
@@ -39,7 +55,7 @@ export default function CommunityPage() {
       </div>
 
       {/* 상단 네비게이션 - 버튼 flex line */}
-      <div className="flex justify-between py-5 pt-10">
+      <div className="flex justify-between pt-10">
         {/* 서브카테고리 네비게이션 */}
         <div>
           {communitymenu && (
@@ -60,8 +76,28 @@ export default function CommunityPage() {
         <CreateBtn />
       </div>
 
-      <div>
-        <PostCard />
+      <div className="flex justify-end pb-5">
+        <SearchBar />
+      </div>
+
+      <div className="grid grid-cols-[200px_1fr]">
+        {/* post category */}
+        <div className="flex flex-col gap-y-2 text-[0.9rem] mt-16">
+          {communitycategory?.map((item) => (
+            <div key={item.category} className="p-2 cursor-pointer">
+              {item.category}
+            </div>
+          ))}
+        </div>
+
+        {/* post card scroll area */}
+        <div className="">
+          <div className="flex justify-between">
+            <div className="text-[1.25rem] font-bold mb-4 px-2">ALL POST</div>
+            <SortDropdown />
+          </div>
+          <PostCard />
+        </div>
       </div>
     </div>
   )

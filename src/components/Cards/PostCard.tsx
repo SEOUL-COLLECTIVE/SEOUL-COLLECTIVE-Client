@@ -80,9 +80,9 @@ const dummyPosts = [
 
 export default function PostCard() {
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen">
       {dummyPosts.map((post) => (
-        <div key={post.id} className="max-w-4xl mx-auto bg-white rounded-sm shadow-md p-8 mb-8">
+        <div key={post.id} className="w-full bg-white rounded-sm shadow-md p-8 mb-8">
           {post.category && <span className="text-[0.75rem] mb-2 font-bold"> {post.category}</span>}
 
           {/* Title */}
