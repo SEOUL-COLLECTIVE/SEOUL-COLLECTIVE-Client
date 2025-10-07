@@ -202,6 +202,29 @@ export async function getCategoryBySlug(slug: string): Promise<{
   }
 }
 
+// 서브카테고리 정보 직접 가져오기
+export async function getSubcategoryBySlug(
+  categorySlug: string,
+  subcategorySlug: string
+): Promise<{
+  name: string
+  slug: string
+} | null> {
+  const data: {
+    items: Subcategory[]
+  } = await fetchContent(`entries?content_type=subcategory&fields.slug=${subcategorySlug}`)
+
+  if (!data.items || data.items.length === 0) return null
+
+  const item = data.items[0]
+  const { name, slug } = item.fields
+
+  return {
+    name,
+    slug: slug ?? subcategorySlug,
+  }
+}
+
 // 카테고리별 아티클 가져오기 (Reference 관계용)
 export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {
   // 1. 먼저 해당 slug를 가진 카테고리의 ID를 찾기
