@@ -1,4 +1,5 @@
 ## 💥 Related Issue
+
 closes #issue_number
 
 <br/>
