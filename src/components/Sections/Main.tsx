@@ -1,32 +1,13 @@
-'use client'
-import { useEffect, useState } from 'react'
 import ContentsCard from '../Cards/ContentsCard'
-import { getMainArticles, getSubArticles } from '@/utils/contentful'
-import { Article } from '@/types/contentful'
+import { useMainArticles, useSubArticles } from '@/hooks/use-contentful'
 
 export default function Main() {
-  const [loading, setLoading] = useState(true)
-  const [mainArticle, setMainArticle] = useState<Article>()
-  const [subArticle, setSubArticle] = useState<Article[]>([])
+  // TanStack Query hooks 사용 - API 호출 최소화
+  const { data: mainArticles, isLoading: mainLoading } = useMainArticles()
+  const { data: subArticles, isLoading: subLoading } = useSubArticles()
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const mainData = await getMainArticles()
-        const subData = await getSubArticles()
-        console.log('main articles', mainData[0])
-        console.log('sub articles', subData)
-        setMainArticle(mainData[0])
-        setSubArticle(subData)
-      } catch (error) {
-        console.error('Failed to fetch main articles:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchArticles()
-  }, [])
+  const mainArticle = mainArticles?.[0]
+  const loading = mainLoading || subLoading
 
   if (loading) {
     return (
@@ -63,7 +44,7 @@ export default function Main() {
       </div>
 
       {/* 오른쪽 두 박스 */}
-      {subArticle.map((item) => (
+      {subArticles.map((item) => (
         <div key={item.id}>
           <ContentsCard
             section={item.section ?? 'sub'}

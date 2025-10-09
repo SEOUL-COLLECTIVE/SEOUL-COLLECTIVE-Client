@@ -1,5 +1,8 @@
+'use client'
+
+import { use } from 'react'
 import SaveBtn from '@/components/Buttons/SaveBtn'
-import { getArticleById } from '@/utils/contentful'
+import { useArticle } from '@/hooks/use-contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
@@ -9,14 +12,33 @@ interface PageProps {
   params: Promise<{ category: string; subcategory: string; id: string }>
 }
 
-export default async function ArticlePage({ params }: PageProps) {
-  const { id } = await params
-  const article = await getArticleById(id)
+export default function ArticlePage({ params }: PageProps) {
+  const { id } = use(params)
 
-  const formattedDate = article?.dateTime ? formatDate(article.dateTime) : null
+  // TanStack Query hook 사용 (캐시에서 가져옴)
+  const { data: article, isLoading, error } = useArticle(id)
 
-  //if (loading) return <div>Loading...</div>
-  if (!article) return <p>Not found</p>
+  // 로딩 상태
+  if (isLoading) {
+    return (
+      <div className="prose max-w-5xl mx-auto p-6">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-lg">Loading...</div>
+        </div>
+      </div>
+    )
+  }
+
+  // 에러 또는 아티클이 없는 경우
+  if (error || !article) {
+    return (
+      <div className="prose max-w-5xl mx-auto p-6">
+        <p>Not found</p>
+      </div>
+    )
+  }
+
+  const formattedDate = article.dateTime ? formatDate(article.dateTime) : null
 
   return (
     <article className="prose max-w-5xl mx-auto p-6">
@@ -53,26 +75,16 @@ export default async function ArticlePage({ params }: PageProps) {
               <p className="mb-4 leading-relaxed">{children}</p>
             ),
 
-            // ✅ 이미지 (Asset) - 수정된 부분
+            // ✅ 이미지 (Asset)
             [BLOCKS.EMBEDDED_ASSET]: (node) => {
               const assetId = node.data?.target?.sys?.id
-              if (!assetId) {
-                console.warn('No asset ID found', node.data)
-                return null
-              }
+              if (!assetId) return null
 
-              // article에서 전달받은 assets Map에서 해당 asset 찾기
               const asset = article.assets.get(assetId)
-              if (!asset) {
-                console.warn('Asset not found for ID:', assetId)
-                return null
-              }
+              if (!asset) return null
 
               const url = asset.fields.file?.url ? `https:${asset.fields.file.url}` : null
-              if (!url) {
-                console.warn('No URL found for asset:', assetId)
-                return null
-              }
+              if (!url) return null
 
               return (
                 <div className="my-6">
@@ -89,32 +101,15 @@ export default async function ArticlePage({ params }: PageProps) {
 
             // ✅ VideoEmbed (Entry) - YouTube, Instagram, TikTok 지원
             [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-              console.log('EMBEDDED_ENTRY node:', node)
-
               const entryId = node.data?.target?.sys?.id
-              if (!entryId) {
-                console.warn('No entry ID found', node.data)
-                return null
-              }
+              if (!entryId) return null
 
-              console.log('Looking for entry ID:', entryId)
-
-              // article에서 전달받은 entries Map에서 해당 entry 찾기
               const entry = article.entries.get(entryId)
-              if (!entry) {
-                console.warn('Entry not found for ID:', entryId)
-                return null
-              }
+              if (!entry) return null
 
-              console.log('Found entry:', entry)
-              console.log('Entry content type:', entry.sys.contentType?.sys.id)
-
-              // VideoEmbed 타입인지 확인 (대소문자 모두 체크)
               const contentTypeId = entry.sys.contentType?.sys.id
               if (contentTypeId === 'videoEmbed' || contentTypeId === 'VideoEmbed') {
                 const { platform, url } = entry.fields as { platform: string; url: string }
-
-                console.log('VideoEmbed found - platform:', platform, 'url:', url)
 
                 if (platform === 'youtube' && url) {
                   // YouTube URL을 embed URL로 변환
@@ -128,9 +123,6 @@ export default async function ArticlePage({ params }: PageProps) {
                   } else if (url.includes('youtube.com/v/')) {
                     embedUrl = url.replace('/v/', '/embed/')
                   }
-
-                  console.log('YouTube - Original URL:', url)
-                  console.log('YouTube - Converted embed URL:', embedUrl)
 
                   return (
                     <div className="my-6 aspect-video">
@@ -158,9 +150,6 @@ export default async function ArticlePage({ params }: PageProps) {
                     embedUrl = url.split('?')[0] + (url.endsWith('/') ? 'embed/' : '/embed/')
                   }
 
-                  console.log('Instagram - Original URL:', url)
-                  console.log('Instagram - Converted embed URL:', embedUrl)
-
                   return (
                     <div className="my-6">
                       <iframe
@@ -176,17 +165,12 @@ export default async function ArticlePage({ params }: PageProps) {
                     </div>
                   )
                 } else if (platform === 'tiktok' && url) {
-                  // TikTok URL을 embed URL로 변환
                   let embedUrl = url
 
-                  // TikTok embed URL 형식: https://www.tiktok.com/embed/videoId
                   if (url.includes('/video/')) {
                     const videoId = url.split('/video/')[1].split('?')[0]
                     embedUrl = `https://www.tiktok.com/embed/${videoId}`
                   }
-
-                  console.log('TikTok - Original URL:', url)
-                  console.log('TikTok - Converted embed URL:', embedUrl)
 
                   return (
                     <div className="my-6 flex justify-center">
@@ -208,7 +192,6 @@ export default async function ArticlePage({ params }: PageProps) {
                 }
               }
 
-              console.log('Not a VideoEmbed or conditions not met')
               return null
             },
           },
