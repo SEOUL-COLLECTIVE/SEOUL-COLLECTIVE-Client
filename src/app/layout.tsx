@@ -3,6 +3,7 @@ import './globals.css'
 import Topbar from '../components/Common/Topbar'
 import Footer from '../components/Common/Footer'
 import localFont from 'next/font/local'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'SEOUL COLLECTIVE',
@@ -35,11 +36,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${futuraBold.variable} ${futura.variable} ${poppins.variable}`}>
       {/* 두 폰트 variable 모두 추가 */}
-      <body className="block">
-        <Topbar />
-        <div className="px-[5.375rem] pt-[11rem]">{children}</div>
-        <Footer />
-      </body>
+      <Providers>
+        <body className="block">
+          <Topbar />
+          <div className="px-[5.375rem] pt-[11rem]">{children}</div>
+          <Footer />
+        </body>
+      </Providers>
     </html>
   )
 }
