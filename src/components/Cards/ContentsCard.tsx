@@ -106,7 +106,7 @@ export default function ContentsCard({
           <div
             className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words leading-tight`}
           >
-            {title}
+            {title.replace(/\\n/g, '\n')}
           </div>
         </div>
       </div>
