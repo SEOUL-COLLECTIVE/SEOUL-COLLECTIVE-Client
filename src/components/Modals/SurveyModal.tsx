@@ -114,9 +114,12 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
               <div className="flex flex-wrap gap-2">
                 {skinConcerns.map((concern) => (
                   <button
+                    type="button"
                     key={concern}
                     onClick={() => toggleConcern(concern)}
                     disabled={!selectedConcerns.includes(concern) && selectedConcerns.length >= 2}
+                    aria-pressed={selectedConcerns.includes(concern)}
+                    aria-label={`${concern}${selectedConcerns.includes(concern) ? ', selected' : ''}`}
                     className={`
                       py-3 px-4 rounded-full text-[0.875rem] font-medium transition-colors
                       ${
