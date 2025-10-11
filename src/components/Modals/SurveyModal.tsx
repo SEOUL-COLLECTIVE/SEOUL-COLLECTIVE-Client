@@ -49,7 +49,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-white">
+      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-white [&>button]:hidden border-0">
         <div className="grid grid-cols-2">
           {/* Left Section - Form */}
           <div className="p-12">
