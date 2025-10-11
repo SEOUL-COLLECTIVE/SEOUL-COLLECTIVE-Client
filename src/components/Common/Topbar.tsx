@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaFacebookF, FaPinterestP } from 'react-icons/fa'
 import Navbar from './Navbar'
+import SurveyModal from '@/components/Modals/SurveyModal'
 
 export default function Topbar() {
   const [showTopbar, setShowTopbar] = useState<boolean>(true)
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,8 +50,12 @@ export default function Topbar() {
               <button className="w-[7rem] bg-purple text-p11 font-semibold text-white py-0.5">
                 SUBSCRIBE
               </button>
-              <button className="w-[7rem] bg-black text-p11 font-semibold text-white">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="w-[7rem] bg-black text-p11 font-semibold text-white"
+              >
                 SIGN IN
+                <SurveyModal open={modalOpen} onOpenChange={setModalOpen} />
               </button>
             </div>
           </div>
