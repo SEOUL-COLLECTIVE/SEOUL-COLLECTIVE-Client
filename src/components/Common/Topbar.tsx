@@ -55,13 +55,15 @@ export default function Topbar() {
                 className="w-[7rem] bg-black text-p11 font-semibold text-white"
               >
                 SIGN IN
-                <SurveyModal open={modalOpen} onOpenChange={setModalOpen} />
               </button>
             </div>
           </div>
         </div>
       )}
       <Navbar showTopbar={showTopbar} />
+
+      {/* survey modal */}
+      <SurveyModal open={modalOpen} onOpenChange={setModalOpen} />
     </div>
   )
 }
