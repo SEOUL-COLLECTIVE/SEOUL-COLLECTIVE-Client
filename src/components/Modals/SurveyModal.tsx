@@ -62,7 +62,9 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
             {/* Skin Type Section */}
             <div className="mb-5">
-              <label className="block text-[0.875rem] font-medium mb-2">Skin Type</label>
+              <label htmlFor="skin-type" className="block text-[0.875rem] font-medium mb-2">
+                Skin Type
+              </label>
               <Select value={skinType} onValueChange={setSkinType}>
                 <SelectTrigger className="h-[2.75rem] border border-[#E0E0E0] rounded-lg px-3 focus:ring-0 focus:ring-offset-0">
                   <SelectValue placeholder="---" />
@@ -83,7 +85,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
             {/* Sensitive Skin Section */}
             <div className="mb-5">
-              <label className="block text-[0.875rem] font-medium mb-2">
+              <label htmlFor="sensitive-skin" className="block text-[0.875rem] font-medium mb-2">
                 Do you have sensitive skin?
               </label>
               <Select value={sensitiveSkin} onValueChange={setSensitiveSkin}>
@@ -106,7 +108,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
             {/* Skin Concerns Section */}
             <div className="mb-8">
-              <label className="block text-[0.875rem] font-medium mb-2">
+              <label htmlFor="skin-concerns" className="block text-[0.875rem] font-medium mb-2">
                 Skin Concerns (Pick up to 2)
               </label>
               <div className="flex flex-wrap gap-2">
