@@ -53,18 +53,18 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
         <div className="grid grid-cols-2">
           {/* Left Section - Form */}
           <div className="p-12">
-            <DialogTitle className="text-[20px] font-bold">
+            <DialogTitle className="text-[1.25rem] font-bold">
               Tell us a bit about your skin
             </DialogTitle>
-            <DialogDescription className="text-[14px] mb-8">
+            <DialogDescription className="text-[0.875rem] mb-8">
               (It only takes 10 seconds)
             </DialogDescription>
 
             {/* Skin Type Section */}
             <div className="mb-5">
-              <label className="block text-[14px] font-medium mb-2">Skin Type</label>
+              <label className="block text-[0.875rem] font-medium mb-2">Skin Type</label>
               <Select value={skinType} onValueChange={setSkinType}>
-                <SelectTrigger className="h-[44px] border border-[#E0E0E0] rounded-lg px-3 focus:ring-0 focus:ring-offset-0">
+                <SelectTrigger className="h-[2.75rem] border border-[#E0E0E0] rounded-lg px-3 focus:ring-0 focus:ring-offset-0">
                   <SelectValue placeholder="---" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
@@ -83,11 +83,11 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
             {/* Sensitive Skin Section */}
             <div className="mb-5">
-              <label className="block text-[14px] font-medium mb-2">
+              <label className="block text-[0.875rem] font-medium mb-2">
                 Do you have sensitive skin?
               </label>
               <Select value={sensitiveSkin} onValueChange={setSensitiveSkin}>
-                <SelectTrigger className="h-[44px] border border-[#E0E0E0] rounded-lg px-3 focus:ring-0 focus:ring-offset-0">
+                <SelectTrigger className="h-[2.75rem] border border-[#E0E0E0] rounded-lg px-3 focus:ring-0 focus:ring-offset-0">
                   <SelectValue placeholder="---" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
@@ -106,7 +106,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
             {/* Skin Concerns Section */}
             <div className="mb-8">
-              <label className="block text-[14px] font-medium mb-2">
+              <label className="block text-[0.875rem] font-medium mb-2">
                 Skin Concerns (Pick up to 2)
               </label>
               <div className="flex flex-wrap gap-2">
@@ -116,7 +116,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                     onClick={() => toggleConcern(concern)}
                     disabled={!selectedConcerns.includes(concern) && selectedConcerns.length >= 2}
                     className={`
-                      py-3 px-4 rounded-full text-[14px] font-medium transition-colors
+                      py-3 px-4 rounded-full text-[0.875rem] font-medium transition-colors
                       ${
                         selectedConcerns.includes(concern)
                           ? 'bg-black text-white'
@@ -139,13 +139,13 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             <div className="flex gap-8">
               <button
                 onClick={handleSkip}
-                className="p-2 bg-black text-white text-[14px] font-medium hover:bg-gray-800 transition-colors"
+                className="p-2 bg-black text-white text-[0.875rem] font-medium hover:bg-gray-800 transition-colors"
               >
                 Skip for now
               </button>
               <button
                 onClick={handleSave}
-                className="p-2 bg-black text-white text-[14px] font-medium hover:bg-gray-800 transition-colors"
+                className="p-2 bg-black text-white text-[0.875rem] font-medium hover:bg-gray-800 transition-colors"
               >
                 Save & Continue
               </button>
