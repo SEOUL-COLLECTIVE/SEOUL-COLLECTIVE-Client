@@ -82,7 +82,7 @@ export const shoppingData = {
       name: 'Lip Butter Balm',
       price: '$24',
       retailer: 'SEPHORA',
-      imageUrl: '/test/thumbnail_01.jpg',
+      imageUrl: '/test/shopping/shopping_item01.jpg',
       link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
     },
     {
@@ -91,7 +91,7 @@ export const shoppingData = {
       name: 'Lip Smoothie Peptide Lip Balm',
       price: '$22',
       retailer: 'AMAZON',
-      imageUrl: '/test/thumbnail_01.jpg',
+      imageUrl: '/test/shopping/shopping_item02.jpg',
       link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
     },
     {
@@ -100,7 +100,7 @@ export const shoppingData = {
       name: 'Phyto-Glow Lip Balm',
       price: '$10',
       retailer: 'AMAZON',
-      imageUrl: '/test/thumbnail_01.jpg',
+      imageUrl: '/test/shopping/shopping_item03.jpg',
       link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
     },
     {
@@ -109,7 +109,7 @@ export const shoppingData = {
       name: 'Lip Butter Balm',
       price: '$24',
       retailer: 'SEPHORA',
-      imageUrl: '/test/thumbnail_01.jpg',
+      imageUrl: '/test/shopping/shopping_item04.jpg',
       link: 'https://www.amazon.com/%ED%99%94%EC%9E%A5%ED%92%88/s?k=%ED%99%94%EC%9E%A5%ED%92%88',
     },
     {

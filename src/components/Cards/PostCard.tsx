@@ -7,37 +7,39 @@ import Image from 'next/image'
 const dummyPosts = [
   {
     id: 1,
-    category: 'SKIN',
+    category: 'Makeup',
     title: 'Monthly Favorites: September 2025 Edition!',
     postedDate: '09-23-2025 09:47',
     updatedDate: 'yesterday',
     author: {
       name: 'KhyleyBT',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['ADMIN', 'ROUGE'],
+      avatar: '/test/community_profile01.jpg',
     },
     content:
       "Happy fall—officially—BIC, I hope September has treated you well! I'm in my annual cliché fall girl cycle, hyped about the leaves changing and cozy sweaters. Here are my top picks for this month!",
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Community Favorites', 'Trending at Sephora'],
+    imageUrls: ['/test/community_img05.jpg', '/test/community_img06.jpg'],
+    tags: ['mocha mousse', 'Trending at SC'],
     likes: 25,
     replies: 76,
   },
   {
     id: 2,
-    category: 'Skincare',
+    category: 'Makeup',
     title: 'My Holy Grail Products for Dry Skin in Winter',
     postedDate: '09-29-2025 14:22',
     updatedDate: 'today',
     author: {
       name: 'BeautyLover_28',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['VIB'],
+      avatar: '/test/community_profile02.jpg',
     },
     content:
       'Winter is coming and my skin is already feeling it! After years of trial and error, I finally found the perfect routine that keeps my skin hydrated and glowing all season long.',
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Skincare', 'Winter Essentials'],
+    imageUrls: [
+      '/test/community_img01.jpg',
+      '/test/community_img02.jpg',
+      '/test/community_img03.jpg',
+    ],
+    tags: ['Makeup', 'Bare Grape'],
     likes: 142,
     replies: 34,
   },
@@ -54,7 +56,7 @@ const dummyPosts = [
     },
     content:
       "The clean girl aesthetic is everywhere right now! I've been perfecting this natural, dewy look and wanted to share my step-by-step process and product recommendations with you all.",
-    imageUrl: '/test/thumbnail_01.jpg',
+    imageUrls: ['/test/community_img04.jpg'],
     tags: ['Makeup Tutorial', 'Trending'],
     likes: 389,
     replies: 128,
@@ -71,7 +73,7 @@ const dummyPosts = [
     },
     content:
       "My hair was completely fried from daily heat styling. I thought I'd have to cut it all off, but these products literally saved my hair! Here's my complete hair repair journey.",
-    imageUrl: '/test/thumbnail_01.jpg',
+    imageUrls: ['/test/community_img05.jpg', '/test/community_img06.jpg'],
     tags: ['Haircare', 'Hair Repair'],
     likes: 267,
     replies: 91,
@@ -127,10 +129,19 @@ export default function PostCard() {
             </p>
           </div>
 
-          {/* Image */}
-          {post.imageUrl && (
-            <div className="mb-6 relative w-[18rem] max-w-md aspect-[4/3]">
-              <Image src={post.imageUrl} alt={post.title} fill className="object-cover" />
+          {/* Images */}
+          {post.imageUrls && post.imageUrls.length > 0 && (
+            <div className="mb-6 flex gap-2">
+              {post.imageUrls.slice(0, 3).map((imageUrl, index) => (
+                <div key={index} className="relative aspect-[4/3] w-[18rem] max-w-md">
+                  <Image
+                    src={imageUrl}
+                    alt={`${post.title} - image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
           )}
 
