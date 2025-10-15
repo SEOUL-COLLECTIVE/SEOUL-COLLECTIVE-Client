@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signupData'
+import { validateEmail, validatePassword, validateRequired } from '@/utils/validation'
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -29,6 +30,13 @@ export default function SignUpPage() {
     emailMarketing: false,
   })
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  })
+
   const [expandedSections, setExpandedSections] = useState({
     termsOfUse: false,
     personalInfoRequired: false,
@@ -43,12 +51,73 @@ export default function SignUpPage() {
     })
   }
 
+  const validateField = (field: keyof typeof errors, value: string) => {
+    let validationResult = { valid: true, message: '' }
+
+    switch (field) {
+      case 'firstName':
+        validationResult = validateRequired(value, 'First name')
+        break
+      case 'lastName':
+        validationResult = validateRequired(value, 'Last name')
+        break
+      case 'email':
+        validationResult = validateEmail(value)
+        break
+      case 'password':
+        validationResult = validatePassword(value)
+        break
+    }
+
+    return validationResult
+  }
+
+  const handleChange = (field: keyof typeof errors, value: string) => {
+    setFormData({ ...formData, [field]: value })
+
+    // 실시간 검증
+    const validationResult = validateField(field, value)
+    setErrors({ ...errors, [field]: validationResult.message })
+  }
+
+  const isFormValid = () => {
+    return (
+      formData.firstName &&
+      formData.lastName &&
+      formData.email &&
+      formData.password &&
+      validateEmail(formData.email).valid &&
+      validatePassword(formData.password).valid &&
+      formData.termsOfUse &&
+      formData.personalInfoRequired
+    )
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!isFormValid()) {
+      // 모든 에러 표시
+      setErrors({
+        firstName: validateRequired(formData.firstName, 'First name').message,
+        lastName: validateRequired(formData.lastName, 'Last name').message,
+        email: validateEmail(formData.email).message,
+        password: validatePassword(formData.password).message,
+      })
+
+      alert('Please fill in all required fields correctly and agree to the required terms.')
+      return
+    }
+
+    console.log('Form submitted:', formData)
+  }
+
   return (
     <div className="w-screen bg-white overflow-auto -mx-[5.375rem] min-h-screen">
       <div className="max-w-[400px] mx-auto p-8 pt-12">
         <h1 className="text-[24px] font-bold text-center mb-8">Sign Up</h1>
 
-        <form className="space-y-6 text-[14px]">
+        <form className="space-y-6 text-[14px]" onSubmit={handleSubmit}>
           {/* Name */}
           <div>
             <label className="block text-gray-700 mb-2">
@@ -59,17 +128,15 @@ export default function SignUpPage() {
               placeholder="First Name"
               className="mb-3"
               value={formData.firstName}
-              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-              required
-              errorMessage="First name is required"
+              onChange={(e) => handleChange('firstName', e.target.value)}
+              error={errors.firstName}
             />
             <SignInput
               type="text"
               placeholder="Last Name (Family Name)"
               value={formData.lastName}
-              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-              required
-              errorMessage="Last name is required"
+              onChange={(e) => handleChange('lastName', e.target.value)}
+              error={errors.lastName}
             />
           </div>
 
@@ -82,9 +149,8 @@ export default function SignUpPage() {
               type="email"
               placeholder="Enter your email address to use as login ID."
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-              errorMessage="[Email] is a required field."
+              onChange={(e) => handleChange('email', e.target.value)}
+              error={errors.email}
             />
           </div>
 
@@ -97,9 +163,8 @@ export default function SignUpPage() {
               type="password"
               placeholder="Password (8 to 16 characters)"
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
-              errorMessage="Please enter 8 - 16 Characters"
+              onChange={(e) => handleChange('password', e.target.value)}
+              error={errors.password}
             />
           </div>
 
@@ -331,7 +396,12 @@ export default function SignUpPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-black text-white py-4 rounded-md font-medium hover:bg-gray-800 transition-colors mt-8"
+            disabled={!isFormValid()}
+            className={`w-full py-4 rounded-md font-medium transition-colors mt-8 ${
+              isFormValid()
+                ? 'bg-black text-white hover:bg-gray-800'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
           >
             Sign Up
           </button>
