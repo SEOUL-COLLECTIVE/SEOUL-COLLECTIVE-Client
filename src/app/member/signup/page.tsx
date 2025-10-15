@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import SignInput from '@/components/Inputs/SignInput'
 import {
   Select,
   SelectContent,
@@ -53,19 +54,22 @@ export default function SignUpPage() {
             <label className="block text-gray-700 mb-2">
               Name <span className="text-red-500">*</span>
             </label>
-            <input
+            <SignInput
               type="text"
               placeholder="First Name"
-              className="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-gray-400 mb-3"
+              className="mb-3"
               value={formData.firstName}
               onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+              required
+              errorMessage="First name is required"
             />
-            <input
+            <SignInput
               type="text"
               placeholder="Last Name (Family Name)"
-              className="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-gray-400"
               value={formData.lastName}
               onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+              required
+              errorMessage="Last name is required"
             />
           </div>
 
@@ -74,14 +78,14 @@ export default function SignUpPage() {
             <label className="block text-gray-700 mb-2">
               Email ID <span className="text-red-500">*</span>
             </label>
-            <input
+            <SignInput
               type="email"
               placeholder="Enter your email address to use as login ID."
-              className="w-full py-2 px-4 border border-red-400 rounded-md focus:outline-none focus:border-red-500"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              required
+              errorMessage="[Email] is a required field."
             />
-            <p className="text-red-500 text-xs mt-1">[Email] is a required field.</p>
           </div>
 
           {/* Password */}
@@ -89,14 +93,14 @@ export default function SignUpPage() {
             <label className="block text-gray-700 mb-2">
               Password <span className="text-red-500">*</span>
             </label>
-            <input
+            <SignInput
               type="password"
               placeholder="Password (8 to 16 characters)"
-              className="w-full py-2 px-4 border border-red-400 rounded-md focus:outline-none focus:border-red-500"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              required
+              errorMessage="Please enter 8 - 16 Characters"
             />
-            <p className="text-red-500 text-xs mt-1">Please enter 8 - 16 Characters</p>
           </div>
 
           {/* Country */}

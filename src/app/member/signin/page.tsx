@@ -1,37 +1,59 @@
 'use client'
 
+import { useState } from 'react'
+import SignInput from '@/components/Inputs/SignInput'
+import { Checkbox } from '@/components/ui/checkbox'
+import Link from 'next/link'
+
 export default function SignInPage() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    saveId: false,
+    keepSignedIn: false,
+  })
+
   return (
     <div className="w-screen bg-white overflow-auto -mx-[5.375rem] min-h-screen">
       <div className="max-w-[400px] mx-auto p-8 pt-12">
         <h1 className="text-[24px] font-bold text-center mb-8">Sign In</h1>
 
         <form className="space-y-3 text-[14px]">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full py-2 px-4 border border-[#C9CDD2] rounded-md focus:outline-none text-gray-700 placeholder-gray-400"
-            />
-          </div>
+          <SignInput
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="border-[#C9CDD2]"
+          />
 
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full py-2 px-4 border border-[#C9CDD2] rounded-md focus:outline-none text-gray-700 placeholder-gray-400"
-            />
-          </div>
+          <SignInput
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            className="border-[#C9CDD2]"
+          />
 
           {/* check button */}
           <div className="flex items-center gap-8 pt-2 pb-4">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="w-5 h-5 rounded border-gray-100" />
+              <Checkbox
+                checked={formData.saveId}
+                onCheckedChange={(checked) =>
+                  setFormData({ ...formData, saveId: checked as boolean })
+                }
+              />
               <span className="text-gray-700 text-[14px]">Save ID</span>
             </label>
 
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="w-5 h-5 rounded border-gray-300" />
+              <Checkbox
+                checked={formData.keepSignedIn}
+                onCheckedChange={(checked) =>
+                  setFormData({ ...formData, keepSignedIn: checked as boolean })
+                }
+              />
               <span className="text-gray-700 text-[14px]">Keep me signed in</span>
               <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -54,12 +76,12 @@ export default function SignInPage() {
 
         {/* signup button & forgot password */}
         <div className="flex justify-between mt-6 text-gray-600 text-[14px]">
-          <a href="#" className="hover:text-gray-800">
+          <Link href="/member/signup" className="hover:text-gray-800">
             Sign up with email
-          </a>
-          <a href="#" className="hover:text-gray-800">
+          </Link>
+          <Link href="/" className="hover:text-gray-800">
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         {/* or 구분선 */}
