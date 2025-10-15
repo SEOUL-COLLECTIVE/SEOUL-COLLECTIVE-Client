@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { navItems } from '@/data/navItem'
+import { navItems } from '@/constants/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
