@@ -12,8 +12,10 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signupData'
 import { validateEmail, validatePassword, validateRequired } from '@/utils/validation'
+import SurveyModal from '@/components/Modals/SurveyModal'
 
 export default function SignUpPage() {
+  const [modalOpen, setModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -146,6 +148,8 @@ export default function SignUpPage() {
     }
 
     console.log('Form submitted:', formData)
+
+    setModalOpen(true)
   }
 
   return (
@@ -438,6 +442,9 @@ export default function SignUpPage() {
           </button>
         </form>
       </div>
+
+      {/* survey modal */}
+      <SurveyModal open={modalOpen} onOpenChange={setModalOpen} />
     </div>
   )
 }
