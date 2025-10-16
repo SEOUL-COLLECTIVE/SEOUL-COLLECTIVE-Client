@@ -1,7 +1,7 @@
 'use client'
 
 import ContentsCard from '../Cards/ContentsCard'
-import { testDriveData } from '@/data/sectionData'
+import { testDriveData } from '@/constants/sectionData'
 
 export default function TestDrive() {
   return (

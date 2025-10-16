@@ -1,7 +1,7 @@
 'use client'
 
 import ContentsCard from '../Cards/ContentsCard'
-import { latestData } from '@/data/sectionData'
+import { latestData } from '@/constants/sectionData'
 
 export default function Latest() {
   return (

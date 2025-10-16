@@ -37,9 +37,9 @@ export default function RootLayout({
     <html lang="en" className={`${futuraBold.variable} ${futura.variable} ${poppins.variable}`}>
       {/* 두 폰트 variable 모두 추가 */}
       <Providers>
-        <body className="block">
+        <body className="flex min-h-screen flex-col">
           <Topbar />
-          <div className="px-[5.375rem] pt-[11rem]">{children}</div>
+          <main className="mx-auto flex-1 px-[5.375rem] pt-[10rem]">{children}</main>
           <Footer />
         </body>
       </Providers>

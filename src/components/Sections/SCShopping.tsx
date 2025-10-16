@@ -2,7 +2,7 @@
 
 import ContentsCard from '../Cards/ContentsCard'
 import ShoppingCard from '../Cards/ShoppingCard'
-import { shoppingData } from '@/data/sectionData'
+import { shoppingData } from '@/constants/sectionData'
 
 export default function SCShopping() {
   return (

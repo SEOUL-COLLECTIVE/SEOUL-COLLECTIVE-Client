@@ -1,6 +1,6 @@
 import { FaInstagram, FaFacebookF, FaPinterestP } from 'react-icons/fa'
 import { AiOutlineMail } from 'react-icons/ai'
-import { mainNavLinks, companyLinks, legalLinks } from '@/data/navItem'
+import { mainNavLinks, companyLinks, legalLinks } from '@/constants/navItem'
 import Image from 'next/image'
 import Link from 'next/link'
 

@@ -14,7 +14,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { IoSearch } from 'react-icons/io5'
-import { navItems } from '@/data/navItem'
+import { navItems } from '@/constants/navItem'
 import { useRouter } from 'next/navigation'
 
 type NavbarProps = {

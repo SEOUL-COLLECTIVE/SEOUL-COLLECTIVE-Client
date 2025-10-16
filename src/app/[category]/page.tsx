@@ -1,7 +1,7 @@
 'use client'
 
 import { notFound } from 'next/navigation'
-import { navItems } from '@/data/navItem'
+import { navItems } from '@/constants/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import Shopping from '@/components/Sections/Shopping'
@@ -41,7 +41,7 @@ export default function CategoryPage({ params }: PageProps) {
       <div className="container mb-24">
         <div className="relative h-80 -mx-[5.375rem]">
           <Image
-            src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}
+            src={categoryData?.thumbnail || '/test/shopping/shopping_back.png'}
             alt={categoryData?.name || navItem.name}
             fill
             className="object-cover"

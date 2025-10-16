@@ -160,7 +160,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
           {/* Right Section - Image */}
           <div className="relative bg-gray-100">
             <Image
-              src="/test/thumbnail_01.jpg"
+              src="/test/survey_img.jpg"
               alt="Skin profile"
               fill
               className="object-cover"

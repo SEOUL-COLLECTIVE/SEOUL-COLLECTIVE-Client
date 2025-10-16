@@ -16,19 +16,19 @@ export default function Shopping() {
   const sideArticles: ArticleItem[] = [
     {
       id: '2',
-      thumbnail: '/test/thumbnail_01.jpg',
+      thumbnail: '/test/shopping/shopping_03.jpg',
       title: 'The Best Brunette Bob Hair Inspiration for Fall',
       author: 'MEDINA AZALDIN',
     },
     {
       id: '3',
-      thumbnail: '/test/thumbnail_01.jpg',
+      thumbnail: '/test/shopping/shopping_01.jpg',
       title: '14 Viral Korean Beauty Steals You Can Score Today',
       author: 'NYKIA SPRADLEY',
     },
     {
       id: '4',
-      thumbnail: '/test/thumbnail_01.jpg',
+      thumbnail: '/test/shopping/shopping_04.jpg',
       title: 'Vicky Tsai Made Tatcha a Success—But at What Cost?',
       author: 'KATHLEEN HOU',
     },
@@ -42,7 +42,7 @@ export default function Shopping() {
           <ContentsCard
             id="1"
             section="shopping"
-            imageUrl="/test/thumbnail_01.jpg"
+            imageUrl="/test/shopping/shopping_02.jpg"
             title={'Hailey Bieber’s Staple Fall\nJeans Are On Sale For Under $75'}
             categorySlug="shopping"
             subcategorySlug="articles"
