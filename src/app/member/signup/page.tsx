@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SignInput from '@/components/Inputs/SignInput'
 import {
   Select,
@@ -80,6 +80,42 @@ export default function SignUpPage() {
     setErrors({ ...errors, [field]: validationResult.message })
   }
 
+  // agree all terms 선택 시 모든 사항에 동의
+  const handleAgreeAllTerms = (checked: boolean) => {
+    setFormData({
+      ...formData,
+      agreeTerms: checked,
+      termsOfUse: checked,
+      personalInfoRequired: checked,
+      personalInfoOptional: checked,
+      marketingOptional: checked,
+      emailMarketing: checked,
+    })
+  }
+
+  // 모든 체크박스가 선택되면 agreeTerms도 자동으로 true
+  useEffect(() => {
+    const allChecked =
+      formData.termsOfUse &&
+      formData.personalInfoRequired &&
+      formData.personalInfoOptional &&
+      formData.marketingOptional &&
+      formData.emailMarketing
+
+    if (allChecked && !formData.agreeTerms) {
+      setFormData({ ...formData, agreeTerms: true })
+    } else if (!allChecked && formData.agreeTerms) {
+      setFormData({ ...formData, agreeTerms: false })
+    }
+  }, [
+    formData.termsOfUse,
+    formData.personalInfoRequired,
+    formData.personalInfoOptional,
+    formData.marketingOptional,
+    formData.emailMarketing,
+    formData,
+  ])
+
   const isFormValid = () => {
     return (
       formData.firstName &&
@@ -126,7 +162,6 @@ export default function SignUpPage() {
             <SignInput
               type="text"
               placeholder="First Name"
-              className="mb-3"
               value={formData.firstName}
               onChange={(e) => handleChange('firstName', e.target.value)}
               error={errors.firstName}
@@ -135,6 +170,7 @@ export default function SignUpPage() {
               type="text"
               placeholder="Last Name (Family Name)"
               value={formData.lastName}
+              className="mt-3"
               onChange={(e) => handleChange('lastName', e.target.value)}
               error={errors.lastName}
             />
@@ -199,7 +235,7 @@ export default function SignUpPage() {
               value={formData.gender}
               onValueChange={(value) => setFormData({ ...formData, gender: value })}
             >
-              <SelectTrigger className="focus:ring-0 focus:ring-offset-0 bg-gray-100">
+              <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent className="bg-white">
@@ -239,12 +275,7 @@ export default function SignUpPage() {
           {/* Terms and Conditions */}
           <div className="space-y-3 pt-4 border-t">
             <label className="flex items-start gap-2 cursor-pointer">
-              <Checkbox
-                checked={formData.agreeTerms}
-                onCheckedChange={(checked) =>
-                  setFormData({ ...formData, agreeTerms: checked as boolean })
-                }
-              />
+              <Checkbox checked={formData.agreeTerms} onCheckedChange={handleAgreeAllTerms} />
               <span>I Agree to all terms. (Required/Optional).</span>
             </label>
 
