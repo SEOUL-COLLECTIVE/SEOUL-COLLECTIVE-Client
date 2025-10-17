@@ -1,4 +1,8 @@
-// lib/api-counter.ts
+/**
+ * API 호출 횟수 로깅
+ * @param query
+ */
+
 let count = 0
 
 export function logApiCall(query: string) {
