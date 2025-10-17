@@ -1,17 +1,12 @@
 'use client'
 
-import { use } from 'react'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import { useArticlesBySubcategory, useCategory } from '@/hooks/use-contentful'
+import { useParams } from 'next/navigation'
 
-interface PageProps {
-  params: Promise<{ category: string; subcategory: string }>
-}
-
-export default function SubCategoryPage({ params }: PageProps) {
-  // use()로 params 간단하게 해결
-  const { category, subcategory } = use(params)
+export default function SubCategoryPage() {
+  const { category, subcategory } = useParams<{ category: string; subcategory: string }>()
 
   // TanStack Query hooks 사용 - API 호출 최소화 (캐시에서 가져옴!)
   const { data: filteredArticles = [], isLoading } = useArticlesBySubcategory(category, subcategory)

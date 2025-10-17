@@ -6,14 +6,10 @@ import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
 import Shopping from '@/components/Sections/Shopping'
 import { useCategory, useArticlesByCategory } from '@/hooks/use-contentful'
-import { use } from 'react'
+import { useParams } from 'next/navigation'
 
-interface PageProps {
-  params: Promise<{ category: string }>
-}
-
-export default function CategoryPage({ params }: PageProps) {
-  const { category } = use(params)
+export default function CategoryPage() {
+  const { category } = useParams<{ category: string }>()
 
   const categoryName = category.toUpperCase()
   const navItem = navItems.find((item) => item.name === categoryName)
@@ -38,7 +34,7 @@ export default function CategoryPage({ params }: PageProps) {
 
   if (category === 'shopping') {
     return (
-      <div className="container mb-24">
+      <div className="container mb-24 w-full">
         <div className="relative h-80 -mx-[5.375rem]">
           <Image
             src={categoryData?.thumbnail || '/test/shopping/shopping_back.png'}
@@ -66,7 +62,7 @@ export default function CategoryPage({ params }: PageProps) {
   }
 
   return (
-    <div className="container mb-24">
+    <div className="container mb-24 w-full">
       <div className="relative h-80 -mx-[5.375rem]">
         <Image
           src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}

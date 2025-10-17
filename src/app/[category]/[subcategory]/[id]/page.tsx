@@ -1,19 +1,15 @@
 'use client'
 
-import { use } from 'react'
 import SaveBtn from '@/components/Buttons/SaveBtn'
 import { useArticle } from '@/hooks/use-contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
 import { formatDate } from '@/utils/date-format'
+import { useParams } from 'next/navigation'
 
-interface PageProps {
-  params: Promise<{ category: string; subcategory: string; id: string }>
-}
-
-export default function ArticlePage({ params }: PageProps) {
-  const { id } = use(params)
+export default function ArticlePage() {
+  const { id } = useParams<{ id: string }>()
 
   // TanStack Query hook 사용 (캐시에서 가져옴)
   const { data: article, isLoading, error } = useArticle(id)
