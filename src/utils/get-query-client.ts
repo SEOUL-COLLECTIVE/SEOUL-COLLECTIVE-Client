@@ -6,7 +6,7 @@ function makeQueryClient() {
       queries: {
         // staleTime: 데이터가 "신선"하다고 간주되는 시간
         // 이 시간 동안은 API를 다시 호출하지 않음
-        staleTime: 60 * 1000 * 5, // 1분 = 60초 * 1000밀리초
+        staleTime: 60 * 1000 * 5, // 5분 = 60초 * 1000밀리초 * 5
 
         // gcTime: 사용하지 않는 캐시를 메모리에 보관하는 시간
         // 이 시간이 지나면 캐시 삭제
