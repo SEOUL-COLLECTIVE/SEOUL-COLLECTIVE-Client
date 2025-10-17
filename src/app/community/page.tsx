@@ -33,7 +33,7 @@ export default function CommunityPage() {
     <div className="container mb-24">
       <div className="relative h-80 -mx-[5.375rem]">
         <Image
-          src={'/test/thumbnail_01.jpg'}
+          src={'/test/community.jpg'}
           alt="community thumbnail"
           fill
           className="object-cover"
