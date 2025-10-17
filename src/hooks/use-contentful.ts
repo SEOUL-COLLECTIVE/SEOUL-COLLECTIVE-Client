@@ -67,7 +67,7 @@ export function useArticlesByCategory(categorySlug: string) {
 
   const filteredArticles =
     articles?.filter(
-      (article) => article.category?.slug.toLowerCase() === categorySlug.toLowerCase()
+      (article) => (article.category?.slug.toLowerCase() ?? '') === categorySlug.toLowerCase()
     ) || []
 
   return {
@@ -85,8 +85,8 @@ export function useArticlesBySubcategory(categorySlug: string, subcategorySlug: 
   const filteredArticles =
     articles?.filter(
       (article) =>
-        article.category?.slug.toLowerCase() === categorySlug.toLowerCase() &&
-        article.subcategory?.slug.toLowerCase() === subcategorySlug.toLowerCase()
+        (article.category?.slug.toLowerCase() ?? '') === categorySlug.toLowerCase() &&
+        (article.subcategory?.slug.toLowerCase() ?? '') === subcategorySlug.toLowerCase()
     ) || []
 
   return {
