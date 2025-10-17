@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getArticles, getCategoryBySlug } from '@/utils/contentful'
+import { getArticles, getCategoryBySlug } from '@/api/contentful'
 import { logApiCall } from '@/utils/api-counter'
 import { contentfulKeys } from '@/utils/contentful-keys'
 
