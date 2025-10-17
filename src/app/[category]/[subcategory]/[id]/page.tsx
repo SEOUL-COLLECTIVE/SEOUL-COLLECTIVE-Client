@@ -6,7 +6,7 @@ import { useArticle } from '@/hooks/use-contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Image from 'next/image'
-import { formatDate } from '@/utils/dateFormat'
+import { formatDate } from '@/utils/date-format'
 
 interface PageProps {
   params: Promise<{ category: string; subcategory: string; id: string }>
