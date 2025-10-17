@@ -53,6 +53,7 @@ export default function SignUpPage() {
     })
   }
 
+  // field에 따라 각각 알맞은 validation 부여
   const validateField = (field: keyof typeof errors, value: string) => {
     let validationResult = { valid: true, message: '' }
 
@@ -124,6 +125,7 @@ export default function SignUpPage() {
       formData.lastName &&
       formData.email &&
       formData.password &&
+      formData.age &&
       validateEmail(formData.email).valid &&
       validatePassword(formData.password).valid &&
       formData.termsOfUse &&
@@ -131,6 +133,7 @@ export default function SignUpPage() {
     )
   }
 
+  // 최종 제출 이벤트
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -208,6 +211,28 @@ export default function SignUpPage() {
             />
           </div>
 
+          {/* Age */}
+          <div>
+            <label className="block text-gray-700 mb-2">
+              Age <span className="text-red-500">*</span>
+            </label>
+            <div className="space-y-2">
+              {AGE_GROUPS.map((ageGroup) => (
+                <label key={ageGroup.value} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="age"
+                    value={ageGroup.value}
+                    checked={formData.age === ageGroup.value}
+                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    className="w-4 h-4"
+                  />
+                  <span>{ageGroup.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
           {/* Country */}
           <div>
             <label className="block text-gray-700 mb-2">Country</label>
@@ -254,26 +279,6 @@ export default function SignUpPage() {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* Age */}
-          <div>
-            <label className="block text-gray-700 mb-2">Age</label>
-            <div className="space-y-2">
-              {AGE_GROUPS.map((ageGroup) => (
-                <label key={ageGroup.value} className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="age"
-                    value={ageGroup.value}
-                    checked={formData.age === ageGroup.value}
-                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    className="w-4 h-4"
-                  />
-                  <span>{ageGroup.label}</span>
-                </label>
-              ))}
-            </div>
           </div>
 
           {/* Terms and Conditions */}
