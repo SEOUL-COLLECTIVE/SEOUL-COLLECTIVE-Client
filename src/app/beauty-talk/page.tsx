@@ -43,12 +43,12 @@ export default function CommunityPage() {
         <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
-            <span className="uppercase">community</span>
+            <span className="uppercase"></span>
           </div>
 
           <div className="mb-2">
             <div className="text-white inline-block tracking-wide text-p32">
-              <div className="font-bold uppercase">community</div>
+              <div className="font-bold uppercase">BEAUTY TALK</div>
             </div>
           </div>
         </div>
