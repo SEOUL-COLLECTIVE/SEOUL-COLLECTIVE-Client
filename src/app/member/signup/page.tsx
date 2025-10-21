@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signupData'
+import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signup'
 import { validateEmail, validatePassword, validateRequired } from '@/utils/validation'
 import SurveyModal from '@/components/Modals/SurveyModal'
 
