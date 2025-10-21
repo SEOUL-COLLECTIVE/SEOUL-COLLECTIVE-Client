@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import ShoppingCard from '../Cards/ShoppingCard'
-import { shoppingData } from '@/constants/sectionData'
+import { shoppingData } from '@/dummys/section-data'
 
 type CarouselProps = {
   category: string
