@@ -3,14 +3,14 @@
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 
-interface ExpertProfileProps {
+interface ExpertsProfileProps {
   name: string
   title: string
   image: string
   description: string
 }
 
-export function ExpertProfile({ name, title, image, description }: ExpertProfileProps) {
+export function ExpertsProfileCard({ name, title, image, description }: ExpertsProfileProps) {
   return (
     <Card className="overflow-hidden bg-white border-none shadow-none">
       <CardContent className="p-0">
@@ -18,7 +18,12 @@ export function ExpertProfile({ name, title, image, description }: ExpertProfile
           {/* Expert Header */}
           <div className="flex items-start gap-4 p-6">
             <div className="relative h-32 w-32 flex-shrink-0 overflow-hidden">
-              <Image src={image || '/thumbnail.01.jpg'} alt={name} fill className="object-cover" />
+              <Image
+                src={image || '/test/thumbnail.01.jpg'}
+                alt={name}
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-bold text-foreground">{name}</h3>

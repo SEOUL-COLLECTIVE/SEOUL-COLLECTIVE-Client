@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { ExpertProfileCard } from '@/components/Cards/ExpertsProfileCard'
+import { ExpertsProfileCard } from '@/components/Cards/ExpertsProfileCard'
 import { ExpertInfo } from '@/components/Cards/ExpertInfo'
 import { QuestionCard } from '@/components/Cards/QuestionCard'
 import { Button } from '@/components/ui/button'
@@ -68,7 +68,7 @@ export default function AskExpertPage() {
             <div className="lg:col-span-2">
               <div className="grid gap-6 sm:grid-cols-2">
                 {experts_thismonth.map((expert, index) => (
-                  <ExpertProfileCard key={index} {...expert} />
+                  <ExpertsProfileCard key={index} {...expert} />
                 ))}
               </div>
             </div>
