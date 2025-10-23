@@ -2,7 +2,7 @@
 
 import ContentsCard from '../Cards/ContentsCard'
 import ShoppingCard from '../Cards/ShoppingCard'
-import { shoppingData } from '@/dummys/section-data'
+import { shoppingData } from '@/dummies/section-data'
 
 export default function SCShopping() {
   return (

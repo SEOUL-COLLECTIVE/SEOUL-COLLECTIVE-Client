@@ -52,7 +52,6 @@ export const dummyPosts = [
     author: {
       name: 'MakeupMaven',
       avatar: '/test/thumbnail_01.jpg',
-      badges: ['ROUGE', 'INFLUENCER'],
     },
     content:
       'I saw a TikTok where someone used setting spray as a primer before foundation. Has anyone tried this? Does it actually work or will it mess up my base?',
@@ -70,7 +69,6 @@ export const dummyPosts = [
     author: {
       name: 'HairGoals_',
       avatar: '/test/thumbnail_01.jpg',
-      badges: ['VIB'],
     },
     content:
       "My hair was completely fried from daily heat styling. I thought I'd have to cut it all off, but these products literally saved my hair! Here's my complete hair repair journey.",

@@ -7,7 +7,7 @@ import SearchBar from '@/components/Inputs/SearchBar'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { dummyPosts } from '@/dummys/beautytalk-data'
+import { dummyPosts } from '@/dummies/beautytalk-data'
 import { btcategory, btmenu, sortOptions } from '@/constants/beautytalk'
 
 export default function CommunityPage() {

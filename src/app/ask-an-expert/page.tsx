@@ -6,10 +6,11 @@ import { QuestionCard } from '@/components/Cards/QuestionCard'
 import { Button } from '@/components/ui/button'
 import { CategoryFilter } from '@/components/Buttons/CategoryFilter'
 import { expertsymenu } from '@/constants/experts'
-import { experts_thismonth, questions } from '@/dummys/experts-data'
+import { experts_thismonth, questions } from '@/dummies/experts-data'
+import { useState } from 'react'
 
-export default function page() {
-  const [selectedCategory, setSelectedCategory] = useState('')
+export default function AskExpertPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
 
   const filteredQuestions =
     selectedCategory === 'All'
