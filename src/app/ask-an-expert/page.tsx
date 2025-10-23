@@ -9,6 +9,13 @@ import { expertsymenu } from '@/constants/experts'
 import { experts_thismonth, questions } from '@/dummys/experts-data'
 
 export default function page() {
+  const [selectedCategory, setSelectedCategory] = useState('')
+
+  const filteredQuestions =
+    selectedCategory === 'All'
+      ? questions
+      : questions.filter((q) => q.category === selectedCategory)
+
   return (
     <div className="w-screen container mb-24">
       <div className="relative h-80 -mx-[5.375rem]">
@@ -71,12 +78,12 @@ export default function page() {
 
           {/* Category Filter */}
           <div className="mb-8">
-            <CategoryFilter />
+            <CategoryFilter selected={selectedCategory} onCategoryChange={setSelectedCategory} />
           </div>
 
           {/* Questions Grid */}
           <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {questions.map((question) => (
+            {filteredQuestions.map((question) => (
               <QuestionCard key={question.id} {...question} />
             ))}
           </div>
