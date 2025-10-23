@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { ExpertProfile } from '@/components/Cards/ExpertsProfileCard'
+import { ExpertProfileCard } from '@/components/Cards/ExpertsProfileCard'
 import { ExpertInfo } from '@/components/Cards/ExpertInfo'
 import { QuestionCard } from '@/components/Cards/QuestionCard'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,7 @@ import { experts_thismonth, questions } from '@/dummies/experts-data'
 import { useState } from 'react'
 
 export default function AskExpertPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
 
   const filteredQuestions =
     selectedCategory === 'All'
@@ -68,7 +68,7 @@ export default function AskExpertPage() {
             <div className="lg:col-span-2">
               <div className="grid gap-6 sm:grid-cols-2">
                 {experts_thismonth.map((expert, index) => (
-                  <ExpertProfile key={index} {...expert} />
+                  <ExpertProfileCard key={index} {...expert} />
                 ))}
               </div>
             </div>

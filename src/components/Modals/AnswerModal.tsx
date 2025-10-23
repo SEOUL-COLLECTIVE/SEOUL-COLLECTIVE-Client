@@ -54,7 +54,7 @@ export default function AnswerModal({
 
         <div className="mt-6 space-y-4">
           {/* Category Tag */}
-          <div className="inline-block rounded-full bg-muted px-3 py-1 bg-gray-100">
+          <div className="inline-block rounded-full px-3 py-1 bg-gray-100">
             <span className="text-xs font-medium text-muted-foreground"># {category}</span>
           </div>
 
