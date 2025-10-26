@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signupData'
+import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signup'
 import { validateEmail, validatePassword, validateRequired } from '@/utils/validation'
 import SurveyModal from '@/components/Modals/SurveyModal'
 
@@ -37,6 +37,7 @@ export default function SignUpPage() {
     lastName: '',
     email: '',
     password: '',
+    age: '',
   })
 
   const [expandedSections, setExpandedSections] = useState({
@@ -144,6 +145,7 @@ export default function SignUpPage() {
         lastName: validateRequired(formData.lastName, 'Last name').message,
         email: validateEmail(formData.email).message,
         password: validatePassword(formData.password).message,
+        age: validateRequired(formData.age, 'Age').message,
       })
 
       alert('Please fill in all required fields correctly and agree to the required terms.')
@@ -231,6 +233,7 @@ export default function SignUpPage() {
                 </label>
               ))}
             </div>
+            {errors.age && <p className="text-red-500 text-sm mt-1">{errors.age}</p>}
           </div>
 
           {/* Country */}

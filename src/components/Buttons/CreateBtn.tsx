@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function CreateBtn() {
   return (
-    <Link href="/community/create">
+    <Link href="/beauty-talk/create">
       <div>
         {/* 기본 버튼 */}
         <button className="flex items-center gap-2 px-4 py-2">
