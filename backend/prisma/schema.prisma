@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // .env 파일의 값 사용
+}
+
+model User {
+  // 계정 정보
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  country   Int?  // (0: Korea, 1: United States, ...)
+  gender    Int?  // (0: Male, 1: Female, 2: Other, 3: Prefer not to answer)
+  age       Int?  // (0: "16-24", 1: "25-34", ...)
+  
+  // 약관 동의 필드
+  termsOfUse           Boolean  @default(false)
+  personalInfoRequired Boolean  @default(false)
+  personalInfoOptional Boolean  @default(false)
+  marketingOptional    Boolean  @default(false)
+  emailMarketing       Boolean  @default(false)
+
+  // 계정 생성 정보
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
