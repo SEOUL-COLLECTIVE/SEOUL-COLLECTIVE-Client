@@ -1,9 +1,9 @@
-import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
-import cors from 'cors'
-import swaggerUi from 'swagger-ui-express'
-import { swaggerSpec } from './config/swagger.config'
-import authRoutes from './routes/authRouter'
+import express, { Express, Request, Response } from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.config';
+import authRoutes from './routes/authRouter';
 
 // .env 파일 로드
 dotenv.config()
@@ -41,7 +41,11 @@ app.use((req, res, next) => {
 });
 
 // Swagger 문서 경로
-app.use(`${API_VERSION}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+app.use(
+  `${API_VERSION}/docs`, 
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerSpec)
+);
 
 // API 라우트 마운트
 app.use(`${API_VERSION}/auth`, authRoutes)
@@ -54,5 +58,5 @@ app.get('/', (req: Request, res: Response) => {
 // 서버 시작
 app.listen(PORT, DEV_HOST, () => {
   console.log(`[SERVER]: Server is running at http://${DEV_HOST}:${PORT}`)
-  console.log(`[SERVER]: Swagger Docs available at http://${DEV_HOST}:${PORT}${API_VERSION}/docs`)
+  console.log(`[SERVER]: Swagger Docs available at http://${DEV_HOST}:${PORT}${API_VERSION}/docs`);
 })

@@ -7,10 +7,11 @@ datasource db {
   url      = env("DATABASE_URL") // .env 파일의 값 사용
 }
 
+// 유저 테이블
 model User {
   // 계정 정보
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String  @id @default(cuid())
+  email     String  @unique
   password  String?
   firstName String
   lastName  String
@@ -19,16 +20,32 @@ model User {
   age       String
 
   // Google 로그인 사용자 식별
-  googleId             String?  @unique
+  googleId String? @unique
 
-  // 약관 동의 필드
-  termsOfUse           Boolean  @default(false)
-  personalInfoRequired Boolean  @default(false)
-  personalInfoOptional Boolean  @default(false)
-  marketingOptional    Boolean  @default(false)
-  emailMarketing       Boolean  @default(false)
+  // 1:1 관계 - Terms 모델 연결
+  terms Terms
 
   // 계정 생성 정보
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 약관 테이블
+model Terms {
+  id String @id @default(cuid())
+
+  // 약관 동의 필드
+  termsOfUse             Boolean @default(true)
+  personalInfoRequired   Boolean @default(true)
+  personalInfoOptional   Boolean @default(false)
+  marketingOptional      Boolean @default(false)
+  emailMarketing         Boolean @default(false)
+
+  // 1:1 관계 - User 모델 연결
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  // 동의 정보
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
