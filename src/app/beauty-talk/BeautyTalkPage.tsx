@@ -6,6 +6,7 @@ import SortDropdown from '@/components/DropDown/SortDropDown'
 import SearchBar from '@/components/Inputs/SearchBar'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import { ROUTES } from '@/constants/routes'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { dummyPosts } from '@/dummies/beautytalk-data'
 import { btcategory, btmenu, sortOptions } from '@/constants/beautytalk'
@@ -37,14 +38,14 @@ export default function BeautyTalkPage() {
     })
 
     const queryString = params.toString()
-    router.push(queryString ? `/beauty-talk?${queryString}` : '/beauty-talk')
+    router.push(queryString ? `${ROUTES.beautyTalk.root}?${queryString}` : ROUTES.beautyTalk.root)
   }
 
   // 메뉴 클릭 핸들러
   const handleMenuClick = (slug: string | null) => {
     if (!slug) {
       // All 클릭 시 - 모든 파라미터 제거
-      router.push('/beauty-talk')
+      router.push(ROUTES.beautyTalk.root)
     } else {
       // 특정 메뉴 클릭 시 - category는 초기화
       updateParams({ type: slug, category: 'all' })
@@ -136,7 +137,7 @@ export default function BeautyTalkPage() {
           <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
             <span
               className="uppercase cursor-pointer hover:underline"
-              onClick={() => router.push('/beauty-talk')}
+              onClick={() => router.push(ROUTES.beautyTalk.root)}
             >
               Beauty Talk
             </span>

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { SectionStyle } from '@/types/card'
 import Link from 'next/link'
-import { ROUTES } from '@/lib/routes'
+import { ROUTES } from '@/constants/routes'
 
 type ContentsCardProps = {
   section: string
