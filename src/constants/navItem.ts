@@ -1,3 +1,5 @@
+import { ROUTES } from '@/constants/routes'
+
 export interface NavItem {
   name: string
   href: string
@@ -7,47 +9,47 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   {
     name: 'SKIN',
-    href: '/skin',
+    href: ROUTES.category('skin'),
     submenu: [
-      { name: 'Skin Concerns', href: '/skin/concerns' },
-      { name: 'Skin Type', href: '/skin/type' },
-      { name: 'Sun Care', href: '/skin/sun-care' },
-      { name: 'Body Care', href: '/skin/body-care' },
+      { name: 'Skin Concerns', href: ROUTES.subcategory('skin', 'skin-concerns') },
+      { name: 'Skin Type', href: ROUTES.subcategory('skin', 'skin-type') },
+      { name: 'Sun Care', href: ROUTES.subcategory('skin', 'sun-care') },
+      { name: 'Body Care', href: ROUTES.subcategory('skin', 'body-care') },
     ],
   },
   {
     name: 'MAKEUP',
-    href: '/makeup',
+    href: ROUTES.category('makeup'),
     submenu: [
-      { name: 'Face', href: '/makeup/face' },
-      { name: 'Eyes', href: '/makeup/eyes' },
-      { name: 'Lips', href: '/makeup/lips' },
-      { name: 'Brushes & tools', href: '/makeup/brushes-tools' },
+      { name: 'Face', href: ROUTES.subcategory('makeup', 'face') },
+      { name: 'Eyes', href: ROUTES.subcategory('makeup', 'eyes') },
+      { name: 'Lips', href: ROUTES.subcategory('makeup', 'lips') },
+      { name: 'Brushes & tools', href: ROUTES.subcategory('makeup', 'brushes-tools') },
     ],
   },
   {
     name: 'HAIR',
-    href: '/hair',
+    href: ROUTES.category('hair'),
     submenu: [
-      { name: 'Hair care', href: '/hair/care' },
-      { name: 'Scalp Health', href: '/hair/scalp-health' },
+      { name: 'Hair care', href: ROUTES.subcategory('hair', 'hair-care') },
+      { name: 'Scalp Health', href: ROUTES.subcategory('hair', 'scalp-health') },
     ],
   },
   {
     name: 'BRANDS',
-    href: '/brands',
+    href: ROUTES.BRANDS,
   },
   {
     name: 'SHOPPING',
-    href: '/shopping',
+    href: ROUTES.SHOPPING,
   },
   {
     name: 'ASK AN EXPERT',
-    href: '/ask-an-expert',
+    href: ROUTES.askExpert.root,
   },
   {
     name: 'BEAUTY TALK',
-    href: '/beauty-talk',
+    href: ROUTES.beautyTalk.root,
   },
 ]
 

@@ -34,6 +34,14 @@ export const ROUTES = {
     type: (type: string) => `/beauty-talk/${type}`,
     typeCategory: (type: string, category: string) => `/beauty-talk/${type}/${category}`,
   },
+
+  // 뷰티톡 (쿼리 → 세그먼트 점진 전환 고려)
+  askExpert: {
+    root: '/ask-an-expert' as const,
+    create: '/ask-an-expert/create' as const,
+    type: (type: string) => `/ask-an-expert/${type}`,
+    typeCategory: (type: string, category: string) => `/ask-an-expert/${type}/${category}`,
+  },
 } as const
 
 // 타입 안전한 아티클 링크 생성기
