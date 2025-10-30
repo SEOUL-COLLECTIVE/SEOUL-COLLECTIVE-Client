@@ -48,9 +48,11 @@ export default function Topbar() {
               <button className="w-[7rem] bg-purple text-p11 font-semibold text-white py-0.5">
                 SUBSCRIBE
               </button>
-              <button className="w-[7rem] bg-black text-p11 font-semibold text-white">
-                SIGN IN
-              </button>
+              <Link href="/member/signin">
+                <button className="w-[7rem] bg-black text-p11 font-semibold text-white">
+                  SIGN IN
+                </button>
+              </Link>
             </div>
           </div>
         </div>

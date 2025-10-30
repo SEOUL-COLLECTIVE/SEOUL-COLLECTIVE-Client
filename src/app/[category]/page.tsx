@@ -1,47 +1,83 @@
+'use client'
+
 import { notFound } from 'next/navigation'
+import { navItems } from '@/constants/navItem'
 import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
-import { getCategoryBySlug, getArticlesByCategory } from '@/utils/contentful'
 import Shopping from '@/components/Sections/Shopping'
-import { navItems } from '@/data/navItem'
+import { useCategory, useArticlesByCategory } from '@/hooks/use-contentful'
+import { useParams } from 'next/navigation'
 
-interface PageProps {
-  params: Promise<{ category: string }>
-}
+export default function CategoryPage() {
+  const { category } = useParams<{ category: string }>()
 
-export default async function CategoryPage({ params }: PageProps) {
-  const { category } = await params
+  const categoryName = category.toUpperCase()
+  const navItem = navItems.find((item) => item.name === categoryName)
 
-  const navItem = navItems.find((item) => item.name === category.toUpperCase())
-
-  // 동적 라우트인 경우에만 Contentful API 호출 (API 호출 최소화)
-  const [categoryData, categoryArticles] = await Promise.all([
-    getCategoryBySlug(category),
-    getArticlesByCategory(category),
-  ])
-
-  if (!categoryData) {
+  if (!navItem) {
     notFound()
   }
 
-  // 동적 라우트 처리 (Contentful에서 관리되는 카테고리)
+  // useCategory: 카테고리 정보 가져옴(api 호출)
+  // useArticlesByCategory: 앞서 받아와서 캐싱되어있는 모든 아티클 중 해당 카테고리만 필터링
+  const { data: categoryData, isLoading: categoryLoading } = useCategory(category)
+  const { data: categoryArticles = [], isLoading: articlesLoading } =
+    useArticlesByCategory(category)
+
+  if (categoryLoading || articlesLoading) {
+    return (
+      <div className="container mb-24 flex justify-center items-center min-h-[60vh]">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
+  }
+
+  if (category === 'shopping') {
+    return (
+      <div className="container mb-24 w-full">
+        <div className="relative h-80 -mx-[5.375rem]">
+          <Image
+            src={categoryData?.thumbnail || '/test/shopping/shopping_back.png'}
+            alt={categoryData?.name || navItem.name}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
+            <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
+              <span className="uppercase">{categoryData?.name || navItem.name}</span>
+            </div>
+
+            <div className="mb-2">
+              <div className="text-white inline-block tracking-wide text-p32">
+                <div className="font-bold uppercase">{categoryData?.name || navItem.name}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Shopping />
+      </div>
+    )
+  }
+
   return (
-    <div className="container mb-24">
+    <div className="container mb-24 w-full">
       <div className="relative h-80 -mx-[5.375rem]">
         <Image
-          src={categoryData.thumbnail || '/test/thumbnail_01.jpg'}
-          alt={categoryData.name}
+          src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}
+          alt={categoryData?.name || 'thumbnail'}
           fill
           className="object-cover"
           priority
         />
         <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
           <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
-            <span className="uppercase">{categoryData.name}</span>
+            <span className="uppercase">{categoryData?.name}</span>
           </div>
           <div className="mb-2">
             <div className="text-white inline-block tracking-wide text-p32">
-              <div className="font-bold uppercase">{categoryData.name}</div>
+              <div className="font-bold uppercase">{categoryData?.name}</div>
             </div>
           </div>
         </div>

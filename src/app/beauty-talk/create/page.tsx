@@ -138,7 +138,7 @@ export default function CreatePostPage() {
       />
 
       {/* Hashtags */}
-      <div className="mb-6">
+      <div className="mb-6 mt-4">
         <label className="block text-sm font-semibold mb-2">#hashtag</label>
         <div className="border border-gray-300 rounded p-3">
           {/* Display Tags */}

@@ -3,85 +3,35 @@
 import { Heart, Bookmark } from 'lucide-react'
 import Image from 'next/image'
 
-// 더미 데이터
-const dummyPosts = [
-  {
-    id: 1,
-    category: 'SKIN',
-    title: 'Monthly Favorites: September 2025 Edition!',
-    postedDate: '09-23-2025 09:47',
-    updatedDate: 'yesterday',
-    author: {
-      name: 'KhyleyBT',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['ADMIN', 'ROUGE'],
-    },
-    content:
-      "Happy fall—officially—BIC, I hope September has treated you well! I'm in my annual cliché fall girl cycle, hyped about the leaves changing and cozy sweaters. Here are my top picks for this month!",
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Community Favorites', 'Trending at Sephora'],
-    likes: 25,
-    replies: 76,
-  },
-  {
-    id: 2,
-    category: 'Skincare',
-    title: 'My Holy Grail Products for Dry Skin in Winter',
-    postedDate: '09-29-2025 14:22',
-    updatedDate: 'today',
-    author: {
-      name: 'BeautyLover_28',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['VIB'],
-    },
-    content:
-      'Winter is coming and my skin is already feeling it! After years of trial and error, I finally found the perfect routine that keeps my skin hydrated and glowing all season long.',
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Skincare', 'Winter Essentials'],
-    likes: 142,
-    replies: 34,
-  },
-  {
-    id: 3,
-    category: 'Makeup',
-    title: 'Recreating the Trending Clean Girl Makeup Look',
-    postedDate: '09-28-2025 11:05',
-    updatedDate: '2 hours ago',
-    author: {
-      name: 'MakeupMaven',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['ROUGE', 'INFLUENCER'],
-    },
-    content:
-      "The clean girl aesthetic is everywhere right now! I've been perfecting this natural, dewy look and wanted to share my step-by-step process and product recommendations with you all.",
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Makeup Tutorial', 'Trending'],
-    likes: 389,
-    replies: 128,
-  },
-  {
-    id: 4,
-    category: 'Haircare',
-    title: 'How I Repaired My Heat-Damaged Hair in 3 Months',
-    postedDate: '09-27-2025 16:33',
-    author: {
-      name: 'HairGoals_',
-      avatar: '/test/thumbnail_01.jpg',
-      badges: ['VIB'],
-    },
-    content:
-      "My hair was completely fried from daily heat styling. I thought I'd have to cut it all off, but these products literally saved my hair! Here's my complete hair repair journey.",
-    imageUrl: '/test/thumbnail_01.jpg',
-    tags: ['Haircare', 'Hair Repair'],
-    likes: 267,
-    replies: 91,
-  },
-]
+interface Post {
+  id: number
+  category: string
+  title: string
+  postedDate: string
+  updatedDate?: string
+  author: {
+    name: string
+    avatar: string
+  }
+  content: string
+  imageUrls?: string[]
+  tags: string[]
+  likes: number
+  replies: number
+  type?: string
+}
 
-export default function PostCard() {
+interface PostCardProps {
+  posts: Post[]
+}
+
+export default function PostCard({ posts }: PostCardProps) {
+  // posts prop이 없으면 빈 배열 사용
+  const displayPosts = posts || []
+
   return (
     <div className="min-h-screen">
-      {dummyPosts.map((post) => (
+      {displayPosts.map((post) => (
         <div key={post.id} className="w-full bg-white rounded-sm shadow-md p-8 mb-8">
           {post.category && <span className="text-[0.75rem] mb-2 font-bold"> {post.category}</span>}
 
@@ -127,10 +77,19 @@ export default function PostCard() {
             </p>
           </div>
 
-          {/* Image */}
-          {post.imageUrl && (
-            <div className="mb-6 relative w-[18rem] max-w-md aspect-[4/3]">
-              <Image src={post.imageUrl} alt={post.title} fill className="object-cover" />
+          {/* Images */}
+          {post.imageUrls && post.imageUrls.length > 0 && (
+            <div className="mb-6 flex gap-2">
+              {post.imageUrls.slice(0, 3).map((imageUrl, index) => (
+                <div key={index} className="relative aspect-[4/3] w-[18rem] max-w-md">
+                  <Image
+                    src={imageUrl}
+                    alt={`${post.title} - image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
           )}
 

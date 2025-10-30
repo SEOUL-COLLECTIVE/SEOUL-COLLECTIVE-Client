@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronDown } from 'lucide-react'
 import {
   DropdownMenu,
@@ -9,14 +9,30 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { sortOptions } from '@/constants/beautytalk'
 
-export default function SortDropdown() {
-  const [selectedSort, setSelectedSort] = useState('MOST RECENT')
+interface SortDropdownProps {
+  value?: string
+  onChange?: (value: string) => void
+}
 
-  const sortOptions = [
-    { value: 'recent', label: 'MOST RECENT' },
-    { value: 'popular', label: 'MOST POPULAR' },
-  ]
+export default function SortDropdown({ value = 'recent', onChange }: SortDropdownProps) {
+  const [selectedSort, setSelectedSort] = useState('Most Recent')
+
+  // value prop이 변경되면 표시 텍스트 업데이트
+  useEffect(() => {
+    const option = sortOptions.find((opt) => opt.value === value)
+    if (option) {
+      setSelectedSort(option.label)
+    }
+  }, [value])
+
+  const handleSelect = (optionValue: string, optionLabel: string) => {
+    setSelectedSort(optionLabel)
+    if (onChange) {
+      onChange(optionValue)
+    }
+  }
 
   return (
     <div className="">
@@ -34,7 +50,7 @@ export default function SortDropdown() {
           {sortOptions.map((option) => (
             <DropdownMenuItem
               key={option.value}
-              onClick={() => setSelectedSort(option.label)}
+              onClick={() => handleSelect(option.value, option.label)}
               className="text-[0.75rem] font-normal py-1 cursor-pointer hover:bg-gray-50 rounded-lg"
             >
               {option.label}

@@ -34,14 +34,6 @@ export const navItems: NavItem[] = [
     ],
   },
   {
-    name: 'NAIL',
-    href: '/nail',
-    submenu: [
-      { name: 'Inspiration', href: '/nail/inspiration' },
-      { name: 'Product', href: '/nail/product' },
-    ],
-  },
-  {
     name: 'BRANDS',
     href: '/brands',
   },
@@ -50,8 +42,12 @@ export const navItems: NavItem[] = [
     href: '/shopping',
   },
   {
-    name: 'COMMUNITY',
-    href: '/community',
+    name: 'ASK AN EXPERT',
+    href: '/ask-an-expert',
+  },
+  {
+    name: 'BEAUTY TALK',
+    href: '/beauty-talk',
   },
 ]
 
