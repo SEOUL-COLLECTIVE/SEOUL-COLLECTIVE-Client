@@ -18,9 +18,9 @@ export const signUpSchema = z.object({
   // -> [TO-DO] 프론트엔드 정규식이 정해지면 수정
 
   // 선택적 필드
-  country: z.number().int().optional(),
-  gender: z.number().int().optional(),
-  age: z.number().int().optional(),
+  country: z.string().optional(),
+  gender: z.string().optional(),
+  age: z.string().optional(),
 
   // 약관 필드
   termsOfUse: z.boolean().refine((val) => val === true, {

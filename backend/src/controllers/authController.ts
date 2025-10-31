@@ -49,13 +49,13 @@ const GOOGLE_CLIENT_ID = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
  *                 type: string
  *                 description: 성
  *               country:
- *                 type: number
+ *                 type: string
  *                 description: 국가 코드
  *               gender:
- *                 type: number
+ *                 type: string
  *                 description: 성별 코드
  *               age:
- *                 type: number
+ *                 type: string
  *                 description: 연령대 코드
  *               termsOfUse:
  *                 type: boolean

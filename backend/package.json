@@ -9,7 +9,7 @@
     "start:prod": "node dist/index.js",
     "build": "tsc",
     "db:migrate": "dotenv -e ./.env -- prisma migrate dev",
-    "db:generate": "npx dotenv -e ./.env -- prisma generate",
+    "db:generate": "dotenv -e ./.env -- prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
