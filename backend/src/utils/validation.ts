@@ -16,11 +16,11 @@ export const signUpSchema = z.object({
     .max(16, 'Password must be 8 to 16 characters.'),
   // .regex(passwordValidation, 'Password must contain at least one uppercase, one lowercase, one number and one special character')
   // -> [TO-DO] 프론트엔드 정규식이 정해지면 수정
+  age: z.string().min(1, 'Age is required.'),
 
   // 선택적 필드
   country: z.string().optional(),
   gender: z.string().optional(),
-  age: z.string().optional(),
 
   // 약관 필드
   termsOfUse: z.boolean().refine((val) => val === true, {
