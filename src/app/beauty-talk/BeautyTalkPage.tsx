@@ -127,7 +127,7 @@ export default function BeautyTalkPage() {
     <div className="container mb-24 w-screen">
       <div className="relative h-80 -mx-[5.375rem]">
         <Image
-          src={'/test/community.jpg'}
+          src={'/test/community.png'}
           alt="community thumbnail"
           fill
           className="object-cover"
