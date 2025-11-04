@@ -17,7 +17,7 @@ model User {
   country   String?
   gender    String?
   age       String
-  
+
   // Google 로그인 사용자 식별
   googleId             String?  @unique
 

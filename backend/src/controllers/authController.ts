@@ -370,6 +370,7 @@ export const googleSignIn = async (req: Request, res: Response) => {
     // 5. 성공 응답 (토큰 및 유저 정보)
     const { password: _, ...userWithoutPassword } = user;
     res.status(200).json({ message: '[SYSTEM] Signed in with Google OAuth.', token, user: userWithoutPassword });
+    
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: '[ERROR] Internal server error.' });
