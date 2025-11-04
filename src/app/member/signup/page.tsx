@@ -13,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { COUNTRIES, GENDERS, AGE_GROUPS, TERMS_CONTENT } from '@/constants/signup'
 import { validateEmail, validatePassword, validateRequired } from '@/utils/validation'
 import SurveyModal from '@/components/Modals/SurveyModal'
+import { api } from '@/api/api'
 
 export default function SignUpPage() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -135,7 +136,7 @@ export default function SignUpPage() {
   }
 
   // 최종 제출 이벤트
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!isFormValid()) {
@@ -154,7 +155,27 @@ export default function SignUpPage() {
 
     console.log('Form submitted:', formData)
 
-    setModalOpen(true)
+    try {
+      const payload = {
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        age: formData.age,
+        gender: formData.gender,
+        country: formData.country,
+      }
+
+      const res = await api.post('/auth/signup', payload)
+      if (res.status === 201) {
+        alert('Sign up successful!')
+        setModalOpen(true)
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(error)
+      alert(error.response?.data?.message || 'Sign up failed.')
+    }
   }
 
   return (
