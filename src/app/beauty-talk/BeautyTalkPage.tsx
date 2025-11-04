@@ -6,6 +6,7 @@ import SortDropdown from '@/components/DropDown/SortDropDown'
 import SearchBar from '@/components/Inputs/SearchBar'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import { ROUTES, getBeautyTalkHref } from '@/constants/routes'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { dummyPosts } from '@/dummies/beautytalk-data'
 import { btcategory, btmenu, sortOptions } from '@/constants/beautytalk'
@@ -26,25 +27,23 @@ export default function BeautyTalkPage() {
 
   // URL 파라미터 업데이트 헬퍼 함수
   const updateParams = (newParams: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams.toString())
+    // 1. 현재 모든 파라미터를 객체 형태로 가져옵니다.
+    const currentParams = Object.fromEntries(searchParams.entries())
 
-    Object.entries(newParams).forEach(([key, value]) => {
-      if (value === 'all' || !value) {
-        params.delete(key)
-      } else {
-        params.set(key, value)
-      }
-    })
+    // 2. 현재 파라미터와 새로운 파라미터를 병합합니다.
+    const mergedParams: Record<string, string | null> = { ...currentParams, ...newParams }
 
-    const queryString = params.toString()
-    router.push(queryString ? `/beauty-talk?${queryString}` : '/beauty-talk')
+    // 3. getBeautyTalkHref 헬퍼 함수를 사용하여 쿼리 기반 URL을 생성합니다.
+    const newHref = getBeautyTalkHref(mergedParams)
+
+    router.push(newHref)
   }
 
   // 메뉴 클릭 핸들러
   const handleMenuClick = (slug: string | null) => {
     if (!slug) {
       // All 클릭 시 - 모든 파라미터 제거
-      router.push('/beauty-talk')
+      router.push(ROUTES.beautyTalk.root)
     } else {
       // 특정 메뉴 클릭 시 - category는 초기화
       updateParams({ type: slug, category: 'all' })
@@ -61,7 +60,7 @@ export default function BeautyTalkPage() {
     updateParams({ sort: value })
   }
 
-  // 더미 데이터 필터링 - 파라미터가 변경될 때마다 실행
+  // 더미 데이터 필터링 - 파라미터가 변경될 때마다 실행 (추후 백엔드 로직으로 변경)
   useEffect(() => {
     const filterPosts = () => {
       setLoading(true)
@@ -126,7 +125,7 @@ export default function BeautyTalkPage() {
     <div className="container mb-24 w-screen">
       <div className="relative h-80 -mx-[5.375rem]">
         <Image
-          src={'/test/community.jpg'}
+          src={'/test/community.png'}
           alt="community thumbnail"
           fill
           className="object-cover"
@@ -136,7 +135,7 @@ export default function BeautyTalkPage() {
           <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
             <span
               className="uppercase cursor-pointer hover:underline"
-              onClick={() => router.push('/beauty-talk')}
+              onClick={() => router.push(ROUTES.beautyTalk.root)}
             >
               Beauty Talk
             </span>

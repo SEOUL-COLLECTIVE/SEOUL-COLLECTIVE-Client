@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { SectionStyle } from '@/types/card'
 import Link from 'next/link'
+import { ROUTES } from '@/constants/routes'
 
 type ContentsCardProps = {
   section: string
@@ -88,7 +89,14 @@ export default function ContentsCard({
   imageUrl,
   id,
 }: ContentsCardProps) {
-  const href = `/${categorySlug}/${subcategorySlug}/${id}`
+  // // routes.ts의 getArticleHref를 통해 라우트 생성
+  // const href = getArticleHref({ categorySlug, subcategorySlug, id })
+
+  // 🔥 안전한 href 생성
+  const href =
+    categorySlug && subcategorySlug ? ROUTES.article(categorySlug, subcategorySlug, id) : '#' // fallback
+
+  // sectionType에 맞는 style 지정
   const style = sectionType.find((s) => s.section === section)
   if (!style) return null
 

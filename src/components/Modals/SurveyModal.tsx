@@ -13,7 +13,7 @@ import Image from 'next/image'
 
 const skinTypes = ['Dry', 'Oily', 'Normal', 'Combination']
 const sensitiveOptions = ['Yes', 'No']
-const skinConcerns = ['Acne', 'Pores', 'Dryness', 'Dark Spots', 'Anti-aging', 'Brightening']
+const skinConcerns = ['Acne', 'Pores', 'Dark Spots', 'Redness', 'Wrinkles', 'Brightening']
 
 interface SurveyModalProps {
   open: boolean
@@ -24,12 +24,14 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
   const [skinType, setSkinType] = useState('')
   const [sensitiveSkin, setSensitiveSkin] = useState('')
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([])
+  const MAX_CONCERN_COUNT = 3 // selectedConcerns 최대개수
 
+  // skin concerns 토글
   const toggleConcern = (concern: string) => {
     if (selectedConcerns.includes(concern)) {
-      setSelectedConcerns(selectedConcerns.filter((c) => c !== concern))
-    } else if (selectedConcerns.length < 2) {
-      setSelectedConcerns([...selectedConcerns, concern])
+      setSelectedConcerns(selectedConcerns.filter((c) => c !== concern)) // 이미 포함되었으면 제외
+    } else if (selectedConcerns.length < MAX_CONCERN_COUNT) {
+      setSelectedConcerns([...selectedConcerns, concern]) // 포함되지 않았으면 추가
     }
   }
 
@@ -109,7 +111,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             {/* Skin Concerns Section */}
             <div className="mb-8">
               <label htmlFor="skin-concerns" className="block text-[0.875rem] font-medium mb-2">
-                Skin Concerns (Pick up to 2)
+                {`Skin Concerns (Pick up to ${MAX_CONCERN_COUNT})`}
               </label>
               <div className="flex flex-wrap gap-2">
                 {skinConcerns.map((concern) => (
@@ -117,7 +119,10 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                     type="button"
                     key={concern}
                     onClick={() => toggleConcern(concern)}
-                    disabled={!selectedConcerns.includes(concern) && selectedConcerns.length >= 2}
+                    disabled={
+                      !selectedConcerns.includes(concern) &&
+                      selectedConcerns.length >= MAX_CONCERN_COUNT
+                    }
                     aria-pressed={selectedConcerns.includes(concern)}
                     aria-label={`${concern}${selectedConcerns.includes(concern) ? ', selected' : ''}`}
                     className={`
@@ -128,7 +133,8 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }
                       ${
-                        !selectedConcerns.includes(concern) && selectedConcerns.length >= 2
+                        !selectedConcerns.includes(concern) &&
+                        selectedConcerns.length >= MAX_CONCERN_COUNT
                           ? 'opacity-50 cursor-not-allowed'
                           : 'cursor-pointer'
                       }
