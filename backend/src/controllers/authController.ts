@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Request, Response } from 'express';
+import axios from 'axios';
 import { prisma } from '../db/prisma';
 import { OAuth2Client } from 'google-auth-library';
 import { signUpSchema, signInSchema } from '../utils/validation';
@@ -32,6 +33,7 @@ const GOOGLE_CLIENT_ID = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
  *               - password
  *               - firstName
  *               - lastName
+ *               - age
  *               - termsOfUse
  *               - personalInfoRequired
  *             properties:
@@ -49,13 +51,13 @@ const GOOGLE_CLIENT_ID = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
  *                 type: string
  *                 description: 성
  *               country:
- *                 type: number
+ *                 type: string
  *                 description: 국가 코드
  *               gender:
- *                 type: number
+ *                 type: string
  *                 description: 성별 코드
  *               age:
- *                 type: number
+ *                 type: string
  *                 description: 연령대 코드
  *               termsOfUse:
  *                 type: boolean
@@ -278,6 +280,13 @@ export const signIn = async (req: Request, res: Response) => {
  *         description: 서버 오류
  */
 export const googleSignIn = async (req: Request, res: Response) => {
+
+  const code = req.query.code as string;
+
+  if (!code) {
+    return res.status(400).json({ message: '[ERROR] Code is required.' });
+  }
+
   try {
     const { idToken } = req.body;
     if (!idToken) {
@@ -285,34 +294,65 @@ export const googleSignIn = async (req: Request, res: Response) => {
     }
 
     // 1. 구글 토큰 검증
-    const ticket = await GOOGLE_CLIENT_ID.verifyIdToken({
-      idToken,
-      audience: String(GOOGLE_CLIENT_ID),
+    const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${process.env.FRONTEND_URL}/auth/google/callback`,
+      grant_type: 'authorization_code',
+    }, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
-    const payload = ticket.getPayload();
 
-    if (!payload || !payload.email) {
-      return res.status(400).json({ message: '[ERROR] Invalid Google token.' });
+    const accessToken = tokenResponse.data.access_token;
+
+    // 2. People API로 사용자 정보 가져오기
+    const profileResponse = await axios.get(
+      'https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,birthdays,photos',
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    const profile = profileResponse.data;
+    const email = profile.emailAddresses?.[0]?.value;
+    const firstName = profile.names?.[0]?.givenName || '';
+    const lastName = profile.names?.[0]?.familyName || '';
+    const picture = profile.photos?.[0]?.url || null;
+
+    const AGE_GROUPS = [
+      { value: '16-24', min: 16, max: 24 },
+      { value: '25-34', min: 25, max: 34 },
+      { value: '35-44', min: 35, max: 44 },
+      { value: '45+', min: 45, max: 120 },
+    ] as const;
+
+    // * 전달 받은 생일 데이터를 연령대 값에 맞게 수정
+    const birthdayData = profile.birthdays?.[0]?.date;
+    let ageGroup: string | null = null;
+    let birthday: Date | null = null;
+
+    if (birthdayData && birthdayData.year) {
+      birthday = new Date(`${birthdayData.year}-${birthdayData.month}-${birthdayData.day}`);
+      const age = new Date().getFullYear() - birthdayData.year;
+      const group = AGE_GROUPS.find(g => age >= g.min && age <= g.max);
+      ageGroup = group ? group.value : null;
     }
 
-    const { email, given_name, family_name, picture } = payload;
+    if (!email) return res.status(400).json({ message: '[ERROR] Email not found in Google profile.' }); // 존재하지 않는 이메일일 시
 
-    // 2. DB에서 유저 조회
+    // 3. DB에서 유저 조회
     let user = await prisma.user.findUnique({ where: { email } });
 
-    // 3. 유저가 없으면 새로 생성
+    // 4. 유저가 없으면 새로 생성
     if (!user) {
       user = await prisma.user.create({
         data: {
           email,
-          firstName: given_name || '',
-          lastName: family_name || '',
-          // 랜덤 문자열로 비밀번호 저장
-          password: Math.random().toString(36).slice(-10),
+          firstName,
+          lastName,
+          password: Math.random().toString(36).slice(-10), // 랜덤 패스워드
+          age: ageGroup,
           termsOfUse: true,
           personalInfoRequired: true,
-          marketingOptional: false,
-          emailMarketing: false,
         },
       });
     }
@@ -329,7 +369,7 @@ export const googleSignIn = async (req: Request, res: Response) => {
 
     // 5. 성공 응답 (토큰 및 유저 정보)
     const { password: _, ...userWithoutPassword } = user;
-    res.status(200).json({ message: '[SYSTEM] Signed in with Google.', token, user: userWithoutPassword });
+    res.status(200).json({ message: '[SYSTEM] Signed in with Google OAuth.', token, user: userWithoutPassword });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: '[ERROR] Internal server error.' });

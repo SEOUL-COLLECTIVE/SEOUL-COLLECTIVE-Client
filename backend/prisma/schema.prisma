@@ -14,9 +14,9 @@ model User {
   password  String?
   firstName String
   lastName  String
-  country   Int?  // (0: Korea, 1: United States, ...)
-  gender    Int?  // (0: Male, 1: Female, 2: Other, 3: Prefer not to answer)
-  age       Int?  // (0: "16-24", 1: "25-34", ...)
+  country   String?
+  gender    String?
+  age       String
   
   // Google 로그인 사용자 식별
   googleId             String?  @unique
