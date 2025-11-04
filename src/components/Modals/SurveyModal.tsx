@@ -13,7 +13,7 @@ import Image from 'next/image'
 
 const skinTypes = ['Dry', 'Oily', 'Normal', 'Combination']
 const sensitiveOptions = ['Yes', 'No']
-const skinConcerns = ['Acne', 'Pores', 'Dryness', 'Dark Spots', 'Anti-aging', 'Brightening']
+const skinConcerns = ['Acne', 'Pores', 'Dark Spots', 'Redness', 'Wrinkles', 'Brightening']
 
 interface SurveyModalProps {
   open: boolean
