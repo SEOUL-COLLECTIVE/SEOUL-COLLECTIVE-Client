@@ -28,7 +28,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
   const toggleConcern = (concern: string) => {
     if (selectedConcerns.includes(concern)) {
       setSelectedConcerns(selectedConcerns.filter((c) => c !== concern))
-    } else if (selectedConcerns.length < 2) {
+    } else if (selectedConcerns.length < 3) {
       setSelectedConcerns([...selectedConcerns, concern])
     }
   }
@@ -109,7 +109,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             {/* Skin Concerns Section */}
             <div className="mb-8">
               <label htmlFor="skin-concerns" className="block text-[0.875rem] font-medium mb-2">
-                Skin Concerns (Pick up to 2)
+                Skin Concerns (Pick up to 3)
               </label>
               <div className="flex flex-wrap gap-2">
                 {skinConcerns.map((concern) => (
@@ -117,7 +117,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                     type="button"
                     key={concern}
                     onClick={() => toggleConcern(concern)}
-                    disabled={!selectedConcerns.includes(concern) && selectedConcerns.length >= 2}
+                    disabled={!selectedConcerns.includes(concern) && selectedConcerns.length >= 3}
                     aria-pressed={selectedConcerns.includes(concern)}
                     aria-label={`${concern}${selectedConcerns.includes(concern) ? ', selected' : ''}`}
                     className={`
@@ -128,7 +128,7 @@ export default function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }
                       ${
-                        !selectedConcerns.includes(concern) && selectedConcerns.length >= 2
+                        !selectedConcerns.includes(concern) && selectedConcerns.length >= 3
                           ? 'opacity-50 cursor-not-allowed'
                           : 'cursor-pointer'
                       }
