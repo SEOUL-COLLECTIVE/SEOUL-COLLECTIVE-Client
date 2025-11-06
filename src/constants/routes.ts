@@ -31,6 +31,7 @@ export const ROUTES = {
   beautyTalk: {
     root: '/beauty-talk' as const,
     create: '/beauty-talk/create' as const,
+    postDetail: (id: number | string) => `/beauty-talk/${id}`,
   },
 
   // 뷰티톡 (쿼리)
