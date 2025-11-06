@@ -2,6 +2,8 @@
 
 import { Heart, Bookmark } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/constants/routes'
 
 interface Post {
   id: number
@@ -28,6 +30,12 @@ interface PostCardProps {
 export default function PostCard({ posts }: PostCardProps) {
   // posts prop이 없으면 빈 배열 사용
   const displayPosts = posts || []
+  const router = useRouter()
+
+  // 해당 포스트 상세페이지로 전환
+  const handleShowDetail = (id: number) => {
+    router.push(ROUTES.beautyTalk.postDetail(id))
+  }
 
   return (
     <div className="min-h-screen">
@@ -37,7 +45,10 @@ export default function PostCard({ posts }: PostCardProps) {
 
           {/* Title */}
           <div className="flex justify-between items-start mb-4">
-            <h1 className="text-[1.25rem] font-bold cursor-pointer hover:underline">
+            <h1
+              className="text-[1.25rem] font-bold cursor-pointer hover:underline"
+              onClick={() => handleShowDetail(post.id)}
+            >
               {post.title}
             </h1>
             <Bookmark className="w-6 h-6 text-gray-400 cursor-pointer hover:fill-current" />
@@ -67,9 +78,12 @@ export default function PostCard({ posts }: PostCardProps) {
               {post.content.length > 150 ? (
                 <>
                   {post.content.substring(0, 150)}{' '}
-                  <a href="#" className="text-blue-600 hover:underline">
+                  <span
+                    className="text-blue-600 hover:underline"
+                    onClick={() => handleShowDetail(post.id)}
+                  >
                     ...read more
-                  </a>
+                  </span>
                 </>
               ) : (
                 post.content
@@ -116,7 +130,12 @@ export default function PostCard({ posts }: PostCardProps) {
             <div className="h-6 w-[0.0825rem] bg-gray-300"></div>
 
             {/* Replies */}
-            <span className="cursor-pointer hover:underline">{post.replies} Replies</span>
+            <span
+              className="cursor-pointer hover:underline"
+              onClick={() => handleShowDetail(post.id)}
+            >
+              {post.replies} Replies
+            </span>
           </div>
         </div>
       ))}
