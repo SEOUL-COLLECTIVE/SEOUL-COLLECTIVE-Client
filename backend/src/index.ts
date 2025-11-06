@@ -13,7 +13,6 @@ const app: Express = express()
 const DEV_HOST = process.env.DEV_HOST || '127.0.0.1';
 const PORT = Number(process.env.PORT) || 5000;
 const API_VERSION = process.env.API_VERSION || '/api/v1';
-
 const FRONTEND_DEV_PORT = process.env.FRONTEND_DEV_PORT || 3000;
 
 const allowedOrigins = [
