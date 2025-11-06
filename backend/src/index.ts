@@ -28,6 +28,17 @@ app.use(cors({
 })) // CORS 허용
 app.use(express.json()) // Request body를 JSON으로 파싱
 
+// 디버그
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    console.log(`[CORS DEBUG] Request from allowed origin: ${origin}`);
+  } else if (origin) {
+    console.error(`[CORS DEBUG] Request blocked from UNKNOWN origin: ${origin}`);
+  }
+  next();
+});
+
 // Swagger 문서 경로
 app.use(
   `${API_VERSION}/docs`, 
