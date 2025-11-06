@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 // 비밀번호 정책: 8자 ~ 16자, 문자/숫자 1개 이상 포함
 const passwordValidation = new RegExp(
