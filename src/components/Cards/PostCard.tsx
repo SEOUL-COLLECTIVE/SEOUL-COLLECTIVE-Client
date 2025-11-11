@@ -25,9 +25,10 @@ interface Post {
 
 interface PostCardProps {
   posts: Post[]
+  onTagClick?: (tag: string) => void
 }
 
-export default function PostCard({ posts }: PostCardProps) {
+export default function PostCard({ posts, onTagClick }: PostCardProps) {
   // posts prop이 없으면 빈 배열 사용
   const displayPosts = posts || []
   const router = useRouter()
@@ -113,6 +114,7 @@ export default function PostCard({ posts }: PostCardProps) {
               <button
                 key={idx}
                 className="bg-black text-white px-2 rounded-md text-[0.75rem] font-bold hover:bg-gray-800"
+                onClick={() => onTagClick && onTagClick(tag)}
               >
                 {tag}
               </button>

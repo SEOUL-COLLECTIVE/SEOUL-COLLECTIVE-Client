@@ -20,6 +20,7 @@ export default function BeautyTalkPage() {
   // URL 파라미터에서 현재 상태 읽기
   const currentType = searchParams.get('type') || 'all'
   const currentCategory = searchParams.get('category') || 'all'
+  const currentTag = searchParams.get('tag') || 'all'
   const currentSort = searchParams.get('sort') || 'recent'
 
   // 기본 뷰인지 확인 (type이 없으면 기본 뷰)
@@ -34,7 +35,13 @@ export default function BeautyTalkPage() {
     const mergedParams: Record<string, string | null> = { ...currentParams, ...newParams }
 
     // 3. getBeautyTalkHref 헬퍼 함수를 사용하여 쿼리 기반 URL을 생성합니다.
-    const newHref = getBeautyTalkHref(mergedParams)
+    const { type, category, sort, tag } = mergedParams as Record<string, string | null>
+    const newHref = getBeautyTalkHref({
+      type: type ?? null,
+      category: category ?? null,
+      sort: sort ?? null,
+      tag: tag ?? null,
+    })
 
     router.push(newHref)
   }
@@ -46,13 +53,15 @@ export default function BeautyTalkPage() {
       router.push(ROUTES.beautyTalk.root)
     } else {
       // 특정 메뉴 클릭 시 - category는 초기화
-      updateParams({ type: slug, category: 'all' })
+      // 태그가 있으면 해제되도록 tag를 'all'로 초기화
+      updateParams({ type: slug, category: 'all', tag: 'all' })
     }
   }
 
   // 카테고리 클릭 핸들러
   const handleCategoryClick = (slug: string) => {
-    updateParams({ category: slug })
+    // 카테고리 선택 시 태그 필터는 초기화
+    updateParams({ category: slug, tag: 'all' })
   }
 
   // 정렬 옵션 클릭 핸들러 (기본 뷰에서만)
@@ -81,6 +90,13 @@ export default function BeautyTalkPage() {
           )
         }
 
+        // tag 필터링 - 태그가 포함된 포스트만 남김
+        if (currentTag !== 'all') {
+          filtered = filtered.filter((post) =>
+            post.tags.some((t) => t.toLowerCase() === currentTag.toLowerCase())
+          )
+        }
+
         // 정렬
         if (currentSort === 'popular') {
           filtered.sort((a, b) => b.likes - a.likes)
@@ -99,11 +115,15 @@ export default function BeautyTalkPage() {
     }
 
     filterPosts()
-  }, [currentType, currentCategory, currentSort])
+  }, [currentType, currentCategory, currentSort, currentTag])
 
   // 포스트 제목 결정
   const getPostTitle = () => {
     let title = 'ALL POSTS'
+    // 태그가 선택된 경우 태그 이름을 우선적으로 표시
+    if (currentTag !== 'all') {
+      return '# ' + currentTag.toUpperCase()
+    }
 
     if (currentCategory !== 'all') {
       title = currentCategory.toUpperCase()
@@ -296,7 +316,7 @@ export default function BeautyTalkPage() {
               ))}
             </div>
           ) : filteredPosts.length > 0 ? (
-            <PostCard posts={filteredPosts} />
+            <PostCard posts={filteredPosts} onTagClick={(tag) => updateParams({ tag })} />
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-gray-500">
               <div className="text-lg mb-2">No posts found</div>

@@ -7,6 +7,8 @@ import type { JSONContent } from '@tiptap/core'
 import TiptapViewer from '@/components/Viewer/TiptapViewer'
 import CommentInput from '@/components/Inputs/CommentInput'
 import CommentList from '@/components/Lists/CommentList'
+import { useRouter } from 'next/navigation'
+import { getBeautyTalkHref } from '@/constants/routes'
 
 export interface Post {
   id: number
@@ -195,6 +197,7 @@ const dummyPostWithBlocks: Post = {
 export default function BTDetailPage() {
   const posts: Post[] = [dummyPostWithBlocks]
   const [post, setPost] = useState(posts[0])
+  const router = useRouter()
 
   // 댓글 추가 이벤트 (임의로 프론트에서 뜨도록 설정해둠)
   const handleAddComment = (commentText: string) => {
@@ -249,6 +252,7 @@ export default function BTDetailPage() {
               <button
                 key={tag}
                 className="bg-black text-white px-2 rounded-md text-[0.75rem] font-bold hover:bg-gray-800"
+                onClick={() => router.push(getBeautyTalkHref({ tag }))}
               >
                 {tag}
               </button>

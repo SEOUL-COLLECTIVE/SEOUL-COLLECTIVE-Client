@@ -81,6 +81,7 @@ export function getBeautyTalkHref(
     type?: string | null
     category?: string | null
     sort?: string | null
+    tag?: string | null
   } = {}
 ) {
   return createQueryHref(params as Record<string, string | undefined>, ROUTES.beautyTalk.root)
