@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/backend/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -9,6 +10,10 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.pnpm-workspace-state.json
+.pnpm-workspace-state-v1.json
+/dist
+/backend/dist
 
 # testing
 /coverage
