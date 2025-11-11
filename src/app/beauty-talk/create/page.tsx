@@ -16,8 +16,12 @@ export default function CreatePostPage() {
   const [postType, setPostType] = useState('')
   const [category, setCategory] = useState('')
   const [content, setContent] = useState<Record<string, unknown> | null>(null)
+  const [contentTextLength, setContentTextLength] = useState(0)
+  const [imageCount, setImageCount] = useState(0)
   const [hashtags, setHashtags] = useState<string[]>([])
   const [hashtagInput, setHashtagInput] = useState('')
+  const MAX_CHARS = 1500
+  const MAX_IMAGES = 5
 
   const handleHashtagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && hashtagInput.trim()) {
@@ -27,6 +31,42 @@ export default function CreatePostPage() {
       }
       setHashtagInput('')
     }
+  }
+
+  // Helper: traverse tiptap JSON to extract plain text and count image nodes
+  const extractTextAndImageCount = (json: unknown) => {
+    let text = ''
+    let images = 0
+
+    const walk = (node: unknown) => {
+      if (!node) return
+      if (Array.isArray(node)) return node.forEach(walk)
+      if (typeof node === 'string') {
+        text += node
+        return
+      }
+      const asAny = node as Record<string, unknown>
+
+      if (asAny.type) {
+        const type = String(asAny.type).toLowerCase()
+        if (type.includes('image')) images += 1
+      }
+
+      if (typeof asAny.text === 'string') {
+        text += asAny.text
+      }
+
+      if (asAny.content) walk(asAny.content)
+      if (asAny.items) walk(asAny.items)
+      if (Array.isArray(asAny.content)) (asAny.content as unknown[]).forEach(walk)
+    }
+
+    if (json && typeof json === 'object' && 'content' in (json as Record<string, unknown>)) {
+      walk((json as Record<string, unknown>).content)
+    } else {
+      walk(json)
+    }
+    return { text, images }
   }
 
   const removeHashtag = (tagToRemove: string) => {
@@ -40,6 +80,19 @@ export default function CreatePostPage() {
       category,
       content: content, // JSON 형식의 에디터 내용
       hashtags,
+    }
+
+    // 검증: 글자수 및 이미지 개수 제한
+    if (contentTextLength > MAX_CHARS) {
+      alert(
+        `Content exceeds the maximum allowed characters (${MAX_CHARS}). Please shorten your post.`
+      )
+      return
+    }
+
+    if (imageCount > MAX_IMAGES) {
+      alert(`Please limit images to ${MAX_IMAGES} or fewer.`)
+      return
     }
 
     console.log('POST 데이터:', postData)
@@ -99,43 +152,25 @@ export default function CreatePostPage() {
         </Select>
       </div>
 
-      {/* Rich Text Editor Placeholder */}
-      {/* <div className="mb-2">
-        <div className="border border-gray-300 rounded"> */}
-      {/* Toolbar */}
-      {/* <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-300 bg-gray-50">
-            <button className="px-2 py-1 hover:bg-gray-200 rounded font-bold">B</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded italic">I</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded underline">U</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded line-through">S</button>
-            <div className="w-px h-6 bg-gray-300 mx-1"></div>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">≡</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">⋮</button>
-            <div className="w-px h-6 bg-gray-300 mx-1"></div>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">☺</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">A</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">📷</button>
-            <button className="px-2 py-1 hover:bg-gray-200 rounded">🎥</button>
-          </div> */}
-
-      {/* Content Area */}
-      {/* <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Body"
-            className="w-full px-4 py-3 min-h-[300px] focus:outline-none resize-none"
-          />
-        </div>
-        <p className="text-sm text-gray-500 mt-2">
-          Hint: <span className="font-semibold">#</span> links to products,{' '}
-          <span className="font-semibold">@</span> links to members and content
-        </p>
-      </div> */}
-
       <SimpleEditor
-        onChange={setContent}
+        onChange={(json) => {
+          setContent(json)
+          const { text, images } = extractTextAndImageCount(json)
+          setContentTextLength(text.length)
+          setImageCount(images)
+        }}
         initialContent={undefined} // 빈 에디터로 시작
       />
+
+      {/* Editor status: character count and image count */}
+      <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
+        <div className={contentTextLength > MAX_CHARS ? 'text-red-500' : ''}>
+          {contentTextLength}/{MAX_CHARS} characters
+        </div>
+        <div className={imageCount > MAX_IMAGES ? 'text-red-500' : ''}>
+          {imageCount}/{MAX_IMAGES} images
+        </div>
+      </div>
 
       {/* Hashtags */}
       <div className="mb-6 mt-4">
@@ -175,8 +210,13 @@ export default function CreatePostPage() {
           Cancel
         </button>
         <button
-          className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+          className={`px-6 py-2 text-white rounded ${
+            contentTextLength > MAX_CHARS || imageCount > MAX_IMAGES
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-black hover:bg-gray-800'
+          }`}
           onClick={handleSubmit}
+          disabled={contentTextLength > MAX_CHARS || imageCount > MAX_IMAGES}
         >
           Post
         </button>

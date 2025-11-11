@@ -290,7 +290,8 @@ export const handleImageUpload = async (
     onProgress?.({ progress })
   }
 
-  return '/images/tiptap-ui-placeholder-image.jpg'
+  // For local/demo use return a test image that exists in /public/test
+  return '/test/community_img01.jpg'
 }
 
 type ProtocolOptions = {
