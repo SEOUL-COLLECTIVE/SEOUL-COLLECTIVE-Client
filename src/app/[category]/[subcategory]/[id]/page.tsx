@@ -38,7 +38,7 @@ export default function ArticlePage() {
 
   return (
     <article className="prose max-w-5xl mx-auto p-6">
-      <h1 className="text-[3rem] font-medium whitespace-pre-line break-words mb-2 leading-tight">
+      <h1 className="text-3xl font-medium whitespace-pre-line break-words mb-2 leading-tight">
         {article.title.replace(/\\n/g, '\n')}
       </h1>
 

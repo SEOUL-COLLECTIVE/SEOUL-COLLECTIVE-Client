@@ -2,13 +2,15 @@
  * signup 시 사용되는 상수 데이터
  */
 
-export const COUNTRIES = [
-  { value: 'kr', label: 'Korea' },
-  { value: 'us', label: 'United States' },
-  { value: 'jp', label: 'Japan' },
-  { value: 'cn', label: 'China' },
-  { value: 'uk', label: 'United Kingdom' },
-] as const
+import countries from 'i18n-iso-countries'
+import en from 'i18n-iso-countries/langs/en.json'
+
+// 전체 국가 코드 (영문)
+countries.registerLocale(en)
+export const COUNTRIES = Object.entries(countries.getNames('en')).map(([code, name]) => ({
+  code,
+  name,
+}))
 
 export const GENDERS = [
   { value: 'male', label: 'Male' },

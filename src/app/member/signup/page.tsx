@@ -246,14 +246,14 @@ export default function SignUpPage() {
               <SelectTrigger className="focus:ring-0 focus:ring-offset-0">
                 <SelectValue placeholder="Select Country" />
               </SelectTrigger>
-              <SelectContent className="bg-white max-h-40 overflow-y-auto">
+              <SelectContent className="bg-white max-h-60 overflow-y-auto">
                 {COUNTRIES.map((country) => (
                   <SelectItem
-                    key={country.value}
-                    value={country.value}
+                    key={country.code}
+                    value={country.code}
                     className="hover:bg-gray-100 cursor-pointer"
                   >
-                    {country.label}
+                    {country.name}
                   </SelectItem>
                 ))}
               </SelectContent>
