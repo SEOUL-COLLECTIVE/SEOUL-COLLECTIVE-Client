@@ -7,6 +7,19 @@ datasource db {
   url      = env("DATABASE_URL") // .env 파일의 값 사용
 }
 
+// 게시글 유형
+enum PostType {
+  MyReview
+  ProductQA
+}
+
+// 게시글 카테고리
+enum PostCategory {
+  SkinCare
+  Makeup
+  Hair
+}
+
 // 유저 테이블
 model User {
   // 계정 정보
@@ -27,6 +40,12 @@ model User {
 
   // 1:1 관계 - Survey 모델 연결
   survey Survey?
+
+  // 뷰티톡 게시글
+  posts     BeautyTalkPost[]
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
 
   // 계정 생성 정보 생성 및 수정 시간
   createdAt DateTime @default(now())
@@ -68,4 +87,80 @@ model Survey {
   // 설문 응답 생성 및 수정 시간
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// 뷰티톡 게시글
+model BeautyTalkPost {
+  id        String   @id @default(cuid())
+
+  title   String
+  content String @db.Text
+  type     PostType
+  category PostCategory
+  viewCount Int @default(0)
+  likeCount Int @default(0)
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  images Image[]
+  hashtags Hashtag[]
+  comments Comment[]
+  likes Like[]
+  bookmarks Bookmark[]
+}
+
+// 게시글 이미지
+model Image {
+  id     String @id @default(cuid())
+  url    String 
+  
+  post     BeautyTalkPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+}
+
+// 해시태그
+model Hashtag {
+  id    String   @id @default(cuid())
+  name  String   @unique
+  posts BeautyTalkPost[]
+}
+
+// 댓글
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  content   String
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  post     BeautyTalkPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+}
+
+// 좋아요
+model Like {
+  id     String @id @default(cuid())
+  
+  post   BeautyTalkPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([postId, userId]) // 한 유저가 한 게시물에 한 번만 좋아요
+}
+
+// 북마크
+model Bookmark {
+  id     String @id @default(cuid())
+  
+  post   BeautyTalkPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([postId, userId]) // 한 유저가 한 게시물에 한 번만 북마크
 }

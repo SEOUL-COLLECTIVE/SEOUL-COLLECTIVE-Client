@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.config';
-import authRoutes from './routes/authRouter';
+import authRoutes from './routes/router';
 
 // .env 파일 로드
 dotenv.config()
