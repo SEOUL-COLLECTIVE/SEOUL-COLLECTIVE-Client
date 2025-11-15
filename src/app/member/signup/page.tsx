@@ -164,6 +164,11 @@ export default function SignUpPage() {
         age: formData.age,
         gender: formData.gender,
         country: formData.country,
+        termsOfUse: formData.termsOfUse,
+        personalInfoRequired: formData.personalInfoRequired,
+        personalInfoOptional: formData.personalInfoOptional,
+        marketingOptional: formData.marketingOptional,
+        emailMarketing: formData.emailMarketing,
       }
 
       const res = await api.post('/auth/signup', payload)

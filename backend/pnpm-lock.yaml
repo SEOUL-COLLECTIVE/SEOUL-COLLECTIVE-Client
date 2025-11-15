@@ -57,6 +57,9 @@ importers:
       '@types/pg':
         specifier: ^8.15.5
         version: 8.15.6
+      '@types/swagger-jsdoc':
+        specifier: ^6.0.4
+        version: 6.0.4
       '@types/swagger-ui-express':
         specifier: ^4.1.8
         version: 4.1.8
@@ -223,6 +226,9 @@ packages:
 
   '@types/strip-json-comments@0.0.30':
     resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
+
+  '@types/swagger-jsdoc@6.0.4':
+    resolution: {integrity: sha512-W+Xw5epcOZrF/AooUM/PccNMSAFOKWZA5dasNyMujTwsBkU74njSJBpvCCJhHAJ95XRMzQrrW844Btu0uoetwQ==}
 
   '@types/swagger-ui-express@4.1.8':
     resolution: {integrity: sha512-AhZV8/EIreHFmBV5wAs0gzJUNq9JbbSXgJLQubCC0jtIo6prnI9MIRRxnU4MZX9RB9yXxF1V4R7jtLl/Wcj31g==}
@@ -1343,6 +1349,8 @@ snapshots:
 
   '@types/strip-json-comments@0.0.30': {}
 
+  '@types/swagger-jsdoc@6.0.4': {}
+
   '@types/swagger-ui-express@4.1.8':
     dependencies:
       '@types/express': 5.0.5
@@ -2321,8 +2329,4 @@ snapshots:
     optionalDependencies:
       commander: 9.5.0
 
-<<<<<<< HEAD
   zod@4.1.12: {}
-=======
-  zod@4.1.12: {}
->>>>>>> 1bc3ed2 (DB 설정 및 Swagger UI 추가)

@@ -4,8 +4,12 @@ import { useState } from 'react'
 import SignInput from '@/components/Inputs/SignInput'
 import { Checkbox } from '@/components/ui/checkbox'
 import Link from 'next/link'
+import { api } from '@/api/api'
+import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
+  const router = useRouter()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -13,12 +17,46 @@ export default function SignInPage() {
     keepSignedIn: false,
   })
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!formData.email || !formData.password) {
+      alert('Please enter your email and password.')
+      return
+    }
+
+    try {
+      const payload = {
+        email: formData.email,
+        password: formData.password,
+        saveId: formData.saveId,
+        keepSignedIn: formData.keepSignedIn,
+      }
+
+      const res = await api.post('/auth/signin', payload)
+
+      if (res.status === 200) {
+        alert('Sign in successful! Welcome.')
+        console.log('JWT Token:', res.data.token)
+
+        // [TO-DO]: 실제 프로젝트에서는 토큰을 로컬 저장소(localStorage/Cookies)에 저장
+        // localStorage.setItem('token', res.data.token);
+
+        router.push('/')
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(error)
+      alert(error.response?.data?.message || 'Sign in failed. Check your credentials.')
+    }
+  }
+
   return (
     <div className="w-screen bg-white overflow-auto -mx-[5.375rem] min-h-screen">
       <div className="max-w-[400px] mx-auto p-8 pt-12">
         <h1 className="text-[24px] font-bold text-center mb-8">Sign In</h1>
 
-        <form className="space-y-3 text-[14px]">
+        <form className="space-y-3 text-[14px]" onSubmit={handleSubmit}>
           <SignInput
             type="email"
             placeholder="Email"

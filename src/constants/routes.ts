@@ -33,11 +33,11 @@ export const ROUTES = {
     create: '/beauty-talk/create' as const,
   },
 
-  // 뷰티톡 (쿼리)
-  askExpert: {
-    root: '/ask-an-expert' as const,
-    create: '/ask-an-expert/create' as const,
-  },
+  // // 뷰티톡 (쿼리)
+  // askExpert: {
+  //   root: '/ask-an-expert' as const,
+  //   create: '/ask-an-expert/create' as const,
+  // },
 
   // 뷰티톡 (쿼리 → 세그먼트 점진 전환 고려)
   askExpert: {

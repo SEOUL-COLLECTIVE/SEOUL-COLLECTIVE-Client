@@ -23,9 +23,12 @@ model User {
   googleId String? @unique
 
   // 1:1 관계 - Terms 모델 연결
-  terms Terms
+  terms Terms?
 
-  // 계정 생성 정보
+  // 1:1 관계 - Survey 모델 연결
+  survey Survey?
+
+  // 계정 생성 정보 생성 및 수정 시간
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -41,11 +44,28 @@ model Terms {
   marketingOptional      Boolean @default(false)
   emailMarketing         Boolean @default(false)
 
-  // 1:1 관계 - User 모델 연결
+  // User 모델 연결
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
 
-  // 동의 정보
+  // 동의 정보 생성 및 수정 시간
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 설문 조사 테이블
+model Survey {
+  id String @id @default(cuid())
+
+  skinType String
+  sensitiveSkin String
+  skinConcerns String[]
+
+  // User 모델 연결
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  // 설문 응답 생성 및 수정 시간
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

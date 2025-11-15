@@ -7,6 +7,8 @@ import { signUpSchema, signInSchema } from '../utils/validation';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import { Prisma } from '@prisma/client';
+
 // Google Client ID
 const GOOGLE_CLIENT_ID = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -113,26 +115,37 @@ export const signUp = async (req: Request, res: Response) => {
     // 3. 비밀번호 암호화 (bcrypt)
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // 4. 새 유저 생성
-    const newUser = await prisma.user.create({
-      data: {
-        // 유저 정보
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-        country: country,
-        gender: gender,
-        age: age,
-        
-        // 약관 동의 정보
-        termsOfUse,
-        personalInfoRequired,
-        personalInfoOptional,
-        marketingOptional,
-        emailMarketing,
-      },
+    // 4. 새 유저 및 약관 동의 정보 트랜잭션
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+      // 4-1. User 생성
+      const newUser = await tx.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          country: country,
+          gender: gender,
+          age: age,
+        },
+      })
+
+      // 4-2. Terms 생성 및 User와 연결
+      const newTerms = await tx.terms.create({
+        data: {
+          userId: newUser.id,
+          termsOfUse,
+          personalInfoRequired,
+          personalInfoOptional,
+          marketingOptional,
+          emailMarketing,
+        },
+      })
+      
+      return { newUser, newTerms };
     })
+    
+    const { newUser } = result;
 
     // 5. 성공 응답
     const { password: _, ...userWithoutPassword } = newUser
@@ -202,6 +215,10 @@ export const signIn = async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(401).json({ message: '[ERROR] Invalid email or password.' })
+    }
+
+    if (!user.password) {
+        return res.status(500).json({ message: '[ERROR] User password hash is missing.' })
     }
 
     // 3. 비밀번호 비교
@@ -342,22 +359,41 @@ export const googleSignIn = async (req: Request, res: Response) => {
     // 3. DB에서 유저 조회
     let user = await prisma.user.findUnique({ where: { email } });
 
-    // 4. 유저가 없으면 새로 생성
-    if (!user) {
-      user = await prisma.user.create({
+  // 4. 유저가 없으면 새로 생성 (트랜잭션 사용)
+  if (!user) {
+    
+    // 트랜잭션 시작
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+      // 4-1. User 생성
+      const newUser = await tx.user.create({
         data: {
           email,
           firstName,
           lastName,
           password: Math.random().toString(36).slice(-10), // 랜덤 패스워드
-          age: ageGroup,
-          termsOfUse: true,
-          personalInfoRequired: true,
+          age: ageGroup || 'UNKNOWN',
         },
       });
-    }
 
-    // 4. JWT 생성
+      // 4-2. Terms 생성 및 User와 연결
+      await tx.terms.create({
+        data: {
+          userId: newUser.id,
+          termsOfUse: true,
+          personalInfoRequired: true,
+          personalInfoOptional: false,
+          marketingOptional: false,
+          emailMarketing: false,
+        },
+      });
+
+      return newUser;
+    });
+
+    user = result;
+  }
+
+    // 5. JWT 생성
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw new Error('[ERROR] JWT_SECRET is not defined.');
 
@@ -367,7 +403,7 @@ export const googleSignIn = async (req: Request, res: Response) => {
       { expiresIn: '7d' } // 구글 로그인은 기본 7일
     );
 
-    // 5. 성공 응답 (토큰 및 유저 정보)
+    // 6. 성공 응답 (토큰 및 유저 정보)
     const { password: _, ...userWithoutPassword } = user;
     res.status(200).json({ message: '[SYSTEM] Signed in with Google OAuth.', token, user: userWithoutPassword });
     
