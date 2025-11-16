@@ -31,15 +31,10 @@ export const ROUTES = {
   beautyTalk: {
     root: '/beauty-talk' as const,
     create: '/beauty-talk/create' as const,
+    postDetail: (id: number | string) => `/beauty-talk/${id}`,
   },
 
   // 뷰티톡 (쿼리)
-  askExpert: {
-    root: '/ask-an-expert' as const,
-    create: '/ask-an-expert/create' as const,
-  },
-
-  // 뷰티톡 (쿼리 → 세그먼트 점진 전환 고려)
   askExpert: {
     root: '/ask-an-expert' as const,
     create: '/ask-an-expert/create' as const,
@@ -88,6 +83,7 @@ export function getBeautyTalkHref(
     type?: string | null
     category?: string | null
     sort?: string | null
+    tag?: string | null
   } = {}
 ) {
   return createQueryHref(params as Record<string, string | undefined>, ROUTES.beautyTalk.root)
