@@ -38,7 +38,7 @@ export default function ArticlePage() {
 
   return (
     <article className="prose max-w-5xl mx-auto p-6">
-      <h1 className="text-[3rem] font-medium whitespace-pre-line break-words mb-2 leading-tight">
+      <h1 className="text-3xl font-medium whitespace-pre-line break-words mb-2 leading-tight">
         {article.title.replace(/\\n/g, '\n')}
       </h1>
 
@@ -66,9 +66,41 @@ export default function ArticlePage() {
       <div>
         {documentToReactComponents(article.contentsDetail, {
           renderNode: {
-            // ✅ 일반 단락
+            // Heading 스타일 (본문과 구분)
+            [BLOCKS.HEADING_1]: (_node, children) => (
+              <h1 className="mb-6 text-4xl font-bold leading-tight">{children}</h1>
+            ),
+            [BLOCKS.HEADING_2]: (_node, children) => (
+              <h2 className="mb-5 text-3xl font-semibold leading-tight">{children}</h2>
+            ),
+            [BLOCKS.HEADING_3]: (_node, children) => (
+              <h3 className="mb-4 text-2xl font-semibold leading-tight">{children}</h3>
+            ),
+            [BLOCKS.HEADING_4]: (_node, children) => (
+              <h3 className="mb-4 text-xl font-semibold leading-tight">{children}</h3>
+            ),
+
+            // 일반 단락
             [BLOCKS.PARAGRAPH]: (_node, children) => (
-              <p className="mb-4 leading-relaxed">{children}</p>
+              <p className="mb-4 leading-relaxed font-crimson">{children}</p>
+            ),
+
+            // Blockquote (본문 폰트로 표시)
+            [BLOCKS.QUOTE]: (_node, children) => (
+              <blockquote className="mb-4 pl-4 border-l-4 border-gray-200 italic font-crimson">
+                {children}
+              </blockquote>
+            ),
+
+            // 리스트 아이템 (본문 폰트)
+            [BLOCKS.LIST_ITEM]: (_node, children) => (
+              <li className="mb-2 font-crimson">{children}</li>
+            ),
+            [BLOCKS.OL_LIST]: (_node, children) => (
+              <ul className="mb-4 pl-6 list-disc font-crimson">{children}</ul>
+            ),
+            [BLOCKS.UL_LIST]: (_node, children) => (
+              <ol className="mb-4 pl-6 list-decimal font-crimson">{children}</ol>
             ),
 
             // ✅ 이미지 (Asset)
