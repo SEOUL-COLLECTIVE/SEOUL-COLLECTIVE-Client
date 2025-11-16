@@ -51,11 +51,7 @@ app.use(cors({
 app.use(express.json()) // Request body를 JSON으로 파싱
 
 // Swagger 문서 경로
-app.use(
-  `${API_VERSION}/docs`, 
-  swaggerUi.serve, 
-  swaggerUi.setup(swaggerSpec)
-);
+app.use(`${API_VERSION}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // API 라우트 마운트
 app.use(`${API_VERSION}/auth`, authRoutes)
