@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SignInput from '@/components/Inputs/SignInput'
 import { Checkbox } from '@/components/ui/checkbox'
 import Link from 'next/link'
@@ -16,6 +16,18 @@ export default function SignInPage() {
     saveId: false,
     keepSignedIn: false,
   })
+
+  // saveId 체크되어 있을 경우 이메일 불러오기
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail')
+    if (savedEmail) {
+      setFormData((prev) => ({
+        ...prev,
+        email: savedEmail,
+        saveId: true,
+      }))
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,12 +47,19 @@ export default function SignInPage() {
 
       const res = await api.post('/auth/signin', payload)
 
-      if (res.status === 200) {
+    if (res.status === 200) {
+        // 로그인 성공 시 'Save ID' 체크 여부에 따라 로컬 스토리지 처리
+        if (formData.saveId) {
+          localStorage.setItem('savedEmail', formData.email)
+        } else {
+          localStorage.removeItem('savedEmail')
+        }
+
         alert('Sign in successful! Welcome.')
         console.log('JWT Token:', res.data.token)
-
-        // [TO-DO]: 실제 프로젝트에서는 토큰을 로컬 저장소(localStorage/Cookies)에 저장
-        // localStorage.setItem('token', res.data.token);
+        
+        // 토큰 저장
+        localStorage.setItem('token', res.data.token) 
 
         router.push('/')
       }

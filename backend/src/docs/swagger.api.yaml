@@ -1,0 +1,446 @@
+openapi: 3.0.0
+info:
+  title: Seoul Collective API Documentation
+  version: 1.0.0
+  description: Node.js Express 서버를 위한 API 문서.
+servers:
+  - url: http://localhost:4000/api/v1
+    description: 로컬 개발 서버
+tags:
+  - name: Auth
+    description: 보안 관리 API (로그인, 회원가입, 구글 로그인, 비밀번호 찾기)
+  - name: BeautyTalk
+    description: 커뮤니티 게시글 및 댓글 관리 API
+
+paths:
+  # ----------------------------------------------------
+  # Auth (로그인, 회원가입, 구글 로그인, 비밀번호 찾기)
+  # ----------------------------------------------------
+  /auth/signup:
+    post:
+      summary: 회원 가입
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpBody'
+      responses:
+        '201':
+          description: 회원 가입 성공
+        '409':
+          description: 이메일 중복
+        '400':
+          description: 유효성 검사 실패
+
+  /auth/signin:
+    post:
+      summary: 로그인 및 JWT 발급
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInBody'
+      responses:
+        '200':
+          description: 로그인 성공, 토큰 및 사용자 정보 반환
+        '401':
+          description: 잘못된 이메일 또는 비밀번호
+  
+  /auth/google-signin:
+    post:
+      summary: 구글 로그인 (OAuth2 Code 교환 방식)
+      description: 프론트엔드에서 받은 OAuth Code를 서버에 전달하여 Access Token 및 사용자 정보를 가져온 후 JWT를 발급합니다.
+      tags: [Auth]
+      parameters:
+        - in: query
+          name: code
+          schema:
+            type: string
+          required: true
+          description: 구글 OAuth2 인증 후 받은 임시 코드
+      responses:
+        '200':
+          description: 로그인 성공, 토큰 및 사용자 정보 반환
+        '400':
+          description: 코드 누락 또는 유효하지 않은 요청
+        '500':
+          description: 서버 오류
+
+  /auth/forgot-password:
+    post:
+      summary: 비밀번호 재설정을 위한 인증 코드 이메일 전송
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: 재설정할 계정의 이메일
+      responses:
+        '200':
+          description: 인증 코드 전송 성공 메시지
+        '404':
+          description: 해당 이메일로 등록된 사용자가 없음
+        '500':
+          description: 서버 오류 또는 이메일 전송 오류
+
+  /auth/reset-password:
+    post:
+      summary: 인증 코드를 사용하여 비밀번호 재설정
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordBody'
+      responses:
+        '200':
+          description: 비밀번호 재설정 성공
+        '400':
+          description: 유효하지 않은 코드 또는 유효성 검사 실패
+        '500':
+          description: 서버 오류
+
+  # ----------------------------------------------------
+  # BeautyTalk
+  # ----------------------------------------------------
+
+  /beauty/posts:
+    post:
+      summary: 커뮤니티 글 작성
+      tags: [BeautyTalk]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostBody'
+      responses:
+        '201':
+          description: 글 작성 성공
+        '400':
+          description: 유효하지 않은 입력 또는 인증 오류
+        '500':
+          description: 서버 오류
+    get:
+      summary: 커뮤니티 글 목록 조회
+      tags: [BeautyTalk]
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [my-review, product-qa, all]
+          description: 글 타입 필터 (my-review, product-qa, all)
+        - in: query
+          name: category
+          schema:
+            type: string
+            enum: [skincare, makeup, hair, all]
+          description: 카테고리 필터 (skincare, makeup, hair, all)
+        - in: query
+          name: tag
+          schema:
+            type: string
+          description: 해시태그 이름 필터
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [recent, popular]
+            default: recent
+          description: 정렬 기준
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: 글 목록 및 페이징 정보 반환
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostListResponse'
+
+  /beauty/posts/{id}:
+    get:
+      summary: 글 상세 보기 및 조회수 증가
+      tags: [BeautyTalk]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 게시글 ID
+      responses:
+        '200':
+          description: 글 상세 정보 (댓글 포함) 반환
+        '404':
+          description: 게시글을 찾을 수 없음
+        '500':
+          description: 서버 오류
+
+  /beauty/posts/{id}/comment:
+    post:
+      summary: 댓글 작성
+      tags: [BeautyTalk]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 게시글 ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  description: 댓글 내용
+      responses:
+        '201':
+          description: 댓글 작성 성공
+        '404':
+          description: 게시글을 찾을 수 없음
+        '500':
+          description: 서버 오류
+
+  /beauty/posts/{id}/like:
+    post:
+      summary: 좋아요 토글
+      tags: [BeautyTalk]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 게시글 ID
+      responses:
+        '200':
+          description: 좋아요 상태 토글 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  liked:
+                    type: boolean
+        '500':
+          description: 서버 오류
+
+  /beauty/posts/{id}/bookmark:
+    post:
+      summary: 북마크 토글
+      tags: [BeautyTalk]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 게시글 ID
+      responses:
+        '200':
+          description: 북마크 상태 토글 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  bookmarked:
+                    type: boolean
+        '500':
+          description: 서버 오류
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # ------------------------------
+    # Auth
+    # ------------------------------
+    SignUpBody:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+        - age
+        - termsOfUse
+        - personalInfoRequired
+      properties:
+        email:
+          type: string
+          format: email
+          description: 이메일
+        password:
+          type: string
+          description: 암호화된 비밀번호
+        firstName:
+          type: string
+          description: 이름
+        lastName:
+          type: string
+          description: 성
+        country:
+          type: string
+          description: 국가 코드 (Optional)
+        gender:
+          type: string
+          description: 성별 코드 (Optional)
+        age:
+          type: string
+          description: 연령대 코드
+        termsOfUse:
+          type: boolean
+          description: 이용 약관 동의 (필수)
+        personalInfoRequired:
+          type: boolean
+          description: 개인 정보 수집 동의 (필수)
+        personalInfoOptional:
+          type: boolean
+          description: 개인 정보 수집 동의 (선택)
+        marketingOptional:
+          type: boolean
+          description: 마케팅 정보 동의 (선택)
+        emailMarketing:
+          type: boolean
+          description: 이메일 마케팅 동의 (선택)
+          
+    SignInBody:
+      type: object
+      required:
+        - email
+        - password
+        - keepSignedIn
+        - saveId
+      properties:
+        email:
+          type: string
+          format: email
+          description: 이메일
+        password:
+          type: string
+          description: 비밀번호
+        keepSignedIn:
+          type: boolean
+          description: 로그인 유지 여부 (JWT 만료 기간 설정)
+        saveId:
+          type: boolean
+          description: 이메일 저장 여부 (프론트엔드 로직)
+
+    ResetPasswordBody:
+      type: object
+      required:
+        - email
+        - code
+        - newPassword
+      properties:
+        email:
+          type: string
+          format: email
+          description: 재설정할 계정의 이메일
+        code:
+          type: string
+          description: 이메일로 받은 6자리 인증 코드
+        newPassword:
+          type: string
+          description: 새 비밀번호
+
+    # ------------------------------
+    # BeautyTalk
+    # ------------------------------
+
+    CreatePostBody:
+      type: object
+      required:
+        - title
+        - postType
+        - category
+        - content
+      properties:
+        title:
+          type: string
+          description: 게시글 제목
+        postType:
+          type: string
+          enum: [my-review, product-qa]
+          description: 글 타입 ('my-review' 또는 'product-qa')
+        category:
+          type: string
+          enum: [skincare, makeup, hair]
+          description: 카테고리
+        content:
+          type: object
+          description: Tiptap 에디터 JSON 객체 (게시글 본문)
+        hashtags:
+          type: array
+          items:
+            type: string
+          description: 해시태그 목록
+
+    PostListResponse:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              author:
+                type: object
+              _count:
+                type: object
+        totalPages:
+          type: integer
+        currentPage:
+          type: integer
+        totalCount:
+          type: integer

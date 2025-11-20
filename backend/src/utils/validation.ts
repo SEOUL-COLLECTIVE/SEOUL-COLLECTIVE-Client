@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
-// 비밀번호 정책: 8자 ~ 16자, 문자/숫자 1개 이상 포함
-const passwordValidation = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,16}$/)
+/**
+ * 비밀번호 정책: 8자 ~ 16자, 영문/숫자 1개 이상 포함
+ */
+const passwordValidation = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/
 
 // 회원 가입 정보
 export const signUpSchema = z.object({
@@ -19,7 +21,7 @@ export const signUpSchema = z.object({
   country: z.string().optional(),
   gender: z.string().optional(),
 
-  // 약관 필드
+  // 필수 약관
   termsOfUse: z.boolean().refine((val) => val === true, {
     message: 'You must agree to the Terms of Use.',
   }),
@@ -27,15 +29,18 @@ export const signUpSchema = z.object({
     message: 'You must agree to the collection of required personal information.',
   }),
 
-  // 선택 약관
-  personalInfoOptional: z.boolean().default(false),
-  marketingOptional: z.boolean().default(false),
-  emailMarketing: z.boolean().default(false),
+  // 선택 약관 (기본값 false 처리)
+  personalInfoOptional: z.boolean().optional().default(false),
+  marketingOptional: z.boolean().optional().default(false),
+  emailMarketing: z.boolean().optional().default(false),
 })
 
 // 로그인 정보
 export const signInSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(1, 'Password is required'),
+  
+  // 프론트엔드에서 보내는 데이터 구조에 맞춰 saveId 추가 (백엔드 로직에선 안 쓰더라도 받아주는 게 좋음)
   keepSignedIn: z.boolean().optional(),
+  saveId: z.boolean().optional(), 
 })

@@ -32,6 +32,10 @@ model User {
   gender    String?
   age       String
 
+  // 비밀번호 재설정용 필드
+  resetToken          String?   // 인증 코드 저장
+  resetTokenExpires   DateTime? // 코드 만료 시간 저장
+
   // Google 로그인 사용자 식별
   googleId String? @unique
 
@@ -94,7 +98,7 @@ model BeautyTalkPost {
   id        String   @id @default(cuid())
 
   title   String
-  content String @db.Text
+  content Json
   type     PostType
   category PostCategory
   viewCount Int @default(0)

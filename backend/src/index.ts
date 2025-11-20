@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.config';
-import authRoutes from './routes/router';
+import authRoutes from './routes/authRoutes';
+import beautyRoutes from './routes/beautyTalkRoutes';
 
 // .env 파일 로드
 dotenv.config()
@@ -28,7 +29,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Seoul-Collective Backend API - Connected')
 })
 
-// ⭐️ 파비콘 요청 처리 (CORS 미들웨어보다 앞에 위치해야 함)
+// 파비콘 요청 처리 (CORS 미들웨어보다 앞에 위치해야 함)
 app.get('/favicon.ico', (req: Request, res: Response) => res.status(204).end());
 
 // 미들웨어 설정
@@ -55,6 +56,7 @@ app.use(`${API_VERSION}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // API 라우트 마운트
 app.use(`${API_VERSION}/auth`, authRoutes)
+app.use(`${API_VERSION}/beauty`, beautyRoutes)
 
 // 서버 시작
 app.listen(PORT, DEV_HOST, () => {
