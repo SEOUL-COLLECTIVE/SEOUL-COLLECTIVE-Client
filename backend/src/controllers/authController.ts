@@ -35,7 +35,7 @@ export const signUp = async (req: Request, res: Response) => {
       personalInfoOptional,
       marketingOptional,
       emailMarketing,
-    } = validatedData;
+    } = validatedData
 
     // 2. 이메일 중복 확인
     const existingUser = await prisma.user.findUnique({
