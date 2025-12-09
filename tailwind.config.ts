@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        mainBlack: ['var(--font-gotham-black)', 'Arial', 'sans-serif'],
         mainBold: ['var(--font-gotham-bold)', 'Arial', 'sans-serif'],
         mainMedium: ['var(--font-gotham-medium)', 'Arial', 'sans-serif'],
         point: ['var(--font-termina-heavy)', 'Arial', 'sans-serif'],
