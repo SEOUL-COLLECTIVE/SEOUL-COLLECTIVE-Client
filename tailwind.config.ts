@@ -19,7 +19,8 @@ const config: Config = {
       colors: {
         bgColor: '#F5F5F7',
         scpurple: '#644DFF',
-        black: '#231F20',
+        scblack: '#231F20',
+        scgrey: '#6C6C6C',
         footerBlack: '#2D2B28',
       },
       fontSize: {
