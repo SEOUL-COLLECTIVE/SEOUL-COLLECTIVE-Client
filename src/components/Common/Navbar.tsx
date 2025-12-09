@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/navigation-menu'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import { IoSearch } from 'react-icons/io5'
 import { navItems } from '@/constants/navItem'
 import { useRouter } from 'next/navigation'
 
@@ -22,16 +20,10 @@ type NavbarProps = {
 }
 
 export default function Navbar({ showTopbar }: NavbarProps) {
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
-  const [searchKeyword, setSearchKeyword] = useState<string>('')
   const router = useRouter()
 
   const onClickTrigger = (href: string) => {
     router.push(href)
-  }
-
-  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value)
   }
 
   return (
@@ -44,7 +36,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
             width={0}
             height={0}
             alt="sc-logo-top"
-            className="w-[7rem]"
+            className="w-[3rem]"
           />
         </Link>
       )}
@@ -59,7 +51,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuTrigger
                   onClick={() => onClickTrigger(item.href)}
-                  className="font-poppins tracking-wide cursor-pointer p-0 text-p12 underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.125rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.125rem] [&>svg]:hidden"
+                  className="font-mainBold leading-tight cursor-pointer p-0 text-p13 underline-offset-[0.4375rem] hover:underline hover:decoration-purple hover:decoration-[0.125rem] data-[state=open]:underline data-[state=open]:decoration-purple data-[state=open]:decoration-[0.125rem] [&>svg]:hidden"
                 >
                   {item.name}
                 </NavigationMenuTrigger>
@@ -69,7 +61,7 @@ export default function Navbar({ showTopbar }: NavbarProps) {
                       <NavigationMenuLink
                         asChild
                         key={sub.name}
-                        className="text-p12 block rounded-md px-4 py-2 hover:text-purple"
+                        className="text-p11 block rounded-md px-4 py-1 font-mainMedium"
                       >
                         <Link href={sub.href}>{sub.name}</Link>
                       </NavigationMenuLink>
@@ -81,32 +73,6 @@ export default function Navbar({ showTopbar }: NavbarProps) {
           </NavigationMenuList>
         </NavigationMenu>
       </nav>
-
-      <div className="flex items-center">
-        {isSearchOpen ? (
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-48 border-b border-black bg-none px-3 py-1 text-sm focus:border-black focus:outline-none"
-              autoFocus
-              onBlur={() => setIsSearchOpen(false)}
-              value={searchKeyword}
-              onChange={onChangeSearchKeyword}
-            />
-            <button onClick={() => setIsSearchOpen(false)} className="text-black hover:text-purple">
-              <IoSearch size={22} />
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setIsSearchOpen(true)}
-            className="text-black transition-colors hover:text-purple"
-          >
-            <IoSearch size={22} />
-          </button>
-        )}
-      </div>
     </div>
   )
 }
