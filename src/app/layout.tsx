@@ -50,7 +50,9 @@ export default function RootLayout({
       lang="en"
       className={`${gothamBlack.variable} ${gothamBold.variable} ${gothamMedium.variable} ${terminaHeavy.variable} ${neuehaasBlackItalic.variable}`}
     >
-      {/* 두 폰트 variable 모두 추가 */}
+      <head>
+        <link rel="icon" href="/sc-favicon.svg" type="image/svg" sizes="20" />
+      </head>
       <body className="flex min-h-screen flex-col">
         <Providers>
           <Topbar />
