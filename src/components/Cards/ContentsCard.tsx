@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes'
 type ContentsCardProps = {
   section: string
   title: string
-  category?: string
+  date: string
   categorySlug?: string
   subcategory?: string
   subcategorySlug?: string
@@ -21,7 +21,7 @@ const sectionType: SectionStyle[] = [
     section: 'main',
     font: {
       category: 'text-p13',
-      title: 'text-p28',
+      title: 'text-3xl',
     },
     gap: {
       image_category: 'pt-3',
@@ -33,7 +33,7 @@ const sectionType: SectionStyle[] = [
     section: 'sub',
     font: {
       category: 'text-p11',
-      title: 'text-p20',
+      title: 'text-xl',
     },
     gap: {
       image_category: 'pt-3',
@@ -42,28 +42,16 @@ const sectionType: SectionStyle[] = [
     image_ratio: 'aspect-[334/235]',
   },
   {
-    section: 'testDrive',
+    section: 'editor-pick',
     font: {
-      category: 'text-p10',
-      title: 'text-p16',
-    },
-    gap: {
-      image_category: 'pt-2',
-      category_title: 'pt-1',
-    },
-    image_ratio: 'aspect-[371/290]',
-  },
-  {
-    section: 'shopping',
-    font: {
-      category: 'text-p13',
-      title: 'text-p26',
+      category: 'text-p11',
+      title: 'text-3xl',
     },
     gap: {
       image_category: 'pt-3',
       category_title: 'pt-1',
     },
-    image_ratio: 'aspect-[514/508]',
+    image_ratio: 'aspect-[47/51]',
   },
   {
     section: 'latest',
@@ -75,16 +63,15 @@ const sectionType: SectionStyle[] = [
       image_category: 'pt-4',
       category_title: 'pt-1',
     },
-    image_ratio: 'aspect-[340/255]',
+    image_ratio: 'aspect-[4/5]',
   },
 ]
 
 export default function ContentsCard({
   section,
   title,
-  category,
+  date,
   categorySlug,
-  subcategory,
   subcategorySlug,
   imageUrl,
   id,
@@ -102,20 +89,20 @@ export default function ContentsCard({
 
   return (
     <Link href={href}>
-      <div className="flex h-full w-full cursor-pointer flex-col font-semibold">
+      <div className="flex h-full w-full cursor-pointer flex-col font-mainBold">
         {/* 이미지 영역 */}
-        <div className={`relative w-full ${style.image_ratio}`}>
+        <div className={`relative w-full aspect-[4/5]`}>
           <Image src={imageUrl} alt="thumbnail" fill className="object-cover" />
         </div>
 
         {/* 텍스트 영역 */}
         <div className={`flex flex-col gap-1 ${style.gap.image_category}`}>
-          <span className={`${style.font.category} text-[#464647] font-medium`}>{category}</span>
           <div
-            className={`${style.font.title} ${style.gap.category_title} tracking-[0.01em] line-clamp-2 whitespace-pre-line break-words leading-tight`}
+            className={`${style.font.title} ${style.gap.category_title} line-clamp-2 whitespace-pre-line break-words leading-tight font-poppins`}
           >
             {title.replace(/\\n/g, '\n')}
           </div>
+          <div className={`${style.font.category} text-scgrey`}>{date}</div>
         </div>
       </div>
     </Link>
