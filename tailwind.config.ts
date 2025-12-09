@@ -10,9 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'futura-bold': ['var(--font-futura-bold)', 'Arial', 'sans-serif'],
-        futura: ['var(--font-futura)', 'Arial', 'sans-serif'],
-        poppins: ['var(--font-poppins)', 'Arial', 'sans-serif'],
+        mainBold: ['var(--font-gotham-bold)', 'Arial', 'sans-serif'],
+        mainMedium: ['var(--font-gotham-medium)', 'Arial', 'sans-serif'],
+        point: ['var(--font-termina-heavy)', 'Arial', 'sans-serif'],
+        nhItalic: ['var(--font-nh-black-italic)', 'Arial', 'sans-serif'],
       },
       colors: {
         bgColor: '#F5F5F7',
