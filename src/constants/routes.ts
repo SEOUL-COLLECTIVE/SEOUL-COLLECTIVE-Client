@@ -11,16 +11,6 @@ export const ROUTES = {
   article: (category: string, subcategory: string, id: string) =>
     `/${category}/${subcategory}/${id}`,
 
-  // 정적 영역
-  BRANDS: '/brands',
-  SHOPPING: '/shopping',
-
-  // 쇼핑 상세
-  shoppingDetail: (id: string | number) => `/shopping/${id}`,
-
-  // 브랜드 상세
-  brandDetail: (slug: string) => `/brands/${slug}`,
-
   // 멤버
   member: {
     signin: '/member/signin' as const,
@@ -34,13 +24,13 @@ export const ROUTES = {
     postDetail: (id: number | string) => `/beauty-talk/${id}`,
   },
 
-  // 뷰티톡 (쿼리)
-  askExpert: {
-    root: '/ask-an-expert' as const,
-    create: '/ask-an-expert/create' as const,
-    type: (type: string) => `/ask-an-expert/${type}`,
-    typeCategory: (type: string, category: string) => `/ask-an-expert/${type}/${category}`,
-  },
+  // // askExpert (쿼리)
+  // askExpert: {
+  //   root: '/ask-an-expert' as const,
+  //   create: '/ask-an-expert/create' as const,
+  //   type: (type: string) => `/ask-an-expert/${type}`,
+  //   typeCategory: (type: string, category: string) => `/ask-an-expert/${type}/${category}`,
+  // },
 } as const
 
 // 타입 안전한 아티클 링크 생성기 (기존 세그먼트 방식 유지)
@@ -89,12 +79,12 @@ export function getBeautyTalkHref(
   return createQueryHref(params as Record<string, string | undefined>, ROUTES.beautyTalk.root)
 }
 
-// 전문가 질문 링크 생성기 (쿼리 기반 사용)
-export function getAskExpertHref(
-  params: {
-    type?: string | null
-    category?: string | null
-  } = {}
-) {
-  return createQueryHref(params as Record<string, string | undefined>, ROUTES.askExpert.root)
-}
+// // 전문가 질문 링크 생성기 (쿼리 기반 사용)
+// export function getAskExpertHref(
+//   params: {
+//     type?: string | null
+//     category?: string | null
+//   } = {}
+// ) {
+//   return createQueryHref(params as Record<string, string | undefined>, ROUTES.askExpert.root)
+// }

@@ -2,9 +2,7 @@
 
 import { notFound } from 'next/navigation'
 import { navItems } from '@/constants/navItem'
-import Image from 'next/image'
 import ContentsCard from '@/components/Cards/ContentsCard'
-import Shopping from '@/components/Sections/Shopping'
 import { useCategory, useArticlesByCategory } from '@/hooks/use-contentful'
 import { useParams } from 'next/navigation'
 
@@ -32,56 +30,9 @@ export default function CategoryPage() {
     )
   }
 
-  if (category === 'shopping') {
-    return (
-      <div className="container mb-24 w-full">
-        <div className="relative h-80 -mx-[5.375rem]">
-          <Image
-            src={categoryData?.thumbnail || '/test/shopping/shopping_back.png'}
-            alt={categoryData?.name || navItem.name}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
-            <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
-              <span className="uppercase">{categoryData?.name || navItem.name}</span>
-            </div>
-
-            <div className="mb-2">
-              <div className="text-white inline-block tracking-wide text-p32">
-                <div className="font-bold uppercase">{categoryData?.name || navItem.name}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Shopping />
-      </div>
-    )
-  }
-
   return (
     <div className="container mb-24 w-full">
-      <div className="relative h-80 -mx-[5.375rem]">
-        <Image
-          src={categoryData?.thumbnail || '/test/thumbnail_01.jpg'}
-          alt={categoryData?.name || 'thumbnail'}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 flex flex-col justify-between py-8 left-[5.375rem]">
-          <div className="flex items-center gap-2 text-white text-sm font-light tracking-wide">
-            <span className="uppercase">{categoryData?.name}</span>
-          </div>
-          <div className="mb-2">
-            <div className="text-white inline-block tracking-wide text-p32">
-              <div className="font-bold uppercase">{categoryData?.name}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="font-mainBlack text-6xl">{categoryData?.name}</div>
 
       {/* 서브카테고리 네비게이션 */}
       {navItem?.submenu && (
@@ -99,32 +50,23 @@ export default function CategoryPage() {
 
       {/* 카테고리별 아티클 목록 */}
       <div className="mt-16">
-        {category == 'shopping' ? (
-          // shopping 카테고리일 경우 Shopping 컴포넌트 렌더링
-          <Shopping />
+        {categoryArticles.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categoryArticles.map((article) => (
+              <ContentsCard
+                key={article.id}
+                section="latest"
+                title={article.title}
+                date={article.dateTime || 'date'}
+                imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
+                id={article.id}
+                categorySlug={article.category?.slug || category}
+                subcategorySlug={article.subcategory?.slug || category}
+              />
+            ))}
+          </div>
         ) : (
-          // 그 외 카테고리일 경우 일반 아티클 목록 렌더링
-          <>
-            <div className="text-p32 font-bold flex justify-center mb-8">THE LATEST</div>
-            {categoryArticles.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {categoryArticles.map((article) => (
-                  <ContentsCard
-                    key={article.id}
-                    section="latest"
-                    title={article.title}
-                    category={article.category?.name || 'category'}
-                    imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
-                    id={article.id}
-                    categorySlug={article.category?.slug || category}
-                    subcategorySlug={article.subcategory?.slug || category}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500">이 카테고리에는 아직 아티클이 없습니다.</p>
-            )}
-          </>
+          <p className="text-gray-500">이 카테고리에는 아직 아티클이 없습니다.</p>
         )}
       </div>
     </div>

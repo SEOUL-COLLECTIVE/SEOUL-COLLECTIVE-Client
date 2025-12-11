@@ -10,15 +10,17 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'futura-bold': ['var(--font-futura-bold)', 'Arial', 'sans-serif'],
-        futura: ['var(--font-futura)', 'Arial', 'sans-serif'],
-        poppins: ['var(--font-poppins)', 'Arial', 'sans-serif'],
+        mainBlack: ['var(--font-gotham-black)', 'Arial', 'sans-serif'],
+        mainBold: ['var(--font-gotham-bold)', 'Arial', 'sans-serif'],
+        mainMedium: ['var(--font-gotham-medium)', 'Arial', 'sans-serif'],
+        point: ['var(--font-termina-heavy)', 'Arial', 'sans-serif'],
+        nhItalic: ['var(--font-nh-black-italic)', 'Arial', 'sans-serif'],
       },
       colors: {
         bgColor: '#F5F5F7',
-        purple: '#7D89FF',
-        yellow: '#F4FF9D',
-        black: '#000000',
+        scpurple: '#644DFF',
+        scblack: '#231F20',
+        scgrey: '#6C6C6C',
         footerBlack: '#2D2B28',
       },
       fontSize: {

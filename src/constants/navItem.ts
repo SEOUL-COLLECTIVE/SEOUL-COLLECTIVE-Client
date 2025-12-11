@@ -1,4 +1,4 @@
-import { ROUTES } from '@/constants/routes'
+import { ROUTES, getBeautyTalkHref } from '@/constants/routes'
 
 export interface NavItem {
   name: string
@@ -8,48 +8,35 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   {
-    name: 'SKIN',
-    href: ROUTES.category('skin'),
+    name: 'BEAUTY',
+    href: ROUTES.category('beauty'),
+  },
+  {
+    name: 'INSIGHTS',
+    href: ROUTES.category('insights'),
     submenu: [
-      { name: 'Skin Concerns', href: ROUTES.subcategory('skin', 'skin-concerns') },
-      { name: 'Skin Type', href: ROUTES.subcategory('skin', 'skin-type') },
-      { name: 'Sun Care', href: ROUTES.subcategory('skin', 'sun-care') },
-      { name: 'Body Care', href: ROUTES.subcategory('skin', 'body-care') },
+      { name: 'Expert Interview', href: ROUTES.subcategory('insights', 'expert-interview') },
+      { name: 'Brand Interview', href: ROUTES.subcategory('insights', 'brand-interview') },
+      { name: 'Street Review', href: ROUTES.subcategory('insights', 'street-review') },
     ],
-  },
-  {
-    name: 'MAKEUP',
-    href: ROUTES.category('makeup'),
-    submenu: [
-      { name: 'Face', href: ROUTES.subcategory('makeup', 'face') },
-      { name: 'Eyes', href: ROUTES.subcategory('makeup', 'eyes') },
-      { name: 'Lips', href: ROUTES.subcategory('makeup', 'lips') },
-      { name: 'Brushes & tools', href: ROUTES.subcategory('makeup', 'brushes-tools') },
-    ],
-  },
-  {
-    name: 'HAIR',
-    href: ROUTES.category('hair'),
-    submenu: [
-      { name: 'Hair care', href: ROUTES.subcategory('hair', 'hair-care') },
-      { name: 'Scalp Health', href: ROUTES.subcategory('hair', 'scalp-health') },
-    ],
-  },
-  {
-    name: 'BRANDS',
-    href: ROUTES.BRANDS,
-  },
-  {
-    name: 'SHOPPING',
-    href: ROUTES.SHOPPING,
-  },
-  {
-    name: 'ASK AN EXPERT',
-    href: ROUTES.askExpert.root,
   },
   {
     name: 'BEAUTY TALK',
     href: ROUTES.beautyTalk.root,
+    submenu: [
+      {
+        name: 'My Review',
+        href: getBeautyTalkHref({
+          type: 'my-review',
+        }),
+      },
+      {
+        name: 'Beauty Q&A',
+        href: getBeautyTalkHref({
+          type: 'beauty-qna',
+        }),
+      },
+    ],
   },
 ]
 
@@ -74,13 +61,11 @@ export const allNavLinks = navItems.reduce(
 // 회사 정보 링크들
 export const companyLinks = [
   { name: 'ABOUT US', href: '/about' },
-  { name: 'CAREERS', href: '/careers' },
-  { name: 'COMMERCE GUIDELINE', href: '/commerce-guideline' },
+  { name: 'CONTACT', href: '/contact' },
 ]
 
 // 법적 정보 링크들
 export const legalLinks = [
   { name: 'PRIVACY POLICY', href: '/privacy' },
   { name: 'TERMS OF SERVICE', href: '/terms' },
-  { name: 'ADVERTISE', href: '/advertise' },
 ]
