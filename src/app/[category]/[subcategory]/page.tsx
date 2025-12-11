@@ -70,7 +70,7 @@ export default async function SubCategoryPage({ params }: PageProps) {
                 key={article.id}
                 section="latest"
                 title={article.title}
-                category={article.category?.name || 'category'}
+                date={article.dateTime || 'date'}
                 imageUrl={article.thumbnail || '/test/thumbnail_01.jpg'}
                 id={article.id}
                 categorySlug={article.category?.slug || category}
