@@ -1,17 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import Main from '../components/Sections/Main'
-import TestDrive from '@/components/Sections/TestDrive'
-import SCShopping from '@/components/Sections/SCShopping'
+import WatchThis from '@/components/Sections/WatchThis'
 import Latest from '@/components/Sections/Latest'
 import CategoryPreview from '@/components/Sections/CategoryPreview'
 import { useArticles } from '@/hooks/use-contentful'
+import EditorPick from '@/components/Sections/EditorPick'
 
 export default function Page() {
-  const [username, setUsername] = useState<string>('Emma')
-
-  // 🔥 여기서 딱 1번만 전체 아티클 가져오기!
+  // 여기서 딱 1번만 전체 아티클 가져오기!
   const { data: articles, isLoading } = useArticles()
 
   if (isLoading) {
@@ -20,13 +17,11 @@ export default function Page() {
 
   return (
     <div>
-      <div className="pb-3 text-p20 font-semibold">Hi, {username}</div>
       <div className="flex flex-col gap-y-24">
         <Main />
-        <TestDrive />
-        <SCShopping />
+        <WatchThis />
+        <EditorPick />
         <Latest />
-        <CategoryPreview />
       </div>
     </div>
   )
